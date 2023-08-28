@@ -6,6 +6,8 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using TeamTextRPG.Classes;
 using static TeamTextRPG.Managers.SceneManager;
+using System.Net.Http.Json;
+using System.Drawing;
 
 namespace TeamTextRPG.Managers
 {
@@ -23,7 +25,8 @@ namespace TeamTextRPG.Managers
 
 
         private Item[] _items = new Item[50];
-        private string? _id;
+        private Monster[] _monsters = new Monster[30];
+        private string? _id; // 캐릭터 생성 시의 id
         public int MaxStage { get; set; }
         public int StagePage { get; set; }
 
@@ -98,7 +101,6 @@ namespace TeamTextRPG.Managers
 
 
             configData.Add(new JProperty("MaxStage", MaxStage));
-
             using (FileStream fs = File.Open(_savePath, FileMode.Create))
             {
                 using (StreamWriter writer = new StreamWriter(fs))
@@ -318,8 +320,13 @@ namespace TeamTextRPG.Managers
             Shop = Shop.OrderBy(item => item.Id).ToList();
             #endregion
 
+            #region 몬스터 세팅
+            _monsters[0] = new Monster("박쥐", 0, 1, 1, 1, 10, 100);
+            #endregion
+
             #region 던전 세팅
             Dungeons.Add(new Dungeon(Player, "마을 동굴", 5, 1000));
+            Dungeons[0].AddMonster(0);
             Dungeons.Add(new Dungeon(Player, "옆 마을", 17, 2500));
             Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 28, 6000));
             Dungeons.Add(new Dungeon(Player, "대형 거미줄", 42, 11000));
@@ -454,58 +461,21 @@ namespace TeamTextRPG.Managers
             Dungeon dungeon = Dungeons[stage - 1];
             bool clear = false;
 
-            Random rnd = new Random();
 
-            ui.ClearLog();
+            ui.MakeBattleBox();
+            ui.PrintHp();
+            ui.PrintMp();
 
-            int damage = rnd.Next(20, 36) - (Player.Def + GetDefBonus() - dungeon.Condition);
-            if (damage < 0) damage = 0;
+            EntryBattle(dungeon);
 
-            if (Player.Def + GetDefBonus() < dungeon.Condition && rnd.Next(0, 100) < 40)
+
+            if (clear)
             {
-                clear = false;
-                damage /= 2;
-                Player.ChangeHP(-damage);
-
-                ui.AddLog($"{dungeon.Name} 도전 실패");
-                if(damage > 0) ui.AddLog($"체력  - {damage}");
-                ui.AddLog("");
+                
             }
             else
             {
-                clear = true;
-                if (stage == MaxStage) MaxStage++;
-                Player.ChangeHP(-damage);
-
-                int rewardGold = (int)(dungeon.Reward[0]
-                    * (100 + rnd.Next(Player.Atk + GetAtkBonus(), 2 * Player.Atk + GetAtkBonus() + 1)) / 100);
-                Player.Gold += rewardGold;
-
-                ui.AddLog($"{dungeon.Name} 클리어");
-                if (damage > 0) ui.AddLog($"체력: {Player.CurrentHp} (-{damage})");
-                ui.AddLog($"골드  + {rewardGold} G");
-
-                Player.Exp += stage;
-                if (Player.Level <= Player.Exp)
-                {
-                    Player.Exp -= Player.Level++;
-
-                    ui.AddLog("");
-                    ui.AddLog("레벨이 올랐습니다.");
-                    if (Player.Level % 2 == 1) ui.AddLog($"공격력 {Player.Atk} -> {++Player.Atk}");
-                    ui.AddLog($"방어력 {Player.Def} -> {++Player.Def}");
-                }
-
-                if (dungeon.Reward.Count > 1 && rnd.Next(0, 100) < 100 + Player.Atk + GetAtkBonus())
-                {
-                    int rewardItemId = dungeon.Reward[rnd.Next(1, dungeon.Reward.Count)];
-
-                    Inventory.Add(MakeNewItem(rewardItemId));
-                    if (!DiscoveredItem.Exists(x => x == rewardItemId)) DiscoveredItem.Add(rewardItemId);
-
-                    ui.AddLog("");
-                    ui.AddLog($"전리품으로 {_items[rewardItemId].Name}(을)를 얻었습니다.");
-                }
+                
             }
         }
 
@@ -727,6 +697,20 @@ namespace TeamTextRPG.Managers
             Item newItem = new Item(item.Name, item.Id, item.Part, level, item.Stat, item.Price, item.Description);
 
             return newItem;
+        }
+
+        public void EntryBattle(Dungeon dungeon)
+        {
+            var ui = GameManager.Instance.UIManager;
+            Random rnd = new Random();
+            int monsterSize = rnd.Next(1, 5);
+
+            for (int i = 0; i < monsterSize; i++)
+            {
+                dungeon.InstantiateMonster(_monsters[rnd.Next(0, dungeon.MonsterIds.Count)]);
+            }
+
+            ui.ShowMonsterCard(monsterSize);
         }
     }
 }
