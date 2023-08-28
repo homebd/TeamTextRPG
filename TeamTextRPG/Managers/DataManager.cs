@@ -6,6 +6,8 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using TeamTextRPG.Classes;
 using static TeamTextRPG.Managers.SceneManager;
+using System.Net.Http.Json;
+using System.Drawing;
 using System.Xml.Linq;
 
 namespace TeamTextRPG.Managers
@@ -24,7 +26,8 @@ namespace TeamTextRPG.Managers
 
 
         private Item[] _items = new Item[50];
-        private string? _id;
+        private Monster[] _monsters = new Monster[30];
+        private string? _id; // 캐릭터 생성 시의 id
         public int MaxStage { get; set; }
         public int StagePage { get; set; }
 
@@ -99,7 +102,6 @@ namespace TeamTextRPG.Managers
 
 
             configData.Add(new JProperty("MaxStage", MaxStage));
-
             using (FileStream fs = File.Open(_savePath, FileMode.Create))
             {
                 using (StreamWriter writer = new StreamWriter(fs))
@@ -319,8 +321,13 @@ namespace TeamTextRPG.Managers
             Shop = Shop.OrderBy(item => item.Id).ToList();
             #endregion
 
+            #region 몬스터 세팅
+            _monsters[0] = new Monster("박쥐", 0, 1, 1, 1, 10, 100, 5);
+            #endregion
+
             #region 던전 세팅
             Dungeons.Add(new Dungeon(Player, "마을 동굴", 5, 1000));
+            Dungeons[0].AddMonster(0);
             Dungeons.Add(new Dungeon(Player, "옆 마을", 17, 2500));
             Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 28, 6000));
             Dungeons.Add(new Dungeon(Player, "대형 거미줄", 42, 11000));
@@ -453,13 +460,15 @@ namespace TeamTextRPG.Managers
             UIManager ui = GameManager.Instance.UIManager;
             int stage = num + StagePage;
             Dungeon dungeon = Dungeons[stage - 1];
+            Random rnd = new Random();
             bool clear = false;
 
-            Random rnd = new Random();
 
-            ui.ClearLog();
+            ui.MakeBattleBox();
+            ui.PrintHp();
+            ui.PrintMp();
 
-            // TODO : 배틀 진행하기!
+            EntryBattle(dungeon);
 
             // 배틀 진행 끝났다면 결과 정산합니다.
 
@@ -469,13 +478,14 @@ namespace TeamTextRPG.Managers
             List<Item> rewardItems = new List<Item>();
             foreach (Monster m in dungeon.Monsters)
             {
-                if (!m.isDead())
+                if (!m.IsDead())
                     continue;
-                rewardGold += m.rewardItemIds[0];
-                m.rewardItemIds.RemoveAt(0);
-                rewardExp += m.rewardExp;
-                foreach (int id in m.rewardItemIds)
+                rewardGold += m.Reward[0];
+                m.Reward.RemoveAt(0);
+                rewardExp += m.RewardExp;
+                for (int i = 1; i < m.Reward.Count; i++)
                 {
+                    int id = m.Reward[i];
                     rewardItems.Add(MakeNewItem(id));
                 }
             }
@@ -538,6 +548,7 @@ namespace TeamTextRPG.Managers
                 ui.AddLog(item.Name);
             }
         }
+        
         public void RestPlayer(int num)
         {
             Shelter st = Shelters[num - 1];
@@ -782,6 +793,20 @@ namespace TeamTextRPG.Managers
             Item newItem = new Item(item.Name, item.Id, item.Part, level, item.Stat, item.Price, item.Description);
 
             return newItem;
+        }
+
+        public void EntryBattle(Dungeon dungeon)
+        {
+            var ui = GameManager.Instance.UIManager;
+            Random rnd = new Random();
+            int monsterSize = rnd.Next(1, 5);
+
+            for (int i = 0; i < monsterSize; i++)
+            {
+                dungeon.InstantiateMonster(_monsters[rnd.Next(0, dungeon.MonsterIds.Count)]);
+            }
+
+            ui.ShowMonsterCard(monsterSize);
         }
     }
 }

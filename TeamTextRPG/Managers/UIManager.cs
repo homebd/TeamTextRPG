@@ -289,7 +289,7 @@ namespace TeamTextRPG.Managers
         {
             var currentCursor = Console.GetCursorPosition();
 
-            int left = 92, top = 0, right = 120, bottom = 23;
+            int left = 92, top = 0, right = 120, bottom = 30;
             _logLeft = left + 2;  _logTop = top + 2;
 
             MakeUIContainer(left, top, right, bottom);
@@ -299,7 +299,7 @@ namespace TeamTextRPG.Managers
                 PrintLog(log);
             }
 
-            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top); MakePlayerBox();
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
 
         }
 
@@ -320,6 +320,7 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(_logLeft, _logTop);
 
+            // 줄바꿈
             int len = Encoding.Default.GetBytes(log).Length;
             if (len > 33)
             {
@@ -606,27 +607,106 @@ namespace TeamTextRPG.Managers
         public void PrintHp()
         {
             var currentCursor = Console.GetCursorPosition();
-            var dm = GameManager.Instance.DataManager;
+            var player = GameManager.Instance.DataManager.Player;
+
+            int rate = 20;
+            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + GameManager.Instance.DataManager.GetHpBonus() + 0.5f);
+            if (fillExpBar >= rate) fillExpBar = rate;
 
             Console.SetCursorPosition(0, _goldTopPostion);
-            Console.Write("┌─────────────────────────┐");
+            Console.Write("┌──────┬──────────────────────────────────────────┐");
             Console.SetCursorPosition(0, _goldTopPostion + 1);
-            Console.Write($"│ 체  력│ {dm.Player.CurrentHp.ToString().PadLeft(6, ' ')}  / {(dm.Player.MaxHp + dm.GetHpBonus()).ToString().PadLeft(6, ' ')}│");
+            Console.Write($"│ 체 력│  ");
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write("".PadRight(fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.Write("".PadRight(rate - fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("│");
             Console.SetCursorPosition(0, _goldTopPostion + 2);
-            Console.Write("├─────────────────────────┴");
+            Console.Write("├──────┴──────────────────────────────────────────┴");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
 
-        public void MakePlayerBox()
+        public void PrintMp()
+        {
+            var currentCursor = Console.GetCursorPosition();
+            var player = GameManager.Instance.DataManager.Player;
+
+            int rate = 15;
+            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + GameManager.Instance.DataManager.GetHpBonus() + 0.5f);
+            if (fillExpBar >= rate) fillExpBar = rate;
+
+            Console.SetCursorPosition(50, _goldTopPostion);
+            Console.Write("┬──────┬────────────────────────────────┐");
+            Console.SetCursorPosition(50, _goldTopPostion + 1);
+            Console.Write($"│ 내 공│  ");
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Write("".PadRight(fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Write("".PadRight(rate - fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("│");
+            Console.SetCursorPosition(50, _goldTopPostion + 2);
+            Console.Write("┴──────┴────────────────────────────────┤");
+
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+        }
+
+        public void MakeBattleBox()
         {
             var currentCursor = Console.GetCursorPosition();
 
-            int left = 92, top = 23, right = 120, bottom = 30;
+            int left = 0, top = 5, right = 92, bottom = 20;
 
             MakeUIContainer(left, top, right, bottom);
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+        }
+
+        public void ShowMonsterCard(int size)
+        {
+            var currentCursor = Console.GetCursorPosition();
+
+            int top = 6, bottom = 19;
+            int width = 22;
+            List<int> leftPosition = new List<int>();
+
+            switch (size)
+            {
+                case 1:
+                    leftPosition.Add(35);
+                    break;
+                case 2:
+                    leftPosition.Add(12);
+                    leftPosition.Add(59);
+                    break;
+                case 3:
+                    leftPosition.Add(5);
+                    leftPosition.Add(35);
+                    leftPosition.Add(65);
+                    break;
+                case 4:
+                    leftPosition.Add(1);
+                    leftPosition.Add(24);
+                    leftPosition.Add(47);
+                    leftPosition.Add(70);
+                    break;
+            }
+
+            //Console.ForegroundColor = ConsoleColor.Green;
+
+            foreach (int left in leftPosition)
+            {
+                MakeUIContainer(left, top, left + width - 1, bottom);
+            }
+
+            //Console.ForegroundColor = ConsoleColor.White;
+
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+
+            Console.ReadKey();
         }
 
     }

@@ -1,20 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TeamTextRPG.Classes
+﻿namespace TeamTextRPG.Classes
 {
-    public class Monster
+    internal class Monster
     {
-        // 아래 내용은 임시로 만들어두었습니다! 이러한 형식의 필드, 메소드가 있어야 ExploreDungeon 메소드에서 올바른 결과를 출력할 수 있습니다.
+        public string Name { get; }
+        public int Id { get; }
+        public int Level { get; set; }
+        public int Atk { get; set; }
+        public int Def { get; set; }
+        public int MaxHp { get; }
+        public int CurrentHp { get; private set; }
+        public List<int> Reward { get; } // Reward[0]은 골드, Reward[1]부터는 아이템 id
+        public int RewardExp { get; }
 
-        public List<int> rewardItemIds = new List<int>();
-        public int rewardExp;
-        public bool isDead()
+        public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp)
         {
-            return false;
+            Name = name;
+            Id = id;
+            Level = level;
+            Atk = atk;
+            Def = def;
+            MaxHp = maxHp;
+            CurrentHp = MaxHp;
+            Reward = new List<int>();
+            Reward.Add(gold);
+            RewardExp = exp;
+        }
+
+        public void ChangeHP(int hp)
+        {
+            var totalHp = MaxHp;
+
+            CurrentHp += hp;
+
+            if (totalHp < CurrentHp)
+            {
+                CurrentHp = totalHp;
+            }
+
+            if (CurrentHp < 0)
+            {
+                CurrentHp = 0;
+            }
+        }
+
+        public bool IsDead()
+        {
+            return CurrentHp == 0;
         }
     }
 }
