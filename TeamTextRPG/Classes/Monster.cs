@@ -10,8 +10,9 @@
         public int MaxHp { get; }
         public int CurrentHp { get; private set; }
         public List<int> Reward { get; } // Reward[0]은 골드, Reward[1]부터는 아이템 id
+        public int RewardExp { get; }
 
-        public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold)
+        public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp)
         {
             Name = name;
             Id = id;
@@ -22,6 +23,7 @@
             CurrentHp = MaxHp;
             Reward = new List<int>();
             Reward.Add(gold);
+            RewardExp = exp;
         }
 
         public void ChangeHP(int hp)

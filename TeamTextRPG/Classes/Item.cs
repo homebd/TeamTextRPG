@@ -4,7 +4,7 @@
 
 namespace TeamTextRPG.Classes
 {
-    internal class Item
+    public class Item
     {
         public enum Parts
         {
