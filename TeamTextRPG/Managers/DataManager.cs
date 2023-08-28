@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using TeamTextRPG.Classes;
 using static TeamTextRPG.Managers.SceneManager;
+using System.Xml.Linq;
 
 namespace TeamTextRPG.Managers
 {
@@ -48,7 +49,7 @@ namespace TeamTextRPG.Managers
 
             JObject configData = new JObject(
                 new JProperty("Name", Player.Name),
-                new JProperty("Job", Player.Job),
+                new JProperty("Job", (int)Player.Job),
                 new JProperty("Level", Player.Level),
                 new JProperty("Exp", Player.Exp),
                 new JProperty("Atk", Player.Atk),
@@ -124,7 +125,7 @@ namespace TeamTextRPG.Managers
 
             Player = new Character(
                 data["Name"].ToString(),
-                data["Job"].ToString(),
+                (JOP)data["Job"],
                 (int)data["Level"],
                 (int)data["Atk"],
                 (int)data["Def"],
@@ -568,21 +569,47 @@ namespace TeamTextRPG.Managers
                         _savePath = savePath;
                         ui.AddLog("ID 생성에 성공했습니다.");
                         ui.AddLog("닉네임을 입력하세요.");
-
+                        string? name;
                         while (true)
                         {
                             ui.SetCursorPositionForOption();
-                            string? name = Console.ReadLine();
+                            name = Console.ReadLine();
                             if (name != null)
                             {
-                                Player = new Character(name, "전사", 1, 10, 5, 100, 1500);
-                                GetBasicItem();
-                                SaveData();
-                                GameManager.Instance.SceneManager.Scene = Scenes.TOWN;
-                                return;
+                                break;
                             }
                             ui.AddLog("잘못된 입력입니다.");
                         }
+
+                        // -------- Json으로 직업에 대한 정보 관리 및 접근성 확보 필요 ---------
+                        ui.AddLog("닉네임 생성에 성공했습니다.");
+                        ui.AddLog(" ");
+                        ui.AddLog("직업을 선택해 주세요.");
+
+                        List<string> option = new List<string>();
+                        option.Add("1. 전사");
+                        option.Add("2. 마법사");
+                        option.Add("3. 궁수");
+                        ui.MakeOptionBox(option);
+                        while (true)
+                        {
+                            ui.SetCursorPositionForOption();
+                            int jop;
+                            if(int.TryParse(Console.ReadLine(), out jop))
+                            {
+                                if (jop >= 0 && jop <= (int)JOP.ARCHER)
+                                {
+                                    Player = new Character(name, (JOP)(jop - 1), 1, 10, 5, 100, 1500);
+                                    GetBasicItem();
+                                    SaveData();
+                                    GameManager.Instance.SceneManager.Scene = Scenes.TOWN;
+                                    ui.AddLog("게임을 시작합니다.");
+                                    return;
+                                }
+                            }
+                            ui.AddLog("잘못된 입력입니다.");
+                        }
+                        // -------------------------------------------------------------
                     }
                 }
                 ui.AddLog("잘못된 입력입니다.");

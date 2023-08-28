@@ -1,13 +1,21 @@
-﻿/// <summary
+﻿
+using Newtonsoft.Json.Linq;
+/// <summary
 /// 캐릭터 클래스
 /// </summary>
 
 namespace TeamTextRPG.Classes
 {
+    public enum JOP
+    {
+        WARRIOR,
+        WIZARD,
+        ARCHER,
+    }
     internal class Character
     {
         public string Name { get; }
-        public string Job { get; }
+        public JOP Job { get; }
         public int Level { get; set; }
         public int Exp { get; set; }
         public int Atk { get; set; }
@@ -17,7 +25,7 @@ namespace TeamTextRPG.Classes
         public int Gold { get; set; }
         public Item[]? Equipments { get; set; }
 
-        public Character(string name, string job, int level, int atk, int def, int maxHp, int gold)
+        public Character(string name, JOP job, int level, int atk, int def, int maxHp, int gold)
         {
             Name = name;
             Job = job;
