@@ -10,6 +10,8 @@ namespace TeamTextRPG.Classes
         public int Condition { get; }
         public List<int> Reward { get; } // Reward[0]은 골드, Reward[1]부터는 아이템 id
 
+        // NOTE : 아래와 같은 Monster 리스트가 있어야 ExploreDungeon에서 올바른 결과 출력이 가능합니다.
+        public List<Monster> Monsters;
 
         public Dungeon(Character player, string name, int condition, int gold)
         {
