@@ -55,5 +55,17 @@ namespace TeamTextRPG.Classes
                 CurrentHp = 0;
             }
         }
+        public void HealHP(Item item)
+        {
+            if (item.Part != Item.Parts.POTIONS)
+            {
+                return;
+            }
+            else
+            {
+                CurrentHp += item.Stat;
+            }
+        }
+
     }
 }

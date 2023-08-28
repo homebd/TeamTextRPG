@@ -12,7 +12,8 @@ namespace TeamTextRPG.Classes
             HELMET,
             CHESTPLATE,
             LEGGINGS,
-            BOOTS
+            BOOTS,
+            POTIONS
         }
         public string Name { get; }
         public int Id { get; }
@@ -22,6 +23,7 @@ namespace TeamTextRPG.Classes
         public int Price { get; }
         public int Level { get; set; }
         public bool IsEquipped { get; set; }
+
         public int BonusStat
         {
             get
@@ -63,6 +65,9 @@ namespace TeamTextRPG.Classes
                 case Parts.LEGGINGS:
                     statByPart = "방어력";
                     break;
+                case Parts.POTIONS:
+                    statByPart = "회복량";
+                    break;
             }
 
             Console.Write($"- {printNum}{equip}{level}{Name}");
@@ -70,7 +75,7 @@ namespace TeamTextRPG.Classes
             Console.Write($"| {statByPart} + {Stat}{bonus}");
             Console.SetCursorPosition(45, Console.GetCursorPosition().Top);
 
-            if(showPrice) Console.WriteLine($"| {((int)(Price * sale)).ToString().PadLeft(8, ' ')} G");
+            if (showPrice) Console.WriteLine($"| {((int)(Price * sale)).ToString().PadLeft(8, ' ')} G");
             else Console.Write($"| {Description}\n");
         }
 
@@ -108,7 +113,7 @@ namespace TeamTextRPG.Classes
             int cost = Price * (6 << Level) / 100;
 
             Console.WriteLine($"| 성공 확률: {prb.ToString().PadLeft(3, ' ')} %| 비용: {cost.ToString().PadLeft(10, ' ')} G");
-             
+
         }
     }
 }

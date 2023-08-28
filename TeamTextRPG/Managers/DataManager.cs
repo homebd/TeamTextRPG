@@ -21,8 +21,8 @@ namespace TeamTextRPG.Managers
         public List<Shelter> Shelters { get; private set; }
         public List<int> DiscoveredItem { get; set; }
 
-
-        private Item[] _items = new Item[50];
+        // 아이템을 추가하기 위해서는 배열을 늘러야 한다. 
+        private Item[] _items = new Item[53];
         private string? _id;
         public int MaxStage { get; set; }
         public int StagePage { get; set; }
@@ -58,7 +58,7 @@ namespace TeamTextRPG.Managers
                 new JProperty("Gold", Player.Gold)
                 );
 
-            if(Inventory.Count > 0)
+            if (Inventory.Count > 0)
             {
                 int[] inventoryIds = new int[Inventory.Count];
                 int[] itemsLevel = new int[Inventory.Count];
@@ -71,8 +71,8 @@ namespace TeamTextRPG.Managers
                 configData.Add(new JProperty("Inventory", JArray.FromObject(inventoryIds)));
                 configData.Add(new JProperty("ItemLevel", JArray.FromObject(itemsLevel)));
             }
-            
-            if(DiscoveredItem.Count > 0)
+
+            if (DiscoveredItem.Count > 0)
             {
                 int[] discoveredIds = new int[DiscoveredItem.Count];
 
@@ -138,6 +138,7 @@ namespace TeamTextRPG.Managers
             {
                 for (int i = 0; i < data["Inventory"].Count; i++)
                 {
+
                     int id = (int)data["Inventory"][i];
                     int level = (int)data["ItemLevel"][i];
 
@@ -145,6 +146,7 @@ namespace TeamTextRPG.Managers
 
                     Inventory.Add(newItem);
                     Shop.Remove(Shop.Find(x => x.Name == newItem.Name));
+
                 }
             }
 
@@ -207,6 +209,12 @@ namespace TeamTextRPG.Managers
             {
                 Player.ChangeHP(item.Stat + item.BonusStat);
             }
+
+            if (item.Part == Item.Parts.POTIONS)
+            {
+                Player.HealHP(item);
+                Inventory.Remove(item);
+            }
         }
 
         public void Unwear(Item.Parts part)
@@ -218,7 +226,7 @@ namespace TeamTextRPG.Managers
                     hp = Player.CurrentHp - 1;
                 else
                     hp = Player.Equipments[(int)part].Stat + Player.Equipments[(int)part].BonusStat;
-                
+
                 Player.ChangeHP(-hp);
             }
             Player.Equipments[(int)part].IsEquipped = false;
@@ -246,6 +254,8 @@ namespace TeamTextRPG.Managers
             GameManager.Instance.UIManager.PrintGold();
             GameManager.Instance.UIManager.PrintItems();
         }
+
+
 
         public void GameDataSetting()
         {
@@ -304,6 +314,9 @@ namespace TeamTextRPG.Managers
             _items[47] = new Item("수룡각", 47, Item.Parts.BOOTS, 0, 360, 332000, "수룡 \'네시\'의 보주로 만든 각반입니다.");
             _items[48] = new Item("청월", 48, Item.Parts.BOOTS, 0, 496, 701000, "달은 물에 잠겨서도 은은한 빛을 만들었습니다.");
             _items[49] = new Item("살구색 양말", 49, Item.Parts.BOOTS, 0, 650, 1447200, "맨발은 위험합니다.");
+            _items[50] = new Item("힐링 포션(소)", 50, Item.Parts.POTIONS, 0, 10, 100, "지나친 포션의 남용은 오히려 체력에 좋습니다.");
+            _items[51] = new Item("힐링 포션(중)", 51, Item.Parts.POTIONS, 0, 50, 100, "지나친 포션의 남용은 오히려 건강에 좋습니다.");
+            _items[52] = new Item("독약", 52, Item.Parts.POTIONS, 0, -40, 100, "포션의 회복 효과를 알기 위해 만들었다.");
             #endregion
 
             #region 상점 세팅
@@ -442,7 +455,7 @@ namespace TeamTextRPG.Managers
 
             if (Player.Equipments[(int)Item.Parts.BOOTS] != null)
                 hpBonus += Player.Equipments[(int)Item.Parts.BOOTS].Stat
-                    +Player.Equipments[(int)Item.Parts.BOOTS].BonusStat;
+                    + Player.Equipments[(int)Item.Parts.BOOTS].BonusStat;
 
             return hpBonus;
         }
@@ -468,7 +481,7 @@ namespace TeamTextRPG.Managers
                 Player.ChangeHP(-damage);
 
                 ui.AddLog($"{dungeon.Name} 도전 실패");
-                if(damage > 0) ui.AddLog($"체력  - {damage}");
+                if (damage > 0) ui.AddLog($"체력  - {damage}");
                 ui.AddLog("");
             }
             else
@@ -482,13 +495,13 @@ namespace TeamTextRPG.Managers
                 Player.Gold += rewardGold;
 
                 ui.AddLog($"{dungeon.Name} 클리어");
-                if (damage > 0) ui.AddLog($"체력: {Player.CurrentHp} (-{damage})");
+                if (damage > 0) ui.AddLog($"체력  - {damage}");
                 ui.AddLog($"골드  + {rewardGold} G");
 
                 Player.Exp += stage;
                 if (Player.Level <= Player.Exp)
                 {
-                    Player.Exp -= Player.Level++;
+                    Player.Exp -= Player.Level;
 
                     ui.AddLog("");
                     ui.AddLog("레벨이 올랐습니다.");
@@ -543,13 +556,13 @@ namespace TeamTextRPG.Managers
                 ui.AddLog("소지금이 부족합니다.");
             }
 
-        } 
+        }
 
         public void CreateId()
         {
             UIManager ui = GameManager.Instance.UIManager;
 
-            while(true)
+            while (true)
             {
                 ui.SetCursorPositionForOption();
                 _id = Console.ReadLine();
@@ -635,7 +648,8 @@ namespace TeamTextRPG.Managers
 
             if (input == "[")
             {
-                if (StagePage == 0) {
+                if (StagePage == 0)
+                {
                     Console.Beep();
                     ui.AddLog("가장 첫 페이지입니다.");
                 }
@@ -701,7 +715,7 @@ namespace TeamTextRPG.Managers
 
                     item.Level = 0;
                     Inventory.Remove(item);
-                    if(!Shop.Exists(x => x.Name == item.Name)) Shop.Add(item);
+                    if (!Shop.Exists(x => x.Name == item.Name)) Shop.Add(item);
 
                     ui.AddLog($"강화에 실패하여 {item.Name}(이)가 파괴되었습니다");
                 }

@@ -9,7 +9,7 @@ using static TeamTextRPG.Managers.SceneManager;
 namespace TeamTextRPG.Managers
 {
     internal class UIManager
-    {   
+    {
         public GameManager GameManager;
         public Item.Parts? Category { get; private set; }
 
@@ -62,8 +62,8 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(0, _categoryTopPostion);
 
-            Console.WriteLine("┌───────┐───────┐───────┐───────┐───────┐───────┐");
-            Console.WriteLine("│  전체 │  무기 │  투구 │  갑옷 │  바지 │  신발 │");
+            Console.WriteLine("┌───────┐───────┐───────┐───────┐───────┐───────┐───────┐");
+            Console.WriteLine("│  전체 │  무기 │  투구 │  갑옷 │  바지 │  신발 │  포션 │");
             switch (Category)
             {
                 case null:
@@ -84,8 +84,11 @@ namespace TeamTextRPG.Managers
                 case Item.Parts.BOOTS:
                     Console.Write("────────────────────────────────────────┘       └─────");
                     break;
+                case Item.Parts.POTIONS:
+                    Console.Write("────────────────────────────────────────────────┘       └");
+                    break;
             }
-            Console.Write("".PadRight(Console.WindowWidth - 54, '─'));
+            Console.Write("".PadRight(Console.WindowWidth - 58, '─'));
             Console.Write("\n\n");
 
             if (forRefresh) Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
@@ -110,7 +113,7 @@ namespace TeamTextRPG.Managers
             var currentCursor = Console.GetCursorPosition();
             var player = GameManager.Instance.DataManager.Player;
 
-            int fillExpBar =  (int)(8 * (float)player.Exp / player.Level + 0.5f);
+            int fillExpBar = (int)(8 * (float)player.Exp / player.Level + 0.5f);
             if (fillExpBar >= 8) fillExpBar = 8;
 
             Console.SetCursorPosition(0, _goldTopPostion);
@@ -192,6 +195,7 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
 
+
         public bool ShiftCategory(string input)
         {
             if (input == "[")
@@ -234,7 +238,7 @@ namespace TeamTextRPG.Managers
                 Console.SetCursorPosition(right - 1, i);
                 Console.Write("│");
             }
-            
+
 
             Console.SetCursorPosition(left, bottom);
             Console.Write("└".PadRight(right - left - 1, '─'));
@@ -259,7 +263,7 @@ namespace TeamTextRPG.Managers
                     Console.Write(option[i].ToString());
 
                     tempLeft += right / 3;
-                    if(tempLeft >= right - 5)
+                    if (tempLeft >= right - 5)
                     {
                         tempLeft = left;
                         tempTop += 2;
@@ -290,7 +294,7 @@ namespace TeamTextRPG.Managers
             var currentCursor = Console.GetCursorPosition();
 
             int left = 92, top = 0, right = 120, bottom = 23;
-            _logLeft = left + 2;  _logTop = top + 2;
+            _logLeft = left + 2; _logTop = top + 2;
 
             MakeUIContainer(left, top, right, bottom);
 
@@ -305,7 +309,8 @@ namespace TeamTextRPG.Managers
 
         public void AddLog(string log)
         {
-            if (_logTop > 20) {
+            if (_logTop > 20)
+            {
                 Logs.RemoveRange(0, 5);
                 MakeLogBox();
             }
@@ -323,13 +328,13 @@ namespace TeamTextRPG.Managers
             int len = Encoding.Default.GetBytes(log).Length;
             if (len > 33)
             {
-                for(int i = 1; i <= 25; i++)
+                for (int i = 1; i <= 25; i++)
                 {
                     string str = log.Substring(log.Length - i, 1);
 
                     len -= Encoding.Default.GetBytes(str).Length;
 
-                    if(len <= 33)
+                    if (len <= 33)
                     {
                         Console.Write(log.Substring(0, log.Length - i));
 
@@ -348,7 +353,7 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
-        
+
         public void ClearLog()
         {
             var currentCursor = Console.GetCursorPosition();
@@ -578,10 +583,10 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(left + 9, 9);
             Console.Write($"{dm.Shelters[num].Name}");
 
-            Console.SetCursorPosition(left+3, 14);
+            Console.SetCursorPosition(left + 3, 14);
             Console.Write($"회복량        {dm.Shelters[num].Heal} H");
 
-            Console.SetCursorPosition(left+3, 17);
+            Console.SetCursorPosition(left + 3, 17);
             Console.Write($"비  용        {dm.Shelters[num].Cost} G");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
@@ -612,6 +617,7 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
+
 
     }
 }
