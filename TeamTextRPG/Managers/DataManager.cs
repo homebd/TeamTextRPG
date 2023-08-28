@@ -488,7 +488,7 @@ namespace TeamTextRPG.Managers
                 Player.Exp += stage;
                 if (Player.Level <= Player.Exp)
                 {
-                    Player.Exp -= Player.Level;
+                    Player.Exp -= Player.Level++;
 
                     ui.AddLog("");
                     ui.AddLog("레벨이 올랐습니다.");
