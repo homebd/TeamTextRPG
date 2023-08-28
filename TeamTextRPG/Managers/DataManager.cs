@@ -9,6 +9,7 @@ using static TeamTextRPG.Managers.SceneManager;
 using System.Net.Http.Json;
 using System.Drawing;
 using System.Xml.Linq;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace TeamTextRPG.Managers
 {
@@ -412,63 +413,16 @@ namespace TeamTextRPG.Managers
             }
         }
 
-        public int GetAtkBonus(bool print = true)
-        {
-            int atkBonus = 0;
-
-            if (Player.Equipments[(int)Item.Parts.WEAPON] != null)
-            {
-                atkBonus = Player.Equipments[(int)Item.Parts.WEAPON].Stat
-                    + Player.Equipments[(int)Item.Parts.WEAPON].BonusStat;
-            }
-
-            return atkBonus;
-        }
-
-        public int GetDefBonus(bool print = true)
-        {
-            int defBonus = 0;
-
-            if (Player.Equipments[(int)Item.Parts.CHESTPLATE] != null)
-                defBonus += Player.Equipments[(int)Item.Parts.CHESTPLATE].Stat
-                    + Player.Equipments[(int)Item.Parts.CHESTPLATE].BonusStat;
-
-            if (Player.Equipments[(int)Item.Parts.LEGGINGS] != null)
-                defBonus += Player.Equipments[(int)Item.Parts.LEGGINGS].Stat
-                    + Player.Equipments[(int)Item.Parts.LEGGINGS].BonusStat;
-
-            return defBonus;
-        }
-
-        public int GetHpBonus(bool print = true)
-        {
-            int hpBonus = 0;
-
-            if (Player.Equipments[(int)Item.Parts.HELMET] != null)
-                hpBonus += Player.Equipments[(int)Item.Parts.HELMET].Stat
-                    + Player.Equipments[(int)Item.Parts.HELMET].BonusStat;
-
-            if (Player.Equipments[(int)Item.Parts.BOOTS] != null)
-                hpBonus += Player.Equipments[(int)Item.Parts.BOOTS].Stat
-                    +Player.Equipments[(int)Item.Parts.BOOTS].BonusStat;
-
-            return hpBonus;
-        }
-
         public void ExploreDungeon(int num)
         {
             UIManager ui = GameManager.Instance.UIManager;
             int stage = num + StagePage;
             Dungeon dungeon = Dungeons[stage - 1];
             Random rnd = new Random();
-            bool clear = false;
 
-
-            ui.MakeBattleBox();
-            ui.PrintHp();
-            ui.PrintMp();
-
-            EntryBattle(dungeon);
+            // 배틀 진입 후 결과 반환
+            bool clear = GameManager.Instance.BattleManager.EntryBattle(dungeon);
+            // ++++ 결과 정산도 battleManager에서 처리해도 될 것 같습니다. ++++ //
 
             // 배틀 진행 끝났다면 결과 정산합니다.
 
@@ -476,12 +430,12 @@ namespace TeamTextRPG.Managers
             int rewardExp = 0;
             // 죽은 몬스터에 따라 골드와 아이템, 경험치를 보상에 추가합니다.
             List<Item> rewardItems = new List<Item>();
-            foreach (Monster m in dungeon.Monsters)
+            foreach (Monster m in GameManager.Instance.BattleManager.Monsters)
             {
                 if (!m.IsDead())
                     continue;
                 rewardGold += m.Reward[0];
-                m.Reward.RemoveAt(0);
+
                 rewardExp += m.RewardExp;
                 for (int i = 1; i < m.Reward.Count; i++)
                 {
@@ -779,7 +733,7 @@ namespace TeamTextRPG.Managers
             }
         }
 
-        private Item MakeNewItem(int id)
+        public Item MakeNewItem(int id)
         {
             Item item = _items[id];
             Item newItem = new Item(item.Name, item.Id, item.Part, item.Level, item.Stat, item.Price, item.Description);
@@ -787,7 +741,7 @@ namespace TeamTextRPG.Managers
             return newItem;
         }
 
-        private Item MakeNewItem(int id, int level)
+        public Item MakeNewItem(int id, int level)
         {
             Item item = _items[id];
             Item newItem = new Item(item.Name, item.Id, item.Part, level, item.Stat, item.Price, item.Description);
@@ -795,18 +749,17 @@ namespace TeamTextRPG.Managers
             return newItem;
         }
 
-        public void EntryBattle(Dungeon dungeon)
+        public Monster MakeNewMonster(int id)
         {
-            var ui = GameManager.Instance.UIManager;
-            Random rnd = new Random();
-            int monsterSize = rnd.Next(1, 5);
+            Monster monster = _monsters[id];
+            Monster newMonster = new Monster(monster.Name, monster.Id, monster.Level, monster.Atk, monster.Def, monster.MaxHp, 0, monster.RewardExp);
 
-            for (int i = 0; i < monsterSize; i++)
+            newMonster.Reward.Clear();
+            foreach(var reward in monster.Reward)
             {
-                dungeon.InstantiateMonster(_monsters[rnd.Next(0, dungeon.MonsterIds.Count)]);
+                newMonster.Reward.Add(reward);
             }
-
-            ui.ShowMonsterCard(monsterSize);
+            return newMonster;
         }
     }
 }

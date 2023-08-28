@@ -18,12 +18,14 @@ namespace TeamTextRPG.Managers
         public SceneManager SceneManager { get; private set; }
         public DataManager DataManager { get; private set; }
         public UIManager UIManager { get; private set; }
+        public BattleManager BattleManager { get; private set; }
 
         public GameManager()
         {
             SceneManager = new SceneManager();
             DataManager = new DataManager();
             UIManager = new UIManager();
+            BattleManager = new BattleManager();
         }
     }
 }

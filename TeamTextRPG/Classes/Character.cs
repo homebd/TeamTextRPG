@@ -1,5 +1,6 @@
 ﻿
 using Newtonsoft.Json.Linq;
+using System.Numerics;
 /// <summary
 /// 캐릭터 클래스
 /// </summary>
@@ -24,6 +25,9 @@ namespace TeamTextRPG.Classes
         public int CurrentHp { get; private set; }
         public int Gold { get; set; }
         public Item[]? Equipments { get; set; }
+        public float CriticalChance { get; set; }
+        public float CriticalDamage { get; set; }
+        public float DodgeRate { get; set; }
 
         public Character(string name, JOP job, int level, int atk, int def, int maxHp, int gold)
         {
@@ -62,6 +66,49 @@ namespace TeamTextRPG.Classes
             {
                 CurrentHp = 0;
             }
+        }
+
+        public int GetAtkBonus(bool print = true)
+        {
+            int atkBonus = 0;
+
+            if (Equipments[(int)Item.Parts.WEAPON] != null)
+            {
+                atkBonus = Equipments[(int)Item.Parts.WEAPON].Stat
+                    + Equipments[(int)Item.Parts.WEAPON].BonusStat;
+            }
+
+            return atkBonus;
+        }
+
+        public int GetDefBonus(bool print = true)
+        {
+            int defBonus = 0;
+
+            if (Equipments[(int)Item.Parts.CHESTPLATE] != null)
+                defBonus += Equipments[(int)Item.Parts.CHESTPLATE].Stat
+                    + Equipments[(int)Item.Parts.CHESTPLATE].BonusStat;
+
+            if (Equipments[(int)Item.Parts.LEGGINGS] != null)
+                defBonus += Equipments[(int)Item.Parts.LEGGINGS].Stat
+                    + Equipments[(int)Item.Parts.LEGGINGS].BonusStat;
+
+            return defBonus;
+        }
+
+        public int GetHpBonus(bool print = true)
+        {
+            int hpBonus = 0;
+
+            if (Equipments[(int)Item.Parts.HELMET] != null)
+                hpBonus += Equipments[(int)Item.Parts.HELMET].Stat
+                    + Equipments[(int)Item.Parts.HELMET].BonusStat;
+
+            if (Equipments[(int)Item.Parts.BOOTS] != null)
+                hpBonus += Equipments[(int)Item.Parts.BOOTS].Stat
+                    + Equipments[(int)Item.Parts.BOOTS].BonusStat;
+
+            return hpBonus;
         }
     }
 }
