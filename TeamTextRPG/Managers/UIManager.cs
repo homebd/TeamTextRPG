@@ -427,6 +427,22 @@ namespace TeamTextRPG.Managers
             var currentCursor = Console.GetCursorPosition();
             var dm = GameManager.Instance.DataManager;
 
+            // 직업 표시
+            string jop = "";
+            switch(dm.Player.Job)
+            {
+                case JOP.WARRIOR:
+                    jop = "전사";
+                    break;
+                case JOP.WIZARD:
+                    jop = "마법사";
+                    break;
+                case JOP.ARCHER:
+                    jop = "궁수";
+                    break;
+
+            }
+
             Console.SetCursorPosition(38, 6);
             Console.Write("< 현재 능력치 >");
 
@@ -434,7 +450,7 @@ namespace TeamTextRPG.Managers
             Console.Write($"이  름  {dm.Player.Name}");
 
             Console.SetCursorPosition(31, 11);
-            Console.Write($"직  업  {dm.Player.Job}");
+            Console.Write($"직  업  {jop}");
 
             Console.SetCursorPosition(31, 13);
             Console.Write($"체  력  {dm.Player.CurrentHp} / {dm.Player.MaxHp}(+{dm.GetHpBonus()})");
