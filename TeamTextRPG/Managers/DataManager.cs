@@ -26,7 +26,7 @@ namespace TeamTextRPG.Managers
 
 
         private Item[] _items = new Item[50];
-        private Monster[] _monsters = new Monster[30];
+        private List<Monster> _monsters = new List<Monster>();
         private string? _id; // 캐릭터 생성 시의 id
         public int MaxStage { get; set; }
         public int StagePage { get; set; }
@@ -43,6 +43,8 @@ namespace TeamTextRPG.Managers
             DiscoveredItem = new List<int>();
             MaxStage = 1;
             StagePage = 0;
+
+            
         }
 
 
@@ -106,7 +108,8 @@ namespace TeamTextRPG.Managers
             {
                 using (StreamWriter writer = new StreamWriter(fs))
                 {
-                    writer.Write(configData.ToString());
+                    writer.Write(_monsters);
+                    //writer.Write(configData.ToString());
                 }
             }
         }
@@ -322,7 +325,42 @@ namespace TeamTextRPG.Managers
             #endregion
 
             #region 몬스터 세팅
-            _monsters[0] = new Monster("박쥐", 0, 1, 1, 1, 10, 100, 5);
+            // 이름 , id, 레벨, 공격력, 방어력, HP, 골드, 경험치
+            _monsters.Add(new Monster("박쥐", 0, 1, 1, 1, 10, 50, 5));
+            _monsters.Add(new Monster("토끼", 1, 1, 1, 0, 15, 50, 5));
+            _monsters.Add(new Monster("거미", 2, 1, 2, 1, 5, 60, 6));
+            _monsters.Add(new Monster("쥐", 3, 1, 2, 1, 10, 70, 7));
+            _monsters.Add(new Monster("뱀", 4, 1, 3, 1, 15, 90, 9));
+            _monsters.Add(new Monster("고블린 정찰병", 5, 2, 3, 3, 20, 150, 15));
+            _monsters.Add(new Monster("배고픈 멧돼지", 6, 2, 3, 3, 30, 200, 20));
+            _monsters.Add(new Monster("날렵한 올빼미", 7, 2, 2, 4, 20, 170, 17));
+            _monsters.Add(new Monster("불개미 무리", 8, 2, 4, 1, 15, 150, 15));
+            _monsters.Add(new Monster("허약한 스켈레톤", 9, 3, 4, 4, 30, 300, 30));
+            _monsters.Add(new Monster("광부 코볼트", 10, 3, 6, 3, 40, 450, 45));
+            _monsters.Add(new Monster("허술한 도적", 11, 3, 5, 4, 35, 400, 40));
+            _monsters.Add(new Monster("허술한 도적 궁수", 12, 3, 8, 2, 25, 500, 50));
+            _monsters.Add(new Monster("거대 사마귀", 13, 4, 7, 5, 40, 700, 70));
+            _monsters.Add(new Monster("거대 타란툴라", 14, 4, 12, 2, 30, 850, 85));
+            _monsters.Add(new Monster("거대 장수말벌", 15, 4, 6, 8, 50, 1000, 100));
+            _monsters.Add(new Monster("아라크네", 16, 4, 8, 8, 60, 1300, 130));
+            _monsters.Add(new Monster("고블린 무리", 17, 5, 10, 10, 80, 1600, 160));
+            _monsters.Add(new Monster("흉폭한 야생마 무리", 18, 5, 7, 12, 100, 1800, 180));
+            _monsters.Add(new Monster("오크", 19, 5, 14, 10, 80, 2200, 220));
+            _monsters.Add(new Monster("놀", 20, 5, 15, 12, 120, 2400, 240));
+            _monsters.Add(new Monster("갈색 그리즐리 베어", 21, 6, 18, 18, 150, 2800, 280));
+            _monsters.Add(new Monster("검정 그리즐리 베어", 22, 6, 22, 16, 180, 3200, 320));
+            _monsters.Add(new Monster("숨죽인 재규어", 23, 6, 28, 12, 80, 3000, 300));
+            _monsters.Add(new Monster("각성한 곰 우르순", 24, 6, 22, 24, 200, 3600, 360));
+            _monsters.Add(new Monster("블랙 와이번", 25, 7, 20, 30, 200, 4000, 400));
+            _monsters.Add(new Monster("레드 와이번", 26, 7, 30, 20, 180, 4200, 420));
+            _monsters.Add(new Monster("변종 거대 독수리", 27, 7, 22, 22, 280, 3800, 380));
+            _monsters.Add(new Monster("용의 해츨링", 27, 7, 15, 40, 300, 4600, 460));
+            _monsters.Add(new Monster("", 27, 7, 15, 40, 300, 4600, 460));
+
+
+
+
+
             #endregion
 
             #region 던전 세팅
@@ -481,7 +519,6 @@ namespace TeamTextRPG.Managers
                 if (!m.IsDead())
                     continue;
                 rewardGold += m.Reward[0];
-                m.Reward.RemoveAt(0);
                 rewardExp += m.RewardExp;
                 for (int i = 1; i < m.Reward.Count; i++)
                 {
@@ -803,6 +840,8 @@ namespace TeamTextRPG.Managers
 
             for (int i = 0; i < monsterSize; i++)
             {
+                // TODO : 던전 레벨별로 몬스터도 맞춰서 들어갈 수 있도록 보정하는 로직
+
                 dungeon.InstantiateMonster(_monsters[rnd.Next(0, dungeon.MonsterIds.Count)]);
             }
 
