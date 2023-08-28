@@ -1,0 +1,26 @@
+{
+  "Name": "[GM]스파르타",
+  "Job": "전사",
+  "Level": 1,
+  "Exp": 0,
+  "Atk": 13,
+  "Def": 8,
+  "MaxHp": 100,
+  "CurrentHp": 100,
+  "Gold": 4560,
+  "Inventory": [
+    0,
+    10,
+    20,
+    30,
+    40
+  ],
+  "ItemLevel": [
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "MaxStage": 2
+}
