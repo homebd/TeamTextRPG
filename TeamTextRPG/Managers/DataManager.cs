@@ -673,7 +673,7 @@ namespace TeamTextRPG.Managers
                             int jop;
                             if(int.TryParse(Console.ReadLine(), out jop))
                             {
-                                if (jop >= 0 && jop <= (int)JOP.ARCHER)
+                                if (jop >= 1 && jop <= (int)JOP.ARCHER + 1)
                                 {
                                     Player = new Character(name, (JOP)(jop - 1), 1, 10, 5, 100, 1500);
                                     GetBasicItem();
