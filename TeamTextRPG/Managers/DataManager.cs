@@ -482,7 +482,7 @@ namespace TeamTextRPG.Managers
                 Player.Gold += rewardGold;
 
                 ui.AddLog($"{dungeon.Name} 클리어");
-                if (damage > 0) ui.AddLog($"체력  - {damage}");
+                if (damage > 0) ui.AddLog($"체력: {Player.CurrentHp} (-{damage})");
                 ui.AddLog($"골드  + {rewardGold} G");
 
                 Player.Exp += stage;
