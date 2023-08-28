@@ -193,11 +193,11 @@ namespace TeamTextRPG.Managers
                             case Scenes.GAME_INTRO:
                                 switch(ret)
                                 {
-                                    case 1:
+                                    case 1: // 회원가입
                                         ui.AddLog("ID를 입력하세요.(영어로)");
                                         dm.CreateId();
                                         return;
-                                    case 2:
+                                    case 2: // 로그인
                                         ui.AddLog("ID를 입력하세요.(영어로)");
                                         dm.LoginId();
                                         return;
