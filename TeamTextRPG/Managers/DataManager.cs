@@ -458,57 +458,85 @@ namespace TeamTextRPG.Managers
 
             ui.ClearLog();
 
-            int damage = rnd.Next(20, 36) - (Player.Def + GetDefBonus() - dungeon.Condition);
-            if (damage < 0) damage = 0;
+            // TODO : 배틀 진행하기!
 
-            if (Player.Def + GetDefBonus() < dungeon.Condition && rnd.Next(0, 100) < 40)
+            // 배틀 진행 끝났다면 결과 정산합니다.
+
+            int rewardGold = 0;
+            int rewardExp = 0;
+            // 죽은 몬스터에 따라 골드와 아이템, 경험치를 보상에 추가합니다.
+            List<Item> rewardItems = new List<Item>();
+            foreach (Monster m in dungeon.Monsters)
             {
-                clear = false;
-                damage /= 2;
-                Player.ChangeHP(-damage);
-
-                ui.AddLog($"{dungeon.Name} 도전 실패");
-                if(damage > 0) ui.AddLog($"체력  - {damage}");
-                ui.AddLog("");
+                if (!m.isDead())
+                    continue;
+                rewardGold += m.rewardItemIds[0];
+                m.rewardItemIds.RemoveAt(0);
+                rewardExp += m.rewardExp;
+                foreach (int id in m.rewardItemIds)
+                {
+                    rewardItems.Add(MakeNewItem(id));
+                }
             }
-            else
+
+            // 클리어를 하지 못했다면 잡은 몬스터의 보상을 주고 끝냅니다.
+            if (!clear)
             {
-                clear = true;
-                if (stage == MaxStage) MaxStage++;
-                Player.ChangeHP(-damage);
-
-                int rewardGold = (int)(dungeon.Reward[0]
-                    * (100 + rnd.Next(Player.Atk + GetAtkBonus(), 2 * Player.Atk + GetAtkBonus() + 1)) / 100);
                 Player.Gold += rewardGold;
+                Player.Exp += rewardExp;
+                Inventory.AddRange(rewardItems);
+                // UI 로그에 출력합니다.
+                PrintDungeonExploreResult(dungeon, clear, rewardGold, rewardExp, rewardItems);
+                return;
+            }
+                
+            // 던전 클리어 골드, 경험치, 아이템 보상을 추가합니다.
+            if (stage == MaxStage) MaxStage++;
+            rewardGold = (int)(dungeon.Reward[0]
+                * (rnd.NextDouble() * 0.4 + 0.8));
+            rewardExp += stage * stage * 10;
+            if (dungeon.Reward.Count > 1 && rnd.Next(0, 100) < 40)
+            {
+                int rewardItemId = dungeon.Reward[rnd.Next(1, dungeon.Reward.Count)];
 
+                Inventory.Add(MakeNewItem(rewardItemId));
+                // 던전 보상으로 얻은 아이템을 상점에서도 나오게 합니다.
+                if (!DiscoveredItem.Exists(x => x == rewardItemId)) DiscoveredItem.Add(rewardItemId);
+            }
+            Player.Gold += rewardGold;
+            Player.Exp += rewardExp;
+
+            // UI 로그에 출력합니다.
+            PrintDungeonExploreResult(dungeon, clear, rewardGold, rewardExp, rewardItems);
+        }
+        // 던전, 클리어여부, 보상 골드, 경험치, 아이템을 받아 UI 로그에 출력합니다.
+        public void PrintDungeonExploreResult(Dungeon dungeon, bool clear, int rewardGold, int rewardExp, List<Item>rewardItems)
+        {
+            UIManager ui = GameManager.Instance.UIManager;
+            if (clear)
                 ui.AddLog($"{dungeon.Name} 클리어");
-                if (damage > 0) ui.AddLog($"체력: {Player.CurrentHp} (-{damage})");
-                ui.AddLog($"골드  + {rewardGold} G");
+            else
+                ui.AddLog($"{dungeon.Name} 탐험 실패");
+            ui.AddLog($"골드  + {rewardGold} G");
+            ui.AddLog($"경험치  + {rewardExp}");
 
-                Player.Exp += stage;
-                if (Player.Level <= Player.Exp)
-                {
-                    Player.Exp -= Player.Level++;
+            int levelThresholdExp = Player.Level * Player.Level * 100;
+            if (Player.Exp >= levelThresholdExp)
+            {
+                Player.Exp -= levelThresholdExp;
+                Player.Level++;
+                Player.Atk++;
+                Player.Def++;
 
-                    ui.AddLog("");
-                    ui.AddLog("레벨이 올랐습니다.");
-                    if (Player.Level % 2 == 1) ui.AddLog($"공격력 {Player.Atk} -> {++Player.Atk}");
-                    ui.AddLog($"방어력 {Player.Def} -> {++Player.Def}");
-                }
-
-                if (dungeon.Reward.Count > 1 && rnd.Next(0, 100) < 100 + Player.Atk + GetAtkBonus())
-                {
-                    int rewardItemId = dungeon.Reward[rnd.Next(1, dungeon.Reward.Count)];
-
-                    Inventory.Add(MakeNewItem(rewardItemId));
-                    if (!DiscoveredItem.Exists(x => x == rewardItemId)) DiscoveredItem.Add(rewardItemId);
-
-                    ui.AddLog("");
-                    ui.AddLog($"전리품으로 {_items[rewardItemId].Name}(을)를 얻었습니다.");
-                }
+                ui.AddLog("레벨이 올랐습니다.");
+            }
+            ui.AddLog("");
+            ui.AddLog("획득한 전리품 목록입니다.");
+            foreach (Item item in rewardItems)
+            {
+                ui.AddLog(item.Name);
             }
         }
-
         public void RestPlayer(int num)
         {
             Shelter st = Shelters[num - 1];
