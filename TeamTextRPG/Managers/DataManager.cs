@@ -321,7 +321,7 @@ namespace TeamTextRPG.Managers
             #endregion
 
             #region 몬스터 세팅
-            _monsters[0] = new Monster("박쥐", 0, 1, 1, 1, 10, 100);
+            _monsters[0] = new Monster("박쥐", 0, 1, 1, 1, 10, 100, 5);
             #endregion
 
             #region 던전 세팅
@@ -459,6 +459,7 @@ namespace TeamTextRPG.Managers
             UIManager ui = GameManager.Instance.UIManager;
             int stage = num + StagePage;
             Dungeon dungeon = Dungeons[stage - 1];
+            Random rnd = new Random();
             bool clear = false;
 
 
@@ -466,7 +467,7 @@ namespace TeamTextRPG.Managers
             ui.PrintHp();
             ui.PrintMp();
 
-            // TODO : 배틀 진행하기!
+            EntryBattle(dungeon);
 
             // 배틀 진행 끝났다면 결과 정산합니다.
 
@@ -476,13 +477,14 @@ namespace TeamTextRPG.Managers
             List<Item> rewardItems = new List<Item>();
             foreach (Monster m in dungeon.Monsters)
             {
-                if (!m.isDead())
+                if (!m.IsDead())
                     continue;
-                rewardGold += m.rewardItemIds[0];
-                m.rewardItemIds.RemoveAt(0);
-                rewardExp += m.rewardExp;
-                foreach (int id in m.rewardItemIds)
+                rewardGold += m.Reward[0];
+                m.Reward.RemoveAt(0);
+                rewardExp += m.RewardExp;
+                for (int i = 1; i < m.Reward.Count; i++)
                 {
+                    int id = m.Reward[i];
                     rewardItems.Add(MakeNewItem(id));
                 }
             }
@@ -545,6 +547,7 @@ namespace TeamTextRPG.Managers
                 ui.AddLog(item.Name);
             }
         }
+        
         public void RestPlayer(int num)
         {
             Shelter st = Shelters[num - 1];

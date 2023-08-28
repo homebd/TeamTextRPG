@@ -224,7 +224,7 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(left, top);
             Console.Write("┌".PadRight(right - left - 1, '─'));
-            Console.Write("┐ ");
+            Console.Write("┐");
 
             for (int i = top + 1; i < bottom; i++)
             {
@@ -232,7 +232,7 @@ namespace TeamTextRPG.Managers
                 Console.Write("│".PadRight(right - left - 1, ' '));
 
                 Console.SetCursorPosition(right - 1, i);
-                Console.Write("│ ");
+                Console.Write("│");
             }
             
 
@@ -679,7 +679,7 @@ namespace TeamTextRPG.Managers
                     break;
             }
 
-            Console.ForegroundColor = ConsoleColor.Green;
+            //Console.ForegroundColor = ConsoleColor.Green;
 
             foreach (int left in leftPosition)
             {
