@@ -377,7 +377,6 @@ namespace TeamTextRPG.Managers
 
             // 배틀 진입 후 결과 반환
             bool clear = GameManager.Instance.BattleManager.EntryBattle(dungeon);
-            // ++++ 결과 정산도 battleManager에서 처리해도 될 것 같습니다. ++++ //
 
             // 배틀 진행 끝났다면 결과 정산합니다.
 
