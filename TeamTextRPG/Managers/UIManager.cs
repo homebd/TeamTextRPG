@@ -53,7 +53,7 @@ namespace TeamTextRPG.Managers
 
             var currentColor = Console.ForegroundColor;
             Console.ForegroundColor = color;
-            Console.WriteLine($"[{title}]");
+            Console.WriteLine($"{title}");
             Console.ForegroundColor = currentColor;
         }
 
@@ -718,7 +718,7 @@ namespace TeamTextRPG.Managers
                     paddingSize++;
                 Console.Write("".PadLeft(paddingSize,' ') + monster.Name + "".PadRight(paddingSize - 1, ' '));
 
-                int fillHpBar = (int)(7 * (float)monster.CurrentHp / monster.MaxHp + 0.5f);
+                int fillHpBar = (int)(7 * (float)monster.CurrentHp / monster.MaxHp + 0.9f);
                 if (fillHpBar >= 7) fillHpBar = 7;
 
                 Console.SetCursorPosition(leftPosition[i] + 2, top + 11);
