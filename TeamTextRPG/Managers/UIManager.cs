@@ -5,11 +5,12 @@
 using TeamTextRPG.Classes;
 using System.Text;
 using static TeamTextRPG.Managers.SceneManager;
+using System.Numerics;
 
 namespace TeamTextRPG.Managers
 {
     internal class UIManager
-    {   
+    {
         public GameManager GameManager;
         public Item.Parts? Category { get; private set; }
 
@@ -110,7 +111,7 @@ namespace TeamTextRPG.Managers
             var currentCursor = Console.GetCursorPosition();
             var player = GameManager.Instance.DataManager.Player;
 
-            int fillExpBar =  (int)(8 * (float)player.Exp / player.Level + 0.5f);
+            int fillExpBar = (int)(8 * (float)player.Exp / (player.Level * player.Level * 100));
             if (fillExpBar >= 8) fillExpBar = 8;
 
             Console.SetCursorPosition(0, _goldTopPostion);
@@ -234,7 +235,7 @@ namespace TeamTextRPG.Managers
                 Console.SetCursorPosition(right - 1, i);
                 Console.Write("│");
             }
-            
+
 
             Console.SetCursorPosition(left, bottom);
             Console.Write("└".PadRight(right - left - 1, '─'));
@@ -259,7 +260,7 @@ namespace TeamTextRPG.Managers
                     Console.Write(option[i].ToString());
 
                     tempLeft += right / 3;
-                    if(tempLeft >= right - 5)
+                    if (tempLeft >= right - 5)
                     {
                         tempLeft = left;
                         tempTop += 2;
@@ -290,7 +291,7 @@ namespace TeamTextRPG.Managers
             var currentCursor = Console.GetCursorPosition();
 
             int left = 92, top = 0, right = 120, bottom = 30;
-            _logLeft = left + 2;  _logTop = top + 2;
+            _logLeft = left + 2; _logTop = top + 2;
 
             MakeUIContainer(left, top, right, bottom);
 
@@ -305,7 +306,8 @@ namespace TeamTextRPG.Managers
 
         public void AddLog(string log)
         {
-            if (_logTop > 20) {
+            if (_logTop > 20)
+            {
                 Logs.RemoveRange(0, 5);
                 MakeLogBox();
             }
@@ -324,13 +326,13 @@ namespace TeamTextRPG.Managers
             int len = Encoding.Default.GetBytes(log).Length;
             if (len > 33)
             {
-                for(int i = 1; i <= 25; i++)
+                for (int i = 1; i <= 25; i++)
                 {
                     string str = log.Substring(log.Length - i, 1);
 
                     len -= Encoding.Default.GetBytes(str).Length;
 
-                    if(len <= 33)
+                    if (len <= 33)
                     {
                         Console.Write(log.Substring(0, log.Length - i));
 
@@ -349,7 +351,7 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
-        
+
         public void ClearLog()
         {
             var currentCursor = Console.GetCursorPosition();
@@ -425,11 +427,11 @@ namespace TeamTextRPG.Managers
         public void PrintStat()
         {
             var currentCursor = Console.GetCursorPosition();
-            var dm = GameManager.Instance.DataManager;
+            var player = GameManager.Instance.DataManager.Player;
 
             // 직업 표시
             string jop = "";
-            switch(dm.Player.Job)
+            switch (player.Job)
             {
                 case JOB.WARRIOR:
                     jop = "전사";
@@ -447,19 +449,19 @@ namespace TeamTextRPG.Managers
             Console.Write("< 현재 능력치 >");
 
             Console.SetCursorPosition(31, 9);
-            Console.Write($"이  름  {dm.Player.Name}");
+            Console.Write($"이  름  {player.Name}");
 
             Console.SetCursorPosition(31, 11);
             Console.Write($"직  업  {jop}");
 
             Console.SetCursorPosition(31, 13);
-            Console.Write($"체  력  {dm.Player.CurrentHp} / {dm.Player.MaxHp}(+{dm.GetHpBonus()})");
+            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp}(+{player.GetHpBonus()})");
 
             Console.SetCursorPosition(31, 15);
-            Console.Write($"공격력  {dm.Player.Atk}(+{dm.GetAtkBonus()})");
+            Console.Write($"공격력  {player.Atk}(+{player.GetAtkBonus()})");
 
             Console.SetCursorPosition(31, 17);
-            Console.Write($"방어력  {dm.Player.Def}(+{dm.GetDefBonus()})");
+            Console.Write($"방어력  {player.Def}(+{player.GetDefBonus()})");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
@@ -546,12 +548,12 @@ namespace TeamTextRPG.Managers
         public void PrintDef()
         {
             var currentCursor = Console.GetCursorPosition();
-            var dm = GameManager.Instance.DataManager;
+            var player = GameManager.Instance.DataManager.Player;
 
             Console.SetCursorPosition(_goldLeftPostion, _goldTopPostion);
             Console.Write("┌─────────────────────────┐");
             Console.SetCursorPosition(_goldLeftPostion, _goldTopPostion + 1);
-            Console.Write($"│ 방어력│ {(dm.Player.Def + dm.GetDefBonus()).ToString().PadLeft(16, ' ')}│");
+            Console.Write($"│ 방어력│ {(player.Def + player.GetDefBonus()).ToString().PadLeft(16, ' ')}│");
             Console.SetCursorPosition(_goldLeftPostion, _goldTopPostion + 2);
             Console.Write("┴─────────────────────────┤");
 
@@ -595,10 +597,10 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(left + 9, 9);
             Console.Write($"{dm.Shelters[num].Name}");
 
-            Console.SetCursorPosition(left+3, 14);
+            Console.SetCursorPosition(left + 3, 14);
             Console.Write($"회복량        {dm.Shelters[num].Heal} H");
 
-            Console.SetCursorPosition(left+3, 17);
+            Console.SetCursorPosition(left + 3, 17);
             Console.Write($"비  용        {dm.Shelters[num].Cost} G");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
@@ -610,7 +612,7 @@ namespace TeamTextRPG.Managers
             var player = GameManager.Instance.DataManager.Player;
 
             int rate = 20;
-            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + GameManager.Instance.DataManager.GetHpBonus() + 0.5f);
+            int fillExpBar = (int)(rate * (float)player.CurrentHp / (player.MaxHp + player.GetHpBonus()) + 0.5f);
             if (fillExpBar >= rate) fillExpBar = rate;
 
             Console.SetCursorPosition(0, _goldTopPostion);
@@ -635,7 +637,7 @@ namespace TeamTextRPG.Managers
             var player = GameManager.Instance.DataManager.Player;
 
             int rate = 15;
-            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + GameManager.Instance.DataManager.GetHpBonus() + 0.5f);
+            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + player.GetHpBonus() + 0.5f);
             if (fillExpBar >= rate) fillExpBar = rate;
 
             Console.SetCursorPosition(50, _goldTopPostion);
@@ -665,12 +667,14 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
 
-        public void ShowMonsterCard(int size)
+        public void ShowMonsterCard(List<Monster> monsters)
         {
             var currentCursor = Console.GetCursorPosition();
 
+            int size = monsters.Count;
             int top = 6, bottom = 19;
             int width = 22;
+
             List<int> leftPosition = new List<int>();
 
             switch (size)
@@ -695,19 +699,38 @@ namespace TeamTextRPG.Managers
                     break;
             }
 
-            //Console.ForegroundColor = ConsoleColor.Green;
-
             foreach (int left in leftPosition)
             {
+                // 몬스터 카드 틀 생성
                 MakeUIContainer(left, top, left + width - 1, bottom);
             }
 
-            //Console.ForegroundColor = ConsoleColor.White;
+            for (int i = 0; i < size; i++)
+            {
+                // 몬스터 Info 출력
+                Monster monster = monsters[i];
+
+                Console.SetCursorPosition(leftPosition[i] + 9, top + 1);
+                Console.Write($"Lv{monster.Level}");
+                Console.SetCursorPosition(leftPosition[i] + 1, top + 2);
+                int paddingSize = (19 - monster.Name.Length * 2) / 2;
+                if (monster.Name.IndexOf(' ') > 0)
+                    paddingSize++;
+                Console.Write("".PadLeft(paddingSize,' ') + monster.Name + "".PadRight(paddingSize - 1, ' '));
+
+                int fillHpBar = (int)(7 * (float)monster.CurrentHp / monster.MaxHp + 0.5f);
+                if (fillHpBar >= 7) fillHpBar = 7;
+
+                Console.SetCursorPosition(leftPosition[i] + 2, top + 11);
+                Console.Write("HP ");
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.Write("".PadRight(fillHpBar, '　'));
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.Write("".PadRight(7 - fillHpBar, '　'));
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
-
-            Console.ReadKey();
         }
-
     }
 }
