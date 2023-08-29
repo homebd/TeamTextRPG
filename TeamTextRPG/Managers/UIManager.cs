@@ -431,13 +431,13 @@ namespace TeamTextRPG.Managers
             string jop = "";
             switch(dm.Player.Job)
             {
-                case JOP.WARRIOR:
+                case JOB.WARRIOR:
                     jop = "전사";
                     break;
-                case JOP.WIZARD:
+                case JOB.WIZARD:
                     jop = "마법사";
                     break;
-                case JOP.ARCHER:
+                case JOB.ARCHER:
                     jop = "궁수";
                     break;
 

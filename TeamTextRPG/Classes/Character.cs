@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace TeamTextRPG.Classes
 {
-    public enum JOP
+    public enum JOB
     {
         WARRIOR,
         WIZARD,
@@ -15,7 +15,7 @@ namespace TeamTextRPG.Classes
     internal class Character
     {
         public string Name { get; }
-        public JOP Job { get; }
+        public JOB Job { get; }
         public int Level { get; set; }
         public int Exp { get; set; }
         public int Atk { get; set; }
@@ -25,7 +25,7 @@ namespace TeamTextRPG.Classes
         public int Gold { get; set; }
         public Item[]? Equipments { get; set; }
 
-        public Character(string name, JOP job, int level, int atk, int def, int maxHp, int gold)
+        public Character(string name, JOB job, int level, int atk, int def, int maxHp, int gold)
         {
             Name = name;
             Job = job;

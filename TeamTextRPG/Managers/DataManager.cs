@@ -130,7 +130,7 @@ namespace TeamTextRPG.Managers
 
             Player = new Character(
                 data["Name"].ToString(),
-                (JOP)data["Job"],
+                (JOB)data["Job"],
                 (int)data["Level"],
                 (int)data["Atk"],
                 (int)data["Def"],
@@ -626,7 +626,22 @@ namespace TeamTextRPG.Managers
         {
             UIManager ui = GameManager.Instance.UIManager;
 
-            while(true)
+            // 직업정보 읽기---------------
+            string jobPath = @"../../../Data";
+            jobPath = Path.Combine(jobPath, $"JobInfo.json");
+            string jsonContent;
+
+            using (FileStream fs = File.Open(jobPath, FileMode.Open))
+            {
+                using (StreamReader reader = new StreamReader(fs))
+                {
+                    jsonContent = reader.ReadToEnd();
+                }
+            }
+
+            dynamic data = JsonConvert.DeserializeObject(jsonContent);
+            // ---------------------------
+            while (true)
             {
                 ui.SetCursorPositionForOption();
                 _id = Console.ReadLine();
@@ -670,12 +685,12 @@ namespace TeamTextRPG.Managers
                         while (true)
                         {
                             ui.SetCursorPositionForOption();
-                            int jop;
-                            if(int.TryParse(Console.ReadLine(), out jop))
+                            int job;
+                            if(int.TryParse(Console.ReadLine(), out job))
                             {
-                                if (jop >= 1 && jop <= (int)JOP.ARCHER + 1)
+                                if (job >= 1 && job <= (int)JOB.ARCHER + 1)
                                 {
-                                    Player = new Character(name, (JOP)(jop - 1), 1, 10, 5, 100, 1500);
+                                    Player = new Character(name, (JOB)(job - 1), 1, (int)data["Atk"][job - 1], (int)data["Def"][job - 1], (int)data["MaxHp"][job - 1], 1500);
                                     GetBasicItem();
                                     SaveData();
                                     GameManager.Instance.SceneManager.Scene = Scenes.TOWN;
