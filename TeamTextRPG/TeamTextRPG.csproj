@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Save\" />
+    <Folder Include="Data\Save\" />
   </ItemGroup>
 
 </Project>

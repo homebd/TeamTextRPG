@@ -1,17 +1,9 @@
-﻿using System.Threading;
-using TeamTextRPG.Classes;
+﻿using TeamTextRPG.Classes;
 
 namespace TeamTextRPG.Managers
 {
     internal class BattleManager
     {
-        public enum AttackType
-        {
-            NORMAL,
-            SKILL,
-            ITEM
-        }
-
         public List<Monster> Monsters = new List<Monster>();
         int _size;
         int _left;
@@ -167,7 +159,7 @@ namespace TeamTextRPG.Managers
         public void NormalHitMonster(Monster monster)
         {
             Random rnd = new Random();
-            Character player = GameManager.Instance.DataManager.Player;
+            Player player = GameManager.Instance.DataManager.Player;
             bool critical = false;
 
             int damage;
@@ -203,12 +195,12 @@ namespace TeamTextRPG.Managers
         public void HitPlayer(Monster monster)
         {
             Random rnd = new Random();
-            Character player = GameManager.Instance.DataManager.Player;
+            Player player = GameManager.Instance.DataManager.Player;
             bool critical = false;
 
             int damage;
             // 회피 계산
-            if(rnd.NextSingle() <= player.DodgeRate)
+            if(rnd.NextSingle() <= player.DodgeChance)
             {
                 damage = 0;
             }

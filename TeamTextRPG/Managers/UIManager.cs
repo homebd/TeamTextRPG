@@ -3,16 +3,16 @@
 /// </summary>
 
 using TeamTextRPG.Classes;
+using TeamTextRPG.Common;
 using System.Text;
 using static TeamTextRPG.Managers.SceneManager;
-using System.Numerics;
 
 namespace TeamTextRPG.Managers
 {
     internal class UIManager
     {
         public GameManager GameManager;
-        public Item.Parts? Category { get; private set; }
+        public Parts? Category { get; private set; }
 
         private int _itemsTopPostion = 7;
 
@@ -70,19 +70,19 @@ namespace TeamTextRPG.Managers
                 case null:
                     Console.Write("┘       └─────────────────────────────────────────────");
                     break;
-                case Item.Parts.WEAPON:
+                case Parts.WEAPON:
                     Console.Write("────────┘       └─────────────────────────────────────");
                     break;
-                case Item.Parts.HELMET:
+                case Parts.HELMET:
                     Console.Write("────────────────┘       └─────────────────────────────");
                     break;
-                case Item.Parts.CHESTPLATE:
+                case Parts.CHESTPLATE:
                     Console.Write("────────────────────────┘       └─────────────────────");
                     break;
-                case Item.Parts.LEGGINGS:
+                case Parts.LEGGINGS:
                     Console.Write("────────────────────────────────┘       └─────────────");
                     break;
-                case Item.Parts.BOOTS:
+                case Parts.BOOTS:
                     Console.Write("────────────────────────────────────────┘       └─────");
                     break;
             }
@@ -147,17 +147,17 @@ namespace TeamTextRPG.Managers
             switch (GameManager.Instance.SceneManager.Scene)
             {
                 case Scenes.INVENTORY_MAIN:
-                    dm.SortItems(dm.Inventory);
+                    dm.SortItems(dm.Player.Inventory);
                     showPrice = false;
                     printNum = false;
                     break;
                 case Scenes.INVENTORY_EQUIP:
-                    dm.SortItems(dm.Inventory);
+                    dm.SortItems(dm.Player.Inventory);
                     showPrice = false;
                     printNum = true;
                     break;
                 case Scenes.INVENTORY_SORT:
-                    dm.SortItems(dm.Inventory);
+                    dm.SortItems(dm.Player.Inventory);
                     showPrice = false;
                     printNum = false;
                     break;
@@ -172,7 +172,7 @@ namespace TeamTextRPG.Managers
                     printNum = true;
                     break;
                 case Scenes.SHOP_SELL:
-                    dm.SortItems(dm.Inventory);
+                    dm.SortItems(dm.Player.Inventory);
                     showPrice = true;
                     printNum = true;
                     sale = 0.85f;
@@ -198,8 +198,8 @@ namespace TeamTextRPG.Managers
             if (input == "[")
             {
                 if (Category == null)
-                    Category = (Item.Parts)(Enum.GetValues(typeof(Item.Parts)).Length - 1);
-                else if (Category == (Item.Parts)0)
+                    Category = (Parts)(Enum.GetValues(typeof(Parts)).Length - 1);
+                else if (Category == (Parts)0)
                     Category = null;
                 else Category--;
 
@@ -208,8 +208,8 @@ namespace TeamTextRPG.Managers
             else if (input == "]")
             {
                 if (Category == null)
-                    Category = (Item.Parts)0;
-                else if (Category == (Item.Parts)(Enum.GetValues(typeof(Item.Parts)).Length - 1))
+                    Category = (Parts)0;
+                else if (Category == (Parts)(Enum.GetValues(typeof(Parts)).Length - 1))
                     Category = null;
                 else Category++;
 
@@ -395,28 +395,28 @@ namespace TeamTextRPG.Managers
             var equipments = GameManager.Instance.DataManager.Player.Equipments;
             string name;
 
-            if (equipments[(int)Item.Parts.WEAPON] == null) name = "------- 없음 -------";
-            else name = equipments[(int)Item.Parts.WEAPON].Name;
+            if (equipments[(int)Parts.WEAPON] == null) name = "------- 없음 -------";
+            else name = equipments[(int)Parts.WEAPON].Name;
             Console.SetCursorPosition(2, 9);
             Console.Write($"무기  {name}");
 
-            if (equipments[(int)Item.Parts.HELMET] == null) name = "------- 없음 -------";
-            else name = equipments[(int)Item.Parts.HELMET].Name;
+            if (equipments[(int)Parts.HELMET] == null) name = "------- 없음 -------";
+            else name = equipments[(int)Parts.HELMET].Name;
             Console.SetCursorPosition(2, 11);
             Console.Write($"투구  {name}");
 
-            if (equipments[(int)Item.Parts.CHESTPLATE] == null) name = "------- 없음 -------";
-            else name = equipments[(int)Item.Parts.CHESTPLATE].Name;
+            if (equipments[(int)Parts.CHESTPLATE] == null) name = "------- 없음 -------";
+            else name = equipments[(int)Parts.CHESTPLATE].Name;
             Console.SetCursorPosition(2, 13);
             Console.Write($"갑옷  {name}");
 
-            if (equipments[(int)Item.Parts.LEGGINGS] == null) name = "------- 없음 -------";
-            else name = equipments[(int)Item.Parts.LEGGINGS].Name;
+            if (equipments[(int)Parts.LEGGINGS] == null) name = "------- 없음 -------";
+            else name = equipments[(int)Parts.LEGGINGS].Name;
             Console.SetCursorPosition(2, 15);
             Console.Write($"바지  {name}");
 
-            if (equipments[(int)Item.Parts.BOOTS] == null) name = "------- 없음 -------";
-            else name = equipments[(int)Item.Parts.BOOTS].Name;
+            if (equipments[(int)Parts.BOOTS] == null) name = "------- 없음 -------";
+            else name = equipments[(int)Parts.BOOTS].Name;
             Console.SetCursorPosition(2, 17);
             Console.Write($"신발  {name}");
 
@@ -433,13 +433,13 @@ namespace TeamTextRPG.Managers
             string jop = "";
             switch (player.Job)
             {
-                case JOP.WARRIOR:
+                case JOB.WARRIOR:
                     jop = "전사";
                     break;
-                case JOP.WIZARD:
+                case JOB.WIZARD:
                     jop = "마법사";
                     break;
-                case JOP.ARCHER:
+                case JOB.ARCHER:
                     jop = "궁수";
                     break;
 
@@ -532,7 +532,7 @@ namespace TeamTextRPG.Managers
 
             DataManager dm = GameManager.Instance.DataManager;
 
-            dm.SortItems(dm.Inventory);
+            dm.SortItems(dm.Player.Inventory);
 
             for (int i = 0; i < dm.SortedItems.Count && i < 12; i++)
             {

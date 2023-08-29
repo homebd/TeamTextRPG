@@ -1,18 +1,13 @@
-﻿namespace TeamTextRPG.Classes
-{
-    internal class Monster
-    {
-        public string Name { get; }
-        public int Id { get; }
-        public int Level { get; set; }
-        public int Atk { get; set; }
-        public int Def { get; set; }
-        public int MaxHp { get; }
-        public float CurrentHp { get; private set; }
-        public List<int> Reward { get; } // Reward[0]은 골드, Reward[1]부터는 아이템 id
-        public int RewardExp { get; }
+﻿using TeamTextRPG.Managers;
 
-        public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp, int rewardItemId = -1)
+namespace TeamTextRPG.Classes
+{
+    internal class Monster : Character
+    {
+        public int Id { get; }
+
+        public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp, int rewardItemId = -1,
+             float cc = 0.15f, float cd = 1.6f, float dc = 0.05f)
         {
             Name = name;
             Id = id;
@@ -21,13 +16,17 @@
             Def = def;
             MaxHp = maxHp;
             CurrentHp = MaxHp;
-            Reward = new List<int>();
-            Reward.Add(gold);
-            RewardExp = exp;
+            Gold = gold;
+            Exp = exp;
             if (rewardItemId > -1)
             {
-                Reward.Add(rewardItemId);
+                Inventory.Add(GameManager.Instance.DataManager.MakeNewItem(rewardItemId));
             }
+            CriticalChance = cc;
+            CriticalDamage = cd;
+            DodgeChance = dc;
+
+            Inventory = new List<Item>();
         }
 
         public void ChangeHP(int hp)
