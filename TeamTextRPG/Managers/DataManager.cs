@@ -87,7 +87,6 @@ namespace TeamTextRPG.Managers
         public void Wear(Item item)
         {
             Player.Equipments[(int)item.Part] = item;
-            item.IsEquipped = true;
 
             if (item.Part == Parts.HELMET || item.Part == Parts.BOOTS)
             {
@@ -107,7 +106,6 @@ namespace TeamTextRPG.Managers
                 
                 Player.ChangeHP(-hp);
             }
-            Player.Equipments[(int)part].IsEquipped = false;
             Player.Equipments[(int)part] = null;
 
         }
@@ -287,11 +285,11 @@ namespace TeamTextRPG.Managers
             Dungeons[0].AddMonster(3);
             Dungeons[0].AddMonster(4);
             Dungeons[0].AddMonster(6);
-            Dungeons[4].AddReward(0);
-            Dungeons[4].AddReward(10);
-            Dungeons[4].AddReward(20);
-            Dungeons[4].AddReward(30);
-            Dungeons[4].AddReward(40);
+            Dungeons[0].AddReward(0);
+            Dungeons[0].AddReward(10);
+            Dungeons[0].AddReward(20);
+            Dungeons[0].AddReward(30);
+            Dungeons[0].AddReward(40);
 
             Dungeons.Add(new Dungeon(Player, "옆 마을", 5, 600));
             Dungeons[1].AddMonster(1);
@@ -299,11 +297,11 @@ namespace TeamTextRPG.Managers
             Dungeons[1].AddMonster(6);
             Dungeons[1].AddMonster(7);
             Dungeons[1].AddMonster(8);
-            Dungeons[4].AddReward(1);
-            Dungeons[4].AddReward(11);
-            Dungeons[4].AddReward(21);
-            Dungeons[4].AddReward(31);
-            Dungeons[4].AddReward(41);
+            Dungeons[1].AddReward(1);
+            Dungeons[1].AddReward(11);
+            Dungeons[1].AddReward(21);
+            Dungeons[1].AddReward(31);
+            Dungeons[1].AddReward(41);
 
             Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 7, 1000));
             Dungeons[2].AddMonster(5);
@@ -311,11 +309,11 @@ namespace TeamTextRPG.Managers
             Dungeons[2].AddMonster(10);
             Dungeons[2].AddMonster(11);
             Dungeons[2].AddMonster(12);
-            Dungeons[4].AddReward(2);
-            Dungeons[4].AddReward(12);
-            Dungeons[4].AddReward(22);
-            Dungeons[4].AddReward(32);
-            Dungeons[4].AddReward(42);
+            Dungeons[2].AddReward(2);
+            Dungeons[2].AddReward(12);
+            Dungeons[2].AddReward(22);
+            Dungeons[2].AddReward(32);
+            Dungeons[2].AddReward(42);
 
             Dungeons.Add(new Dungeon(Player, "대형 거미줄", 10, 1500));
             
@@ -323,67 +321,67 @@ namespace TeamTextRPG.Managers
             Dungeons[3].AddMonster(14);
             Dungeons[3].AddMonster(15);
             Dungeons[3].AddMonster(16);
-            Dungeons[4].AddReward(3);
-            Dungeons[4].AddReward(13);
-            Dungeons[4].AddReward(23);
-            Dungeons[4].AddReward(33);
-            Dungeons[4].AddReward(43);
+            Dungeons[3].AddReward(3);
+            Dungeons[3].AddReward(13);
+            Dungeons[3].AddReward(23);
+            Dungeons[3].AddReward(33);
+            Dungeons[3].AddReward(43);
 
             Dungeons.Add(new Dungeon(Player, "초원 지대", 14, 2500));
-            Dungeons[3].AddMonster(17);
-            Dungeons[3].AddMonster(18);
-            Dungeons[3].AddMonster(19);
-            Dungeons[3].AddMonster(20);
+            Dungeons[4].AddMonster(17);
+            Dungeons[4].AddMonster(18);
+            Dungeons[4].AddMonster(19);
+            Dungeons[4].AddMonster(20);
             Dungeons[4].AddReward(4);
             Dungeons[4].AddReward(14);
             Dungeons[4].AddReward(24);
             Dungeons[4].AddReward(34);
             Dungeons[4].AddReward(44);
             Dungeons.Add(new Dungeon(Player, "곰의 절벽", 20, 4000));
-            Dungeons[3].AddMonster(21);
-            Dungeons[3].AddMonster(22);
-            Dungeons[3].AddMonster(23);
-            Dungeons[3].AddMonster(24);
-            Dungeons[4].AddReward(5);
-            Dungeons[4].AddReward(15);
-            Dungeons[4].AddReward(25);
-            Dungeons[4].AddReward(35);
-            Dungeons[4].AddReward(45);
+            Dungeons[5].AddMonster(21);
+            Dungeons[5].AddMonster(22);
+            Dungeons[5].AddMonster(23);
+            Dungeons[5].AddMonster(24);
+            Dungeons[5].AddReward(5);
+            Dungeons[5].AddReward(15);
+            Dungeons[5].AddReward(25);
+            Dungeons[5].AddReward(35);
+            Dungeons[5].AddReward(45);
             Dungeons.Add(new Dungeon(Player, "지룡의 둥지", 26, 6000));
-            Dungeons[3].AddMonster(25);
-            Dungeons[3].AddMonster(26);
-            Dungeons[3].AddMonster(27);
-            Dungeons[3].AddMonster(28);
+            Dungeons[6].AddMonster(25);
+            Dungeons[6].AddMonster(26);
+            Dungeons[6].AddMonster(27);
+            Dungeons[6].AddMonster(28);
             Dungeons[6].AddReward(6);
             Dungeons[6].AddReward(16);
             Dungeons[6].AddReward(26);
             Dungeons[6].AddReward(36);
             Dungeons[6].AddReward(46);
             Dungeons.Add(new Dungeon(Player, "심연의 해구", 35, 9000));
-            Dungeons[3].AddMonster(29);
-            Dungeons[3].AddMonster(30);
-            Dungeons[3].AddMonster(31);
-            Dungeons[3].AddMonster(32);
+            Dungeons[7].AddMonster(29);
+            Dungeons[7].AddMonster(30);
+            Dungeons[7].AddMonster(31);
+            Dungeons[7].AddMonster(32);
             Dungeons[7].AddReward(7);
             Dungeons[7].AddReward(17);
             Dungeons[7].AddReward(27);
             Dungeons[7].AddReward(37);
             Dungeons[7].AddReward(47);
             Dungeons.Add(new Dungeon(Player, "달의 안개", 45, 13000));
-            Dungeons[3].AddMonster(33);
-            Dungeons[3].AddMonster(34);
-            Dungeons[3].AddMonster(35);
-            Dungeons[3].AddMonster(36);
+            Dungeons[8].AddMonster(33);
+            Dungeons[8].AddMonster(34);
+            Dungeons[8].AddMonster(35);
+            Dungeons[8].AddMonster(36);
             Dungeons[8].AddReward(8);
             Dungeons[8].AddReward(18);
             Dungeons[8].AddReward(28);
             Dungeons[8].AddReward(38);
             Dungeons[8].AddReward(48);
             Dungeons.Add(new Dungeon(Player, "격전지", 60, 25000));
-            Dungeons[3].AddMonster(37);
-            Dungeons[3].AddMonster(38);
-            Dungeons[3].AddMonster(39);
-            Dungeons[3].AddMonster(40);
+            Dungeons[9].AddMonster(37);
+            Dungeons[9].AddMonster(38);
+            Dungeons[9].AddMonster(39);
+            Dungeons[9].AddMonster(40);
             Dungeons[9].AddReward(9);
             Dungeons[9].AddReward(19);
             Dungeons[9].AddReward(29);
@@ -426,7 +424,7 @@ namespace TeamTextRPG.Managers
                     Player.Inventory = Player.Inventory.OrderBy(item => item.Price).ToList();
                     break;
                 case 4:
-                    Player.Inventory = Player.Inventory.OrderByDescending(item => item.IsEquipped).ToList();
+                    Player.Inventory = Player.Inventory.OrderByDescending(item => GameManager.Instance.DataManager.Player.Equipments[(int)item.Part] == item).ToList();
                     break;
                 case 5:
                     Player.Inventory = Player.Inventory.OrderByDescending(item => item.Level).ToList();
@@ -750,7 +748,7 @@ namespace TeamTextRPG.Managers
                 }
                 else
                 {
-                    if (item.IsEquipped)
+                    if (Player.Equipments[(int)item.Part] == item)
                     {
                         Unwear(item.Part);
                     }
