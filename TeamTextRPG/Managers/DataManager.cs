@@ -6,10 +6,6 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using TeamTextRPG.Classes;
 using static TeamTextRPG.Managers.SceneManager;
-using System.Net.Http.Json;
-using System.Drawing;
-using System.Xml.Linq;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace TeamTextRPG.Managers
 {
@@ -44,8 +40,6 @@ namespace TeamTextRPG.Managers
             DiscoveredItem = new List<int>();
             MaxStage = 1;
             StagePage = 0;
-
-            
         }
 
 
@@ -109,8 +103,7 @@ namespace TeamTextRPG.Managers
             {
                 using (StreamWriter writer = new StreamWriter(fs))
                 {
-                    writer.Write(_monsters);
-                    //writer.Write(configData.ToString());
+                    writer.Write(configData.ToString());
                 }
             }
         }
@@ -367,10 +360,34 @@ namespace TeamTextRPG.Managers
             #region 던전 세팅
             Dungeons.Add(new Dungeon(Player, "마을 동굴", 5, 1000));
             Dungeons[0].AddMonster(0);
+            Dungeons[0].AddMonster(2);
+            Dungeons[0].AddMonster(3);
+            Dungeons[0].AddMonster(4);
+            Dungeons[0].AddMonster(6);
+
             Dungeons.Add(new Dungeon(Player, "옆 마을", 17, 2500));
+            Dungeons[1].AddMonster(1);
+            Dungeons[1].AddMonster(5);
+            Dungeons[1].AddMonster(6);
+            Dungeons[1].AddMonster(7);
+            Dungeons[1].AddMonster(8);
+
             Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 28, 6000));
+            Dungeons[2].AddMonster(5);
+            Dungeons[2].AddMonster(9);
+            Dungeons[2].AddMonster(10);
+            Dungeons[2].AddMonster(11);
+            Dungeons[2].AddMonster(12);
+
             Dungeons.Add(new Dungeon(Player, "대형 거미줄", 42, 11000));
+            Dungeons[3].AddMonster(8);
+            Dungeons[3].AddMonster(13);
+            Dungeons[3].AddMonster(14);
+            Dungeons[3].AddMonster(15);
+            Dungeons[3].AddMonster(16);
+            //------- 보상 -------//
             Dungeons[3].AddReward(4);
+
             Dungeons.Add(new Dungeon(Player, "초원 지대", 61, 24000));
             Dungeons[4].AddReward(14);
             Dungeons[4].AddReward(15);

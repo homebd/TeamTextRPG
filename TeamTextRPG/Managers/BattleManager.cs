@@ -172,7 +172,7 @@ namespace TeamTextRPG.Managers
 
             int damage;
             // 회피 계산
-            if(rnd.NextSingle() <= 0.15f)
+            if(rnd.NextSingle() <= 0.05f)
             {
                 damage = 0;
             }
