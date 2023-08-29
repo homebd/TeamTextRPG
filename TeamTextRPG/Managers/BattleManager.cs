@@ -75,6 +75,7 @@ namespace TeamTextRPG.Managers
                 else ui.AddLog("잘못된 입력입니다.");
             }
         }
+
         private void PrintPlayerUI()
         {
             var ui = GameManager.Instance.UIManager;
@@ -119,15 +120,24 @@ namespace TeamTextRPG.Managers
                             if (monster.IsDead())
                             {
                                 // 죽음 처리
-                                // ui에 해당 몬스터의 인덱스를 전달해야 함
+                                // ui에 해당 몬스터의 인덱스를 전달해야 함 -> 어차피 또 계산해야 함
                                 _left--;
                             }
 
-                            playerTurn = false;
+                            //playerTurn = false;
+                            break;
                         }
                     }
                 }
                 else ui.AddLog("잘못된 입력입니다.");
+            }
+
+            foreach(var monster in Monsters)
+            {
+                if(!monster.IsDead())
+                {
+                    HitPlayer(monster);
+                }
             }
         }
 
@@ -158,16 +168,72 @@ namespace TeamTextRPG.Managers
         {
             Random rnd = new Random();
             Character player = GameManager.Instance.DataManager.Player;
+            bool critical = false;
 
-            int damage = player.Atk + player.GetAtkBonus();
+            int damage;
+            // 회피 계산
+            if(rnd.NextSingle() <= 0.15f)
+            {
+                damage = 0;
+            }
+            else
+            {
+                damage = (int)(rnd.Next(90, 110) * 0.01f * (player.Atk + player.GetAtkBonus()));
 
-            if (rnd.NextSingle() * 100 <= player.CriticalChance)
-                damage = (int)(damage * player.CriticalDamage);
+                if (rnd.NextSingle() <= player.CriticalChance)
+                {
+                    damage = (int)(damage * player.CriticalDamage);
+                    critical = true;
+                }
 
-            damage -= monster.Def;
-            if (damage < 0) damage = 0;
+                damage -= monster.Def;
+            }
 
-            monster.ChangeHP(-damage);
+            if (damage > 0)
+            {
+                monster.ChangeHP(-damage);
+                GameManager.Instance.UIManager.AddLog($"{monster.Name}에게 {damage}의 {(critical ? "치명타" : "")} 공격!");
+            }
+            else // 회피 or 방어력이 너무 높은 경우
+            {
+                GameManager.Instance.UIManager.AddLog("공격이 빗나갔다!");
+            }
+        }
+
+        public void HitPlayer(Monster monster)
+        {
+            Random rnd = new Random();
+            Character player = GameManager.Instance.DataManager.Player;
+            bool critical = false;
+
+            int damage;
+            // 회피 계산
+            if(rnd.NextSingle() <= player.DodgeRate)
+            {
+                damage = 0;
+            }
+            else
+            {
+                damage = (int)(rnd.Next(90, 110) * 0.01f * monster.Atk);
+
+                if (rnd.NextSingle() <= 0.15f)
+                {
+                    damage = (int)(damage * 1.6f);
+                    critical = true;
+                }
+
+                damage -= player.Def;
+            }
+
+            if (damage > 0)
+            {
+                player.ChangeHP(-damage);
+                GameManager.Instance.UIManager.AddLog($"{monster.Name}의 {(critical ? "치명타" : "")} 공격! [데미지: {damage}]");
+            }
+            else
+            {
+                GameManager.Instance.UIManager.AddLog($"{monster.Name}의 공격은 빗나갔다!");
+            }
         }
     }
 }

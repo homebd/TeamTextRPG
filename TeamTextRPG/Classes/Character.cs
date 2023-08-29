@@ -25,9 +25,9 @@ namespace TeamTextRPG.Classes
         public int CurrentHp { get; private set; }
         public int Gold { get; set; }
         public Item[]? Equipments { get; set; }
-        public float CriticalChance { get; set; }
-        public float CriticalDamage { get; set; }
-        public float DodgeRate { get; set; }
+        public float CriticalChance { get; set; } //0~1
+        public float CriticalDamage { get; set; } //140% = 1.4f
+        public float DodgeRate { get; set; } // 0~1
 
         public Character(string name, JOP job, int level, int atk, int def, int maxHp, int gold)
         {
