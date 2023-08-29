@@ -112,7 +112,7 @@ namespace TeamTextRPG.Managers
             var currentCursor = Console.GetCursorPosition();
             var player = GameManager.Instance.DataManager.Player;
 
-            int fillExpBar = (int)(8 * (float)player.Exp / player.Level + 0.5f);
+            int fillExpBar = (int)(8 * (float)player.Exp / (player.Level * player.Level * 100));
             if (fillExpBar >= 8) fillExpBar = 8;
 
             Console.SetCursorPosition(0, _goldTopPostion);
@@ -711,9 +711,13 @@ namespace TeamTextRPG.Managers
                 // 몬스터 Info 출력
                 Monster monster = monsters[i];
 
-                Console.SetCursorPosition(leftPosition[i] + 2, top + 9);
-                Console.Write($"Lv. {monster.Level}");
-                Console.Write(monster.Name.ToString().PadLeft(10, ' '));
+                Console.SetCursorPosition(leftPosition[i] + 9, top + 1);
+                Console.Write($"Lv{monster.Level}");
+                Console.SetCursorPosition(leftPosition[i] + 1, top + 2);
+                int paddingSize = (19 - monster.Name.Length * 2) / 2;
+                if (monster.Name.IndexOf(' ') > 0)
+                    paddingSize++;
+                Console.Write("".PadLeft(paddingSize,' ') + monster.Name + "".PadRight(paddingSize - 1, ' '));
 
                 int fillHpBar = (int)(7 * (float)monster.CurrentHp / monster.MaxHp + 0.5f);
                 if (fillHpBar >= 7) fillHpBar = 7;
