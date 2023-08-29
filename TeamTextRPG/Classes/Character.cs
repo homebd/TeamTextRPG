@@ -22,7 +22,7 @@ namespace TeamTextRPG.Classes
         public int Atk { get; set; }
         public int Def { get; set; }
         public int MaxHp { get; }
-        public int CurrentHp { get; private set; }
+        public float CurrentHp { get; private set; }
         public int Gold { get; set; }
         public Item[]? Equipments { get; set; }
         public float CriticalChance { get; set; } //0~1

@@ -22,7 +22,7 @@ namespace TeamTextRPG.Managers
         public List<int> DiscoveredItem { get; set; }
 
 
-        private Item[] _items = new Item[50];
+        private List<Item> _items = new List<Item>();
         private List<Monster> _monsters = new List<Monster>();
         private string? _id; // 캐릭터 생성 시의 id
         public int MaxStage { get; set; }
@@ -215,7 +215,7 @@ namespace TeamTextRPG.Managers
             {
                 int hp;
                 if (Player.CurrentHp <= Player.Equipments[(int)part].Stat + Player.Equipments[(int)part].BonusStat)
-                    hp = Player.CurrentHp - 1;
+                    hp = (int)Player.CurrentHp - 1;
                 else
                     hp = Player.Equipments[(int)part].Stat + Player.Equipments[(int)part].BonusStat;
                 
@@ -250,64 +250,90 @@ namespace TeamTextRPG.Managers
         public void GameDataSetting()
         {
             #region 아이템 정보 세팅
-            _items[0] = new Item("나뭇가지", 0, Item.Parts.WEAPON, 0, 1, 300, "금방이라도 부러질 듯한 나뭇가지입니다.");
-            _items[1] = new Item("낡은 검", 1, Item.Parts.WEAPON, 0, 4, 1000, "너무 무뎌져 종이조차 자르지 못하는 검입니다.");
-            _items[2] = new Item("청동 도끼", 2, Item.Parts.WEAPON, 0, 9, 2200, "청동으로 만들어진 무거운 도끼입니다.");
-            _items[3] = new Item("은빛 창", 3, Item.Parts.WEAPON, 0, 16, 4400, "은을 매우 뾰족하게 깎아만든 창입니다.");
-            _items[4] = new Item("주궁", 4, Item.Parts.WEAPON, 0, 25, 8800, "여왕 거미 \'마더\'의 거미줄로 만든 활입니다.");
-            _items[5] = new Item("곰 장갑", 5, Item.Parts.WEAPON, 0, 36, 17600, "폭군 \'비틀즈\'의 발톱이 달린 장갑입니다.");
-            _items[6] = new Item("지룡의 단검", 6, Item.Parts.WEAPON, 0, 49, 35200, "지룡 \'메테오\'의 어금니를 벼려 만든 단검입니다.");
-            _items[7] = new Item("수룡장", 7, Item.Parts.WEAPON, 0, 64, 70400, "수룡 \'네시\'의 두개골로 만든 지팡이입니다.");
-            _items[8] = new Item("백월", 8, Item.Parts.WEAPON, 0, 81, 140800, "무명의 밤, 이 차크람이 세상을 비췄습니다.");
-            _items[9] = new Item("초월한 창", 9, Item.Parts.WEAPON, 0, 100, 281600, "이 창을 쥐면 용맹함이 샘솟는 것 같습니다.");
+            // 이름 id 파츠 레벨 스탯 가격 설명
+            // 무기 = 공격력, 헬멧과 부츠 = 체력, 갑옷과 바지 = 방어력
+            // 0~49 번은 던전 보상으로 주어질 예정.
+            _items.Add(new Item("목검", 0, Item.Parts.WEAPON, 0, 1, 800, "금방이라도 부러질 듯한 목검입니다."));
+            _items.Add(new Item("낡은 검", 1, Item.Parts.WEAPON, 0, 3, 3000, "너무 무뎌져 종이조차 자르지 못하는 검입니다."));
+            _items.Add(new Item("모험자의 도끼", 2, Item.Parts.WEAPON, 0, 7, 8000, "대륙 끝까지 도달했던 모험자의 도끼입니다."));
+            _items.Add(new Item("거미 독 창", 3, Item.Parts.WEAPON, 0, 11, 20000, "거미의 맹독이 발린 창입니다."));
+            _items.Add(new Item("사자발톱 검 ", 4, Item.Parts.WEAPON, 0, 16, 38000, "초왕 \'라이언\'의 발톱으로 만든 검입니다."));
+            _items.Add(new Item("곰 장갑", 5, Item.Parts.WEAPON, 0, 23, 55000, "폭군 \'비틀즈\'의 발톱이 달린 장갑입니다."));
+            _items.Add(new Item("지룡의 단검", 6, Item.Parts.WEAPON, 0, 31, 90000, "지룡 \'메테오\'의 어금니를 벼려 만든 단검입니다."));
+            _items.Add(new Item("수룡장", 7, Item.Parts.WEAPON, 0, 40, 150000, "수룡 \'네시\'의 두개골로 만든 지팡이입니다."));
+            _items.Add(new Item("백월", 8, Item.Parts.WEAPON, 0, 50, 240000, "무명의 밤, 이 차크람이 세상을 비췄습니다."));
+            _items.Add(new Item("초월한 창", 9, Item.Parts.WEAPON, 0, 63, 440000, "이 창을 쥐면 용맹함이 샘솟는 것 같습니다."));
+            
+            _items.Add(new Item("가벼운 천 모자", 10, Item.Parts.HELMET, 0, 5, 500, "머리에 꼭 맞는 모자입니다."));
+            _items.Add(new Item("수련자 두건", 11, Item.Parts.HELMET, 0, 20, 2000, "수련에 도움을 주는 두건입니다."));
+            _items.Add(new Item("모험자의 투구", 12, Item.Parts.HELMET, 0, 40, 5000, "대륙 끝까지 도달했던 모험자의 투구입니다."));
+            _items.Add(new Item("실크 모자", 13, Item.Parts.HELMET, 0, 80, 13000, "마력이 깃든 거미줄로 만든 모자입니다."));
+            _items.Add(new Item("사슴뿔 투구", 14, Item.Parts.HELMET, 0, 125, 22000, "성록 \'데이지\'의 뿔로 장식한 투구입니다."));
+            _items.Add(new Item("공작깃 투구", 15, Item.Parts.HELMET, 0, 180, 35000, "명조 \'무지개\'의 깃털로 장식한 투구입니다."));
+            _items.Add(new Item("지룡의 투구", 16, Item.Parts.HELMET, 0, 245, 55000, "지룡 \'메테오\'의 비늘로 덮은 투구입니다."));
+            _items.Add(new Item("수룡의 투구", 17, Item.Parts.HELMET, 0, 320, 90000, "수룡 \'네시\'의 지느러미로 덮은 투구입니다"));
+            _items.Add(new Item("월관", 18, Item.Parts.HELMET, 0, 405, 150000, "흑백청적 네 빛의 보석이 찬란하게 빛납니다."));
+            _items.Add(new Item("초월한 투구 ", 19, Item.Parts.HELMET, 0, 500, 270000, "이 투구를 쓰면 강인함 샘솟는 것 같습니다."));
+            
+            _items.Add(new Item("얇은 천 상의", 20, Item.Parts.CHESTPLATE, 0, 1, 500, "얇은 천으로 만들어진 상의입니다."));
+            _items.Add(new Item("수련자 상의", 21, Item.Parts.CHESTPLATE, 0, 2, 2000, "수련에 도움을 주는 옷입니다."));
+            _items.Add(new Item("모험자의 갑옷", 22, Item.Parts.CHESTPLATE, 0, 4, 5000, "대륙 끝까지 도달했던 모험자의 갑옷입니다."));
+            _items.Add(new Item("실크 로브", 23, Item.Parts.CHESTPLATE, 0, 6, 13000, "마력이 깃든 거미줄로 만든 로브입니다."));
+            _items.Add(new Item("악어 갑옷", 24, Item.Parts.CHESTPLATE, 0, 8, 22000, "늪의 군주 \'샤로\'의 가죽으로 만든 갑옷입니다."));
+            _items.Add(new Item("곰가죽 갑옷", 25, Item.Parts.CHESTPLATE, 0, 10, 35000, "폭군 \'비틀즈\'의 가죽을 받친 갑옷입니다."));
+            _items.Add(new Item("지룡의 갑주", 26, Item.Parts.CHESTPLATE, 0, 13, 55000, "지룡 \'메테오\'의 날갯가죽으로 만든 갑옷입니다."));
+            _items.Add(new Item("수룡 갑주", 27, Item.Parts.CHESTPLATE, 0, 16, 90000, "수룡 \'네시\'의 비늘로 덮은 갑옷입니다."));
+            _items.Add(new Item("적월", 28, Item.Parts.CHESTPLATE, 0, 19, 150000, "붉은 땅, 달만이 외로이 피어 몽우리졌습니다."));
+            _items.Add(new Item("빨간 망토", 29, Item.Parts.CHESTPLATE, 0, 23, 270000, "이 망토만 있다면 갑옷은 불필요합니다."));
+            
+            _items.Add(new Item("얇은 천 바지", 30, Item.Parts.LEGGINGS, 0, 1, 500, "군데군데 헤진 바지입니다."));
+            _items.Add(new Item("수련자 하의", 31, Item.Parts.LEGGINGS, 0, 2, 2000, "수련에 도움을 주는 바지입니다."));
+            _items.Add(new Item("모험자의 바지", 32, Item.Parts.LEGGINGS, 0, 3, 5000, "대륙 끝까지 도달했던 모험자의 바지입니다."));
+            _items.Add(new Item("실크 바지", 33, Item.Parts.LEGGINGS, 0, 5, 13000, "마력이 깃든 거미줄로 만든 바지입니다."));
+            _items.Add(new Item("뱀가죽 바지", 34, Item.Parts.LEGGINGS, 0, 6, 22000, "교사 \'스니키\'의 가죽으로 만든 레깅스입니다."));
+            _items.Add(new Item("곰가죽 바지", 35, Item.Parts.LEGGINGS, 0, 8, 35000, "폭군 \'비틀즈\'의 가죽으로 만든 바지입니다."));
+            _items.Add(new Item("지룡의 바지", 36, Item.Parts.LEGGINGS, 0, 10, 55000, "지룡 \'메테오\'의 지느러미로 덮은 바지입니다."));
+            _items.Add(new Item("수룡의 문양", 37, Item.Parts.LEGGINGS, 0, 12, 90000, "수룡 \'네시\'의 표식이 박힌 바지입니다."));
+            _items.Add(new Item("흑월", 38, Item.Parts.LEGGINGS, 0, 14, 150000, "달이 없던 그날 밤, 그 그림자에 물들었습니다."));
+            _items.Add(new Item("빨간 반바지", 39, Item.Parts.LEGGINGS, 0, 17, 270000, "반바지에서조차 그의 예절과 겸손이 느껴집니다."));
+            
+            _items.Add(new Item("발싸개", 40, Item.Parts.BOOTS, 0, 5, 500, "신발이라고 부르기 민망한 천 쪼가리입니다."));
+            _items.Add(new Item("수련자 단화", 41, Item.Parts.BOOTS, 0, 20, 2000, "수련에 도움을 주는 단화입니다."));
+            _items.Add(new Item("모험자의 부츠", 42, Item.Parts.BOOTS, 0, 45, 5000, "대륙 끝까지 도달했던 모험자의 부츠입니다."));
+            _items.Add(new Item("실크 부츠", 43, Item.Parts.BOOTS, 0, 80, 13000, "마력이 깃든 거미줄로 만든 부츠입니다."));
+            _items.Add(new Item("늑대 부츠", 44, Item.Parts.BOOTS, 0, 125, 22000, "걸랑 \'울\'의 발바닥을 밑창에 붙인 부츠입니다."));
+            _items.Add(new Item("곰가죽 장화", 45, Item.Parts.BOOTS, 0, 180, 35000, "폭군 \'비틀즈\'의 가죽으로 만든 장화입니다."));
+            _items.Add(new Item("지룡의 각반", 46, Item.Parts.BOOTS, 0, 245, 55000, "지룡 \'메테오\'의 뿔을 감아 만든 각반입니다."));
+            _items.Add(new Item("수룡각", 47, Item.Parts.BOOTS, 0, 320, 90000, "수룡 \'네시\'의 보주로 만든 각반입니다."));
+            _items.Add(new Item("청월", 48, Item.Parts.BOOTS, 0, 405, 150000, "달은 물에 잠겨서도 은은한 빛을 만들었습니다."));
+            _items.Add(new Item("살구색 양말", 49, Item.Parts.BOOTS, 0, 500, 270000, "맨발은 위험합니다."));
 
-            _items[10] = new Item("야구 모자", 10, Item.Parts.HELMET, 0, 3, 500, "머리에 꼭 맞는 모자입니다.");
-            _items[11] = new Item("수련자 두건", 11, Item.Parts.HELMET, 0, 9, 1800, "수련에 도움을 주는 두건입니다.");
-            _items[12] = new Item("청동 투구", 12, Item.Parts.HELMET, 0, 21, 3900, "청동으로 만든 투구입니다.");
-            _items[13] = new Item("강철 투구", 13, Item.Parts.HELMET, 0, 35, 8300, "강철로 만든 투구입니다.");
-            _items[14] = new Item("사슴뿔 투구", 14, Item.Parts.HELMET, 0, 50, 16500, "성록 \'데이지\'의 뿔로 장식한 투구입니다.");
-            _items[15] = new Item("공작깃 투구", 15, Item.Parts.HELMET, 0, 69, 35200, "명조 \'무지개\'의 깃털로 장식한 투구입니다.");
-            _items[16] = new Item("지룡의 투구", 16, Item.Parts.HELMET, 0, 96, 74700, "지룡 \'메테오\'의 비늘로 덮은 투구입니다.");
-            _items[17] = new Item("수룡의 투구", 17, Item.Parts.HELMET, 0, 137, 166000, "수룡 \'네시\'의 지느러미로 덮은 투구입니다");
-            _items[18] = new Item("월관", 18, Item.Parts.HELMET, 0, 184, 350500, "흑백청적 네 빛의 보석이 찬란하게 빛납니다.");
-            _items[19] = new Item("초월한 투구 ", 19, Item.Parts.HELMET, 0, 250, 723600, "이 투구를 쓰면 강인함 샘솟는 것 같습니다.");
+            // id가 50 이상은 몬스터에게 드랍되는 아이템
+            _items.Add(new Item("거미 눈 헬멧", 50, Item.Parts.HELMET, 0, 10, 1000, "거미 눈을 달아놓은 헬멧입니다."));
+            _items.Add(new Item("뱀 독 단검", 51, Item.Parts.WEAPON, 0, 2, 1200, "뱀의 독을 발라놓은 단검입니다."));
+            _items.Add(new Item("고블린의 누더기 갑옷", 52, Item.Parts.CHESTPLATE, 0, 2, 1500, "고블린이 입던 더러운 가죽 갑옷입니다."));
+            _items.Add(new Item("멧돼지 가죽 부츠", 53, Item.Parts.BOOTS, 0, 10, 1000, "단단한 멧돼지의 가죽으로 만들어졌습니다."));
+            _items.Add(new Item("코볼트 곡괭이", 54, Item.Parts.WEAPON, 0, 5, 5000, "코볼트가 쓰던 곡괭이로 굉장히 무겁습니다."));
+            _items.Add(new Item("궁수의 신발", 55, Item.Parts.BOOTS, 0, 30, 3500, "도적 궁수가 신던 신발로 가볍고 튼튼합니다."));
+            _items.Add(new Item("도적의 바지", 56, Item.Parts.LEGGINGS, 0, 3, 3500, "도적이 입던 바지로 손때가 탄 것 말고는 괜찮습니다."));
+            _items.Add(new Item("사마귀 갑각", 57, Item.Parts.CHESTPLATE, 0, 5, 9000, "사마귀의 갑각을 다듬어서 만든 갑옷입니다."));
+            _items.Add(new Item("말벌 투구", 58, Item.Parts.HELMET, 0, 60, 9000, "말벌의 겹눈을 가공해서 덧댄 투구입니다."));
+            _items.Add(new Item("오크 글레이브", 59, Item.Parts.WEAPON, 0, 14, 30000, "오크가 쓰던 글레이브입니다."));
 
-            _items[20] = new Item("티셔츠", 20, Item.Parts.CHESTPLATE, 0, 1, 500, "얇은 면 티셔츠입니다.");
-            _items[21] = new Item("수련자 상의", 21, Item.Parts.CHESTPLATE, 0, 3, 1000, "수련에 도움을 주는 옷입니다.");
-            _items[22] = new Item("청동 갑옷", 22, Item.Parts.CHESTPLATE, 0, 7, 3500, "청동으로 만든 갑옷입니다.");
-            _items[23] = new Item("강철 갑옷", 23, Item.Parts.CHESTPLATE, 0, 15, 14000, "강철로 만든 갑옷입니다.");
-            _items[24] = new Item("악어 갑옷", 24, Item.Parts.CHESTPLATE, 0, 22, 40500, "늪의 군주 \'샤로\'의 가죽으로 만든 갑옷입니다.");
-            _items[25] = new Item("곰가죽 갑옷", 25, Item.Parts.CHESTPLATE, 0, 31, 107000, "폭군 \'비틀즈\'의 가죽을 받친 갑옷입니다.");
-            _items[26] = new Item("지룡의 갑주", 26, Item.Parts.CHESTPLATE, 0, 40, 361000, "지룡 \'메테오\'의 날갯가죽으로 만든 갑옷입니다.");
-            _items[27] = new Item("수룡 갑주", 27, Item.Parts.CHESTPLATE, 0, 52, 902000, "수룡 \'네시\'의 비늘로 덮은 갑옷입니다.");
-            _items[28] = new Item("적월", 28, Item.Parts.CHESTPLATE, 0, 68, 2136000, "붉은 땅, 달만이 외로이 피어 몽우리졌습니다.");
-            _items[29] = new Item("빨간 망토", 29, Item.Parts.CHESTPLATE, 0, 80, 7320000, "이 망토만 있다면 갑옷은 불필요합니다.");
-
-            _items[30] = new Item("청바지", 30, Item.Parts.LEGGINGS, 0, 3, 1000, "멋을 위해 군데군데 찢긴 청바지입니다.");
-            _items[31] = new Item("수련자 하의", 31, Item.Parts.LEGGINGS, 0, 9, 2200, "수련에 도움을 주는 바지입니다.");
-            _items[32] = new Item("청동 바지", 32, Item.Parts.LEGGINGS, 0, 15, 7000, "청동으로 만든 바지입니다.");
-            _items[33] = new Item("강철 바지", 33, Item.Parts.LEGGINGS, 0, 23, 28000, "강철로 만든 바지입니다.");
-            _items[34] = new Item("뱀가죽 바지", 34, Item.Parts.LEGGINGS, 0, 32, 91000, "교사 \'스니키\'의 가죽으로 만든 레깅스입니다.");
-            _items[35] = new Item("곰가죽 바지", 35, Item.Parts.LEGGINGS, 0, 42, 214000, "폭군 \'비틀즈\'의 가죽으로 만든 바지입니다.");
-            _items[36] = new Item("지룡의 바지", 36, Item.Parts.LEGGINGS, 0, 55, 722000, "지룡 \'메테오\'의 지느러미로 덮은 바지입니다.");
-            _items[37] = new Item("수룡의 문양", 37, Item.Parts.LEGGINGS, 0, 68, 1804000, "수룡 \'네시\'의 표식이 박힌 바지입니다.");
-            _items[38] = new Item("흑월", 38, Item.Parts.LEGGINGS, 0, 83, 4272000, "달이 없던 그날 밤, 그 그림자에 물들었습니다.");
-            _items[39] = new Item("빨간 반바지", 39, Item.Parts.LEGGINGS, 0, 100, 14640000, "반바지에서조차 그의 예절과 겸손이 느껴집니다.");
-
-            _items[40] = new Item("운동화", 40, Item.Parts.BOOTS, 0, 5, 1000, "밑창이 다 닳아버린 운동화입니다.");
-            _items[41] = new Item("수련자 단화", 41, Item.Parts.BOOTS, 0, 12, 3600, "수련에 도움을 주는 단화입니다.");
-            _items[42] = new Item("청동 부츠", 42, Item.Parts.BOOTS, 0, 36, 7800, "청동으로 만든 부츠입니다.");
-            _items[43] = new Item("강철 부츠", 43, Item.Parts.BOOTS, 0, 68, 16600, "강철로 만든 부츠입니다.");
-            _items[44] = new Item("늑대 부츠", 44, Item.Parts.BOOTS, 0, 112, 33000, "걸랑 \'울\'의 발바닥을 밑창에 붙인 부츠입니다.");
-            _items[45] = new Item("곰가죽 장화", 45, Item.Parts.BOOTS, 0, 172, 70400, "폭군 \'비틀즈\'의 가죽으로 만든 장화입니다.");
-            _items[46] = new Item("지룡의 각반", 46, Item.Parts.BOOTS, 0, 255, 149400, "지룡 \'메테오\'의 뿔을 감아 만든 각반입니다.");
-            _items[47] = new Item("수룡각", 47, Item.Parts.BOOTS, 0, 360, 332000, "수룡 \'네시\'의 보주로 만든 각반입니다.");
-            _items[48] = new Item("청월", 48, Item.Parts.BOOTS, 0, 496, 701000, "달은 물에 잠겨서도 은은한 빛을 만들었습니다.");
-            _items[49] = new Item("살구색 양말", 49, Item.Parts.BOOTS, 0, 650, 1447200, "맨발은 위험합니다.");
+            _items.Add(new Item("놀 가죽 바지", 60, Item.Parts.LEGGINGS, 0, 5, 17000, "놀의 가죽과 털로 만들어진 바지입니다."));
+            _items.Add(new Item("우르순의 가죽 갑옷", 61, Item.Parts.CHESTPLATE, 0, 9, 30000, "각성한 곰의 가죽으로 만든 갑옷입니다."));
+            _items.Add(new Item("숨 죽인 신발", 62, Item.Parts.BOOTS, 0, 150, 30000, "재규어의 발가죽으로 만든 소음이 적은 신발입니다."));
+            _items.Add(new Item("와이번 이빨 창", 63, Item.Parts.WEAPON, 0, 27, 75000, "와이번의 이빨을 가공해서 만든 창입니다"));
+            _items.Add(new Item("독수리 깃털 투구", 64, Item.Parts.HELMET, 0, 220, 40000, "변종 독수리의 깃털로 장식된 투구입니다."));
+            _items.Add(new Item("인어족의 비늘각반", 65, Item.Parts.LEGGINGS, 0, 11, 75000, "인어족의 비늘로 이뤄진 각반입니다."));
+            _items.Add(new Item("아귀 머리", 66, Item.Parts.HELMET, 0, 280, 75000, "미끌미끌한 아귀의 머리입니다."));
+            _items.Add(new Item("그림자 검", 67, Item.Parts.WEAPON, 0, 45, 200000, "칠흑의 검신을 가진 검입니다."));
+            _items.Add(new Item("차크람의 갑옷", 68, Item.Parts.CHESTPLATE, 0, 17, 120000, "차크람이 한 때 입었던 갑옷입니다."));
+            _items.Add(new Item("드래곤 비늘 신발", 69, Item.Parts.BOOTS, 0, 450, 220000, "드래곤의 비늘을 덧댄 신발로 아주 튼튼합니다."));
             #endregion
 
             #region 상점 세팅
-            for (int i = 0; i < _items.Length; i++)
+            for (int i = 0; i < _items.Count; i++)
             {
                 if (i % 10 > 3) i += 9 - i % 10;
                 else
@@ -322,34 +348,45 @@ namespace TeamTextRPG.Managers
             // 이름 , id, 레벨, 공격력, 방어력, HP, 골드, 경험치
             _monsters.Add(new Monster("박쥐", 0, 1, 1, 1, 10, 50, 5));
             _monsters.Add(new Monster("토끼", 1, 1, 1, 0, 15, 50, 5));
-            _monsters.Add(new Monster("거미", 2, 1, 2, 1, 5, 60, 6));
+            _monsters.Add(new Monster("거미", 2, 1, 2, 1, 5, 60, 6, 50));
             _monsters.Add(new Monster("쥐", 3, 1, 2, 1, 10, 70, 7));
-            _monsters.Add(new Monster("뱀", 4, 1, 3, 1, 15, 90, 9));
-            _monsters.Add(new Monster("고블린 정찰병", 5, 2, 3, 3, 20, 150, 15));
-            _monsters.Add(new Monster("배고픈 멧돼지", 6, 2, 3, 3, 30, 200, 20));
+            _monsters.Add(new Monster("뱀", 4, 1, 3, 1, 15, 90, 9, 51));
+            _monsters.Add(new Monster("고블린 정찰병", 5, 2, 3, 3, 20, 150, 15, 52));
+            _monsters.Add(new Monster("배고픈 멧돼지", 6, 2, 3, 3, 30, 200, 20, 53));
             _monsters.Add(new Monster("날렵한 올빼미", 7, 2, 2, 4, 20, 170, 17));
             _monsters.Add(new Monster("불개미 무리", 8, 2, 4, 1, 15, 150, 15));
-            _monsters.Add(new Monster("허약한 스켈레톤", 9, 3, 4, 4, 30, 300, 30));
-            _monsters.Add(new Monster("광부 코볼트", 10, 3, 6, 3, 40, 450, 45));
-            _monsters.Add(new Monster("허술한 도적", 11, 3, 5, 4, 35, 400, 40));
-            _monsters.Add(new Monster("허술한 도적 궁수", 12, 3, 8, 2, 25, 500, 50));
-            _monsters.Add(new Monster("거대 사마귀", 13, 4, 7, 5, 40, 700, 70));
+            _monsters.Add(new Monster("허약한 스켈레톤", 9, 2, 3, 3, 30, 240, 24));
+            _monsters.Add(new Monster("광부 코볼트", 10, 4, 8, 4, 40, 700, 70, 54));
+            _monsters.Add(new Monster("허술한 도적", 11, 3, 5, 4, 35, 400, 40, 56));
+            _monsters.Add(new Monster("허술한 도적 궁수", 12, 3, 8, 2, 25, 500, 50, 55));
+            _monsters.Add(new Monster("거대 사마귀", 13, 4, 7, 5, 40, 700, 70, 57));
             _monsters.Add(new Monster("거대 타란툴라", 14, 4, 12, 2, 30, 850, 85));
-            _monsters.Add(new Monster("거대 장수말벌", 15, 4, 6, 8, 50, 1000, 100));
-            _monsters.Add(new Monster("아라크네", 16, 4, 8, 8, 60, 1300, 130));
-            _monsters.Add(new Monster("고블린 무리", 17, 5, 10, 10, 80, 1600, 160));
-            _monsters.Add(new Monster("흉폭한 야생마 무리", 18, 5, 7, 12, 100, 1800, 180));
-            _monsters.Add(new Monster("오크", 19, 5, 14, 10, 80, 2200, 220));
-            _monsters.Add(new Monster("놀", 20, 5, 15, 12, 120, 2400, 240));
-            _monsters.Add(new Monster("갈색 그리즐리 베어", 21, 6, 18, 18, 150, 2800, 280));
-            _monsters.Add(new Monster("검정 그리즐리 베어", 22, 6, 22, 16, 180, 3200, 320));
-            _monsters.Add(new Monster("숨죽인 재규어", 23, 6, 28, 12, 80, 3000, 300));
-            _monsters.Add(new Monster("각성한 곰 우르순", 24, 6, 22, 24, 200, 3600, 360));
+            _monsters.Add(new Monster("거대 장수말벌", 15, 3, 4, 6, 30, 500, 50, 58));
+            _monsters.Add(new Monster("아라크네", 16, 5, 12, 8, 60, 1400, 140));
+            _monsters.Add(new Monster("악어 무리", 17, 4, 8, 8, 70, 1200, 120));
+            _monsters.Add(new Monster("흉폭한 늑대 무리", 18, 5, 12, 8, 100, 1600, 160));
+            _monsters.Add(new Monster("오크", 19, 6, 16, 14, 120, 2200, 220, 59));
+            _monsters.Add(new Monster("놀", 20, 5, 13, 10, 100, 1800, 180, 60));
+            _monsters.Add(new Monster("갈색 그리즐리 베어", 21, 6, 16, 16, 150, 2600, 260));
+            _monsters.Add(new Monster("검정 그리즐리 베어", 22, 6, 20, 16, 180, 3000, 300));
+            _monsters.Add(new Monster("숨죽인 재규어", 23, 5, 24, 4, 80, 2400, 240, 62));
+            _monsters.Add(new Monster("각성한 곰 우르순", 24, 7, 22, 24, 200, 3800, 380, 61));
             _monsters.Add(new Monster("블랙 와이번", 25, 7, 20, 30, 200, 4000, 400));
-            _monsters.Add(new Monster("레드 와이번", 26, 7, 30, 20, 180, 4200, 420));
-            _monsters.Add(new Monster("변종 거대 독수리", 27, 7, 22, 22, 280, 3800, 380));
-            _monsters.Add(new Monster("용의 해츨링", 27, 7, 15, 40, 300, 4600, 460));
-            _monsters.Add(new Monster("", 27, 7, 15, 40, 300, 4600, 460));
+            _monsters.Add(new Monster("레드 와이번", 26, 7, 30, 20, 180, 4200, 420, 63));
+            _monsters.Add(new Monster("변종 거대 독수리", 27, 6, 13, 17, 140, 2400, 240, 64));
+            _monsters.Add(new Monster("지룡의 해츨링", 28, 8, 20, 40, 300, 5500, 550));
+            _monsters.Add(new Monster("심해 해파리", 29, 7, 15, 25, 160, 3400, 340));
+            _monsters.Add(new Monster("아귀", 30, 8, 30, 20, 250, 4600, 460, 66));
+            _monsters.Add(new Monster("인어족 전사", 31, 8, 30, 30, 300, 5000, 500, 65));
+            _monsters.Add(new Monster("수룡의 사념", 32, 9, 45, 35, 450, 7500, 750));
+            _monsters.Add(new Monster("그림자 사냥개", 33, 8, 45, 20, 300, 6000, 600));
+            _monsters.Add(new Monster("그림자 망령", 34, 9, 30, 50, 550, 8500, 850));
+            _monsters.Add(new Monster("그림자 암살자", 35, 9, 60, 25, 350, 9500, 950, 67));
+            _monsters.Add(new Monster("차크람의 후예", 36, 10, 60, 40, 600, 13000, 1200, 68));
+            _monsters.Add(new Monster("괴수 히드라", 37, 9, 45, 45, 500, 11000, 1100));
+            _monsters.Add(new Monster("마계의 사천왕", 38, 10, 50, 60, 700, 16000, 1600));
+            _monsters.Add(new Monster("골드 드래곤", 39, 10, 55, 65, 800, 20000, 2000, 69));
+            _monsters.Add(new Monster("마왕 바알", 40, 11, 75, 75, 1400, 30000, 3000));
 
 
 
@@ -358,66 +395,109 @@ namespace TeamTextRPG.Managers
             #endregion
 
             #region 던전 세팅
-            Dungeons.Add(new Dungeon(Player, "마을 동굴", 5, 1000));
+            Dungeons.Add(new Dungeon(Player, "마을 동굴", 3, 300));
             Dungeons[0].AddMonster(0);
             Dungeons[0].AddMonster(2);
             Dungeons[0].AddMonster(3);
             Dungeons[0].AddMonster(4);
             Dungeons[0].AddMonster(6);
+            Dungeons[4].AddReward(0);
+            Dungeons[4].AddReward(10);
+            Dungeons[4].AddReward(20);
+            Dungeons[4].AddReward(30);
+            Dungeons[4].AddReward(40);
 
-            Dungeons.Add(new Dungeon(Player, "옆 마을", 17, 2500));
+            Dungeons.Add(new Dungeon(Player, "옆 마을", 5, 600));
             Dungeons[1].AddMonster(1);
             Dungeons[1].AddMonster(5);
             Dungeons[1].AddMonster(6);
             Dungeons[1].AddMonster(7);
             Dungeons[1].AddMonster(8);
+            Dungeons[4].AddReward(1);
+            Dungeons[4].AddReward(11);
+            Dungeons[4].AddReward(21);
+            Dungeons[4].AddReward(31);
+            Dungeons[4].AddReward(41);
 
-            Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 28, 6000));
+            Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 7, 1000));
             Dungeons[2].AddMonster(5);
             Dungeons[2].AddMonster(9);
             Dungeons[2].AddMonster(10);
             Dungeons[2].AddMonster(11);
             Dungeons[2].AddMonster(12);
+            Dungeons[4].AddReward(2);
+            Dungeons[4].AddReward(12);
+            Dungeons[4].AddReward(22);
+            Dungeons[4].AddReward(32);
+            Dungeons[4].AddReward(42);
 
-            Dungeons.Add(new Dungeon(Player, "대형 거미줄", 42, 11000));
-            Dungeons[3].AddMonster(8);
+            Dungeons.Add(new Dungeon(Player, "대형 거미줄", 10, 1500));
+            
             Dungeons[3].AddMonster(13);
             Dungeons[3].AddMonster(14);
             Dungeons[3].AddMonster(15);
             Dungeons[3].AddMonster(16);
-            //------- 보상 -------//
-            Dungeons[3].AddReward(4);
+            Dungeons[4].AddReward(3);
+            Dungeons[4].AddReward(13);
+            Dungeons[4].AddReward(23);
+            Dungeons[4].AddReward(33);
+            Dungeons[4].AddReward(43);
 
-            Dungeons.Add(new Dungeon(Player, "초원 지대", 61, 24000));
+            Dungeons.Add(new Dungeon(Player, "초원 지대", 14, 2500));
+            Dungeons[3].AddMonster(17);
+            Dungeons[3].AddMonster(18);
+            Dungeons[3].AddMonster(19);
+            Dungeons[3].AddMonster(20);
+            Dungeons[4].AddReward(4);
             Dungeons[4].AddReward(14);
-            Dungeons[4].AddReward(15);
             Dungeons[4].AddReward(24);
             Dungeons[4].AddReward(34);
             Dungeons[4].AddReward(44);
-            Dungeons.Add(new Dungeon(Player, "곰의 절벽", 85, 38000));
-            Dungeons[5].AddReward(5);
-            Dungeons[5].AddReward(25);
-            Dungeons[5].AddReward(35);
-            Dungeons[5].AddReward(45);
-            Dungeons.Add(new Dungeon(Player, "지룡의 둥지", 120, 62000));
+            Dungeons.Add(new Dungeon(Player, "곰의 절벽", 20, 4000));
+            Dungeons[3].AddMonster(21);
+            Dungeons[3].AddMonster(22);
+            Dungeons[3].AddMonster(23);
+            Dungeons[3].AddMonster(24);
+            Dungeons[4].AddReward(5);
+            Dungeons[4].AddReward(15);
+            Dungeons[4].AddReward(25);
+            Dungeons[4].AddReward(35);
+            Dungeons[4].AddReward(45);
+            Dungeons.Add(new Dungeon(Player, "지룡의 둥지", 26, 6000));
+            Dungeons[3].AddMonster(25);
+            Dungeons[3].AddMonster(26);
+            Dungeons[3].AddMonster(27);
+            Dungeons[3].AddMonster(28);
             Dungeons[6].AddReward(6);
             Dungeons[6].AddReward(16);
             Dungeons[6].AddReward(26);
             Dungeons[6].AddReward(36);
             Dungeons[6].AddReward(46);
-            Dungeons.Add(new Dungeon(Player, "심연의 해구", 170, 80000));
+            Dungeons.Add(new Dungeon(Player, "심연의 해구", 35, 9000));
+            Dungeons[3].AddMonster(29);
+            Dungeons[3].AddMonster(30);
+            Dungeons[3].AddMonster(31);
+            Dungeons[3].AddMonster(32);
             Dungeons[7].AddReward(7);
             Dungeons[7].AddReward(17);
             Dungeons[7].AddReward(27);
             Dungeons[7].AddReward(37);
             Dungeons[7].AddReward(47);
-            Dungeons.Add(new Dungeon(Player, "달의 안개", 230, 110000));
+            Dungeons.Add(new Dungeon(Player, "달의 안개", 45, 13000));
+            Dungeons[3].AddMonster(33);
+            Dungeons[3].AddMonster(34);
+            Dungeons[3].AddMonster(35);
+            Dungeons[3].AddMonster(36);
             Dungeons[8].AddReward(8);
             Dungeons[8].AddReward(18);
             Dungeons[8].AddReward(28);
             Dungeons[8].AddReward(38);
             Dungeons[8].AddReward(48);
-            Dungeons.Add(new Dungeon(Player, "격전지", 300, 150000));
+            Dungeons.Add(new Dungeon(Player, "격전지", 60, 25000));
+            Dungeons[3].AddMonster(37);
+            Dungeons[3].AddMonster(38);
+            Dungeons[3].AddMonster(39);
+            Dungeons[3].AddMonster(40);
             Dungeons[9].AddReward(9);
             Dungeons[9].AddReward(19);
             Dungeons[9].AddReward(29);
@@ -512,7 +592,7 @@ namespace TeamTextRPG.Managers
                 
             // 던전 클리어 골드, 경험치, 아이템 보상을 추가합니다.
             if (stage == MaxStage) MaxStage++;
-            rewardGold = (int)(dungeon.Reward[0]
+            rewardGold += (int)(dungeon.Reward[0]
                 * (rnd.NextDouble() * 0.4 + 0.8));
             rewardExp += stage * stage * 10;
             if (dungeon.Reward.Count > 1 && rnd.Next(0, 100) < 40)
@@ -647,7 +727,7 @@ namespace TeamTextRPG.Managers
                             {
                                 if (jop >= 1 && jop <= (int)JOP.ARCHER + 1)
                                 {
-                                    Player = new Character(name, (JOP)(jop - 1), 1, 10, 5, 100, 1500);
+                                    Player = new Character(name, (JOP)(jop - 1), 1, 5, 5, 100, 1500);
                                     GetBasicItem();
                                     SaveData();
                                     GameManager.Instance.SceneManager.Scene = Scenes.TOWN;
