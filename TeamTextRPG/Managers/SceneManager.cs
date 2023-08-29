@@ -10,7 +10,7 @@ namespace TeamTextRPG.Managers
     {
         public GameManager GameManager;
 
-        private string _path = @"../../../Scenes";
+        private string _path = @"../../../Data/Scenes";
         public enum Scenes
         {
             GAME_INTRO,

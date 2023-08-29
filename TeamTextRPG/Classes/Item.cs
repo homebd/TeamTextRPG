@@ -1,19 +1,13 @@
 ﻿/// <summary
 /// 아이템이 가져야 할 속성들을 정의하는 클래스
 /// </summary>
+/// 
+using TeamTextRPG.Common;
 
 namespace TeamTextRPG.Classes
 {
     public class Item
     {
-        public enum Parts
-        {
-            WEAPON,
-            HELMET,
-            CHESTPLATE,
-            LEGGINGS,
-            BOOTS
-        }
         public string Name { get; }
         public int Id { get; }
         public Parts Part { get; }
