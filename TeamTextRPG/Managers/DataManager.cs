@@ -459,9 +459,13 @@ namespace TeamTextRPG.Managers
                 rewardGold += m.Gold;
                 rewardExp += m.Exp;
 
-                foreach (var reward in m.Inventory)
+                foreach (Item rewardItem in m.Inventory)
                 {
-                    rewardItems.Add(MakeNewItem(reward.Id));
+                    if (rnd.NextDouble() < 0.1f)
+                    {
+                        rewardItems.Add(rewardItem);
+                        m.Inventory.Remove(rewardItem);
+                    }
                 }
             }
 
@@ -481,14 +485,17 @@ namespace TeamTextRPG.Managers
             rewardGold += (int)(dungeon.Reward[0]
                 * (rnd.NextDouble() * 0.4 + 0.8));
             rewardExp += stage * stage * 10;
-            if (dungeon.Reward.Count > 1 && rnd.Next(0, 100) < 40)
+            for (int i = 1; i < dungeon.Reward.Count; i++)
             {
-                int rewardItemId = dungeon.Reward[rnd.Next(1, dungeon.Reward.Count)];
-
-                Player.Inventory.Add(MakeNewItem(rewardItemId));
-                // 던전 보상으로 얻은 아이템을 상점에서도 나오게 합니다.
-                if (!DiscoveredItem.Exists(x => x == rewardItemId)) DiscoveredItem.Add(rewardItemId);
+                if (rnd.NextDouble() < 0.1f)
+                {
+                    int rewardItemId = dungeon.Reward[i];
+                    Player.Inventory.Add(MakeNewItem(rewardItemId));
+                    if (!DiscoveredItem.Exists(x => x == rewardItemId))
+                        DiscoveredItem.Add(rewardItemId);
+                }
             }
+
             Player.Gold += rewardGold;
             Player.Exp += rewardExp;
 
