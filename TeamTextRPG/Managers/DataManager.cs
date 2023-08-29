@@ -29,6 +29,8 @@ namespace TeamTextRPG.Managers
         public int StagePage { get; set; }
 
         private string _savePath = @"../../../Save";
+        private string _itemPath = @"../../../Data\\Items.json";
+        private string _monsterPath = @"../../../Data\\Monsters.Json";
 
         public DataManager()
         {
@@ -110,6 +112,7 @@ namespace TeamTextRPG.Managers
 
         public void LoadData()
         {
+            #region 유저 데이터 로드
             string jsonContent;
 
             using (FileStream fs = File.Open(_savePath, FileMode.Open))
@@ -196,6 +199,7 @@ namespace TeamTextRPG.Managers
             Player.ChangeHP((int)data["CurrentHp"] - Player.MaxHp);
 
             MaxStage = (int)data["MaxStage"];
+            #endregion
         }
 
         public void Wear(Item item)
@@ -249,61 +253,15 @@ namespace TeamTextRPG.Managers
 
         public void GameDataSetting()
         {
-            #region 아이템 정보 세팅
-            _items[0] = new Item("나뭇가지", 0, Item.Parts.WEAPON, 0, 1, 300, "금방이라도 부러질 듯한 나뭇가지입니다.");
-            _items[1] = new Item("낡은 검", 1, Item.Parts.WEAPON, 0, 4, 1000, "너무 무뎌져 종이조차 자르지 못하는 검입니다.");
-            _items[2] = new Item("청동 도끼", 2, Item.Parts.WEAPON, 0, 9, 2200, "청동으로 만들어진 무거운 도끼입니다.");
-            _items[3] = new Item("은빛 창", 3, Item.Parts.WEAPON, 0, 16, 4400, "은을 매우 뾰족하게 깎아만든 창입니다.");
-            _items[4] = new Item("주궁", 4, Item.Parts.WEAPON, 0, 25, 8800, "여왕 거미 \'마더\'의 거미줄로 만든 활입니다.");
-            _items[5] = new Item("곰 장갑", 5, Item.Parts.WEAPON, 0, 36, 17600, "폭군 \'비틀즈\'의 발톱이 달린 장갑입니다.");
-            _items[6] = new Item("지룡의 단검", 6, Item.Parts.WEAPON, 0, 49, 35200, "지룡 \'메테오\'의 어금니를 벼려 만든 단검입니다.");
-            _items[7] = new Item("수룡장", 7, Item.Parts.WEAPON, 0, 64, 70400, "수룡 \'네시\'의 두개골로 만든 지팡이입니다.");
-            _items[8] = new Item("백월", 8, Item.Parts.WEAPON, 0, 81, 140800, "무명의 밤, 이 차크람이 세상을 비췄습니다.");
-            _items[9] = new Item("초월한 창", 9, Item.Parts.WEAPON, 0, 100, 281600, "이 창을 쥐면 용맹함이 샘솟는 것 같습니다.");
 
-            _items[10] = new Item("야구 모자", 10, Item.Parts.HELMET, 0, 3, 500, "머리에 꼭 맞는 모자입니다.");
-            _items[11] = new Item("수련자 두건", 11, Item.Parts.HELMET, 0, 9, 1800, "수련에 도움을 주는 두건입니다.");
-            _items[12] = new Item("청동 투구", 12, Item.Parts.HELMET, 0, 21, 3900, "청동으로 만든 투구입니다.");
-            _items[13] = new Item("강철 투구", 13, Item.Parts.HELMET, 0, 35, 8300, "강철로 만든 투구입니다.");
-            _items[14] = new Item("사슴뿔 투구", 14, Item.Parts.HELMET, 0, 50, 16500, "성록 \'데이지\'의 뿔로 장식한 투구입니다.");
-            _items[15] = new Item("공작깃 투구", 15, Item.Parts.HELMET, 0, 69, 35200, "명조 \'무지개\'의 깃털로 장식한 투구입니다.");
-            _items[16] = new Item("지룡의 투구", 16, Item.Parts.HELMET, 0, 96, 74700, "지룡 \'메테오\'의 비늘로 덮은 투구입니다.");
-            _items[17] = new Item("수룡의 투구", 17, Item.Parts.HELMET, 0, 137, 166000, "수룡 \'네시\'의 지느러미로 덮은 투구입니다");
-            _items[18] = new Item("월관", 18, Item.Parts.HELMET, 0, 184, 350500, "흑백청적 네 빛의 보석이 찬란하게 빛납니다.");
-            _items[19] = new Item("초월한 투구 ", 19, Item.Parts.HELMET, 0, 250, 723600, "이 투구를 쓰면 강인함 샘솟는 것 같습니다.");
-
-            _items[20] = new Item("티셔츠", 20, Item.Parts.CHESTPLATE, 0, 1, 500, "얇은 면 티셔츠입니다.");
-            _items[21] = new Item("수련자 상의", 21, Item.Parts.CHESTPLATE, 0, 3, 1000, "수련에 도움을 주는 옷입니다.");
-            _items[22] = new Item("청동 갑옷", 22, Item.Parts.CHESTPLATE, 0, 7, 3500, "청동으로 만든 갑옷입니다.");
-            _items[23] = new Item("강철 갑옷", 23, Item.Parts.CHESTPLATE, 0, 15, 14000, "강철로 만든 갑옷입니다.");
-            _items[24] = new Item("악어 갑옷", 24, Item.Parts.CHESTPLATE, 0, 22, 40500, "늪의 군주 \'샤로\'의 가죽으로 만든 갑옷입니다.");
-            _items[25] = new Item("곰가죽 갑옷", 25, Item.Parts.CHESTPLATE, 0, 31, 107000, "폭군 \'비틀즈\'의 가죽을 받친 갑옷입니다.");
-            _items[26] = new Item("지룡의 갑주", 26, Item.Parts.CHESTPLATE, 0, 40, 361000, "지룡 \'메테오\'의 날갯가죽으로 만든 갑옷입니다.");
-            _items[27] = new Item("수룡 갑주", 27, Item.Parts.CHESTPLATE, 0, 52, 902000, "수룡 \'네시\'의 비늘로 덮은 갑옷입니다.");
-            _items[28] = new Item("적월", 28, Item.Parts.CHESTPLATE, 0, 68, 2136000, "붉은 땅, 달만이 외로이 피어 몽우리졌습니다.");
-            _items[29] = new Item("빨간 망토", 29, Item.Parts.CHESTPLATE, 0, 80, 7320000, "이 망토만 있다면 갑옷은 불필요합니다.");
-
-            _items[30] = new Item("청바지", 30, Item.Parts.LEGGINGS, 0, 3, 1000, "멋을 위해 군데군데 찢긴 청바지입니다.");
-            _items[31] = new Item("수련자 하의", 31, Item.Parts.LEGGINGS, 0, 9, 2200, "수련에 도움을 주는 바지입니다.");
-            _items[32] = new Item("청동 바지", 32, Item.Parts.LEGGINGS, 0, 15, 7000, "청동으로 만든 바지입니다.");
-            _items[33] = new Item("강철 바지", 33, Item.Parts.LEGGINGS, 0, 23, 28000, "강철로 만든 바지입니다.");
-            _items[34] = new Item("뱀가죽 바지", 34, Item.Parts.LEGGINGS, 0, 32, 91000, "교사 \'스니키\'의 가죽으로 만든 레깅스입니다.");
-            _items[35] = new Item("곰가죽 바지", 35, Item.Parts.LEGGINGS, 0, 42, 214000, "폭군 \'비틀즈\'의 가죽으로 만든 바지입니다.");
-            _items[36] = new Item("지룡의 바지", 36, Item.Parts.LEGGINGS, 0, 55, 722000, "지룡 \'메테오\'의 지느러미로 덮은 바지입니다.");
-            _items[37] = new Item("수룡의 문양", 37, Item.Parts.LEGGINGS, 0, 68, 1804000, "수룡 \'네시\'의 표식이 박힌 바지입니다.");
-            _items[38] = new Item("흑월", 38, Item.Parts.LEGGINGS, 0, 83, 4272000, "달이 없던 그날 밤, 그 그림자에 물들었습니다.");
-            _items[39] = new Item("빨간 반바지", 39, Item.Parts.LEGGINGS, 0, 100, 14640000, "반바지에서조차 그의 예절과 겸손이 느껴집니다.");
-
-            _items[40] = new Item("운동화", 40, Item.Parts.BOOTS, 0, 5, 1000, "밑창이 다 닳아버린 운동화입니다.");
-            _items[41] = new Item("수련자 단화", 41, Item.Parts.BOOTS, 0, 12, 3600, "수련에 도움을 주는 단화입니다.");
-            _items[42] = new Item("청동 부츠", 42, Item.Parts.BOOTS, 0, 36, 7800, "청동으로 만든 부츠입니다.");
-            _items[43] = new Item("강철 부츠", 43, Item.Parts.BOOTS, 0, 68, 16600, "강철로 만든 부츠입니다.");
-            _items[44] = new Item("늑대 부츠", 44, Item.Parts.BOOTS, 0, 112, 33000, "걸랑 \'울\'의 발바닥을 밑창에 붙인 부츠입니다.");
-            _items[45] = new Item("곰가죽 장화", 45, Item.Parts.BOOTS, 0, 172, 70400, "폭군 \'비틀즈\'의 가죽으로 만든 장화입니다.");
-            _items[46] = new Item("지룡의 각반", 46, Item.Parts.BOOTS, 0, 255, 149400, "지룡 \'메테오\'의 뿔을 감아 만든 각반입니다.");
-            _items[47] = new Item("수룡각", 47, Item.Parts.BOOTS, 0, 360, 332000, "수룡 \'네시\'의 보주로 만든 각반입니다.");
-            _items[48] = new Item("청월", 48, Item.Parts.BOOTS, 0, 496, 701000, "달은 물에 잠겨서도 은은한 빛을 만들었습니다.");
-            _items[49] = new Item("살구색 양말", 49, Item.Parts.BOOTS, 0, 650, 1447200, "맨발은 위험합니다.");
+            #region 아이템 데이터 로드
+            using (FileStream fs = File.Open(_itemPath, FileMode.Open))
+            {
+                using (StreamReader reader = new StreamReader(fs))
+                {
+                    _items = JsonConvert.DeserializeObject<Item[]>(reader.ReadToEnd());
+                }
+            }
             #endregion
 
             #region 상점 세팅
