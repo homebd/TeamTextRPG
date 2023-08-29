@@ -1,5 +1,6 @@
 {
   "Name": "[GM]스파르타",
+<<<<<<< Updated upstream
   "Job": "전사",
   "Level": 1,
   "Exp": 0,
@@ -8,6 +9,16 @@
   "MaxHp": 100,
   "CurrentHp": 120,
   "Gold": 4260,
+=======
+  "Job": 0,
+  "Level": 2,
+  "Exp": 37,
+  "Atk": 14,
+  "Def": 9,
+  "MaxHp": 100,
+  "CurrentHp": 108,
+  "Gold": 8594,
+>>>>>>> Stashed changes
   "Inventory": [
     0,
     10,
@@ -16,11 +27,16 @@
     40
   ],
   "ItemLevel": [
-    0,
+    2,
     0,
     0,
     0,
     0
   ],
-  "MaxStage": 2
+  "Weapon": 0,
+  "Helmet": 10,
+  "ChestPlate": 20,
+  "Leggings": 30,
+  "Boots": 40,
+  "MaxStage": 3
 }
