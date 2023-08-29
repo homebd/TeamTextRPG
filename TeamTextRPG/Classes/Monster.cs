@@ -1,18 +1,11 @@
 ﻿namespace TeamTextRPG.Classes
 {
-    internal class Monster
+    internal class Monster : Character
     {
-        public string Name { get; }
         public int Id { get; }
-        public int Level { get; set; }
-        public int Atk { get; set; }
-        public int Def { get; set; }
-        public int MaxHp { get; }
-        public int CurrentHp { get; private set; }
-        public List<int> Reward { get; } // Reward[0]은 골드, Reward[1]부터는 아이템 id
-        public int RewardExp { get; }
 
-        public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp)
+        public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp,
+             float cc = 0.15f, float cd = 1.6f, float dc = 0.05f)
         {
             Name = name;
             Id = id;
@@ -21,9 +14,14 @@
             Def = def;
             MaxHp = maxHp;
             CurrentHp = MaxHp;
-            Reward = new List<int>();
-            Reward.Add(gold);
-            RewardExp = exp;
+            Gold = gold;
+            Exp = exp;
+
+            CriticalChance = cc;
+            CriticalDamage = cd;
+            DodgeChance = dc;
+
+            Inventory = new List<Item>();
         }
 
         public void ChangeHP(int hp)
