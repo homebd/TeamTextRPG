@@ -3,6 +3,7 @@
 /// </summary>
 
 using Newtonsoft.Json;
+using TeamTextRPG.Common;
 
 namespace TeamTextRPG.Managers
 {
@@ -11,22 +12,6 @@ namespace TeamTextRPG.Managers
         public GameManager GameManager;
 
         private string _path = @"../../../Data/Scenes";
-        public enum Scenes
-        {
-            GAME_INTRO,
-            GAME_OUTRO,
-            TOWN,
-            STATUS,
-            INVENTORY_MAIN,
-            INVENTORY_EQUIP,
-            INVENTORY_SORT,
-            SHOP_MAIN,
-            SHOP_BUY,
-            SHOP_SELL,
-            DUNGEON,
-            SHELTER,
-            SMITHY
-        }
 
         public Scenes Scene;
 
@@ -268,7 +253,7 @@ namespace TeamTextRPG.Managers
                                 {
                                     var selectedItem = dm.SortedItems[ret - 1];
 
-                                    if (selectedItem.IsEquipped)
+                                    if (dm.Player.Equipments[(int)selectedItem.Part] == selectedItem)
                                     {
                                         dm.Unwear(selectedItem.Part);
                                     }
@@ -337,7 +322,7 @@ namespace TeamTextRPG.Managers
                                 {
                                     var selectedItem = dm.SortedItems[ret - 1];
 
-                                    if (selectedItem.IsEquipped)
+                                    if (dm.Player.Equipments[(int)selectedItem.Part] == selectedItem)
                                     {
                                         ui.AddLog("장착 중인 장비는 판매할 수 없습니다.");
                                     }

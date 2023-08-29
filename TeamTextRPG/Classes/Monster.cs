@@ -18,15 +18,15 @@ namespace TeamTextRPG.Classes
             CurrentHp = MaxHp;
             Gold = gold;
             Exp = exp;
-            if (rewardItemId > -1)
-            {
-                Inventory.Add(GameManager.Instance.DataManager.MakeNewItem(rewardItemId));
-            }
             CriticalChance = cc;
             CriticalDamage = cd;
             DodgeChance = dc;
 
             Inventory = new List<Item>();
+            if (rewardItemId > -1)
+            {
+                Inventory.Add(GameManager.Instance.DataManager.MakeNewItem(rewardItemId));
+            }
         }
 
         public void ChangeHP(int hp)
