@@ -82,8 +82,6 @@ namespace TeamTextRPG.Managers
                 Shop.Add(MakeNewItem((int)id));
             }
             MaxStage = data.MaxStage.ToObject<int>();
-
-            //Player.ChangeHP((int)data["CurrentHp"] - Player.MaxHp);
         }
 
         public void Wear(Item item)
