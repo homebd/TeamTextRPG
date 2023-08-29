@@ -6,6 +6,7 @@ using TeamTextRPG.Classes;
 using System.Text;
 using static TeamTextRPG.Managers.SceneManager;
 using System.Numerics;
+using System;
 
 namespace TeamTextRPG.Managers
 {
@@ -479,18 +480,18 @@ namespace TeamTextRPG.Managers
 
             for (int i = 0; i < 3; i++)
             {
-                PrintDungeon(i);
-                if (dm.StagePage + i + 1 > dm.MaxStage) PrintLockedDungeon(i);
+                PrintDungeon(i, dm.GetDungeon(i));
+
+                if (i + dm.StagePage + 1 > dm.MaxStage) PrintLockedDungeon(i);
             }
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
 
-        public void PrintDungeon(int num)
+        public void PrintDungeon(int num, Dungeon dungeon)
         {
             var currentCursor = Console.GetCursorPosition();
-            var dm = GameManager.Instance.DataManager;
-            int stage = num + dm.StagePage;
+            
 
             int left = 2 + (30 * (num));
 
@@ -498,13 +499,13 @@ namespace TeamTextRPG.Managers
             Console.Write($"< {num + 1} >");
 
             Console.SetCursorPosition(left, 9);
-            Console.Write($"이  름  {dm.Dungeons[stage].Name}");
+            Console.Write($"이  름  {dungeon.Name}");
 
             Console.SetCursorPosition(left, 13);
-            Console.Write($"권  장  방어력 {dm.Dungeons[stage].Condition} 이상");
+            Console.Write($"권  장  방어력 {dungeon.Condition} 이상");
 
             Console.SetCursorPosition(left, 17);
-            Console.Write($"보  상  {dm.Dungeons[stage].Reward[0].ToString().PadLeft(4, ' ')} G");
+            Console.Write($"보  상  {dungeon.Reward[0].ToString().PadLeft(4, ' ')} G");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }

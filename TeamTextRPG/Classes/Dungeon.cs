@@ -13,7 +13,7 @@ namespace TeamTextRPG.Classes
 
         // NOTE : 아래와 같은 Monster 리스트가 있어야 ExploreDungeon에서 올바른 결과 출력이 가능합니다.
 
-        public Dungeon(Character player, string name, int condition, int gold)
+        public Dungeon(string name, int condition, int gold)
         {
             Reward = new List<int>();
             MonsterIds = new List<int>();

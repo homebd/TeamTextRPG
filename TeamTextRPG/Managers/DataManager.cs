@@ -17,12 +17,12 @@ namespace TeamTextRPG.Managers
         public List<Item> Inventory { get; private set; }
         public List<Item> Shop { get; private set; }
         public List<Item> SortedItems { get; set; }
-        public List<Dungeon> Dungeons { get; private set; }
         public List<Shelter> Shelters { get; private set; }
         public List<int> DiscoveredItem { get; set; }
 
 
-        private Item[] _items = new Item[50];
+        private Item[] _items = new Item[60];
+        private Dungeon[] _dungeons = new Dungeon[10];
         private List<Monster> _monsters = new List<Monster>();
         private string? _id; // 캐릭터 생성 시의 id
         public int MaxStage { get; set; }
@@ -30,6 +30,7 @@ namespace TeamTextRPG.Managers
 
         private string _savePath = @"../../../Save";
         private string _itemPath = @"../../../Data\\Items.json";
+        private string _dungeonPath = @"../../../Data\\Dungeons.Json";
         private string _monsterPath = @"../../../Data\\Monsters.Json";
 
         public DataManager()
@@ -37,7 +38,6 @@ namespace TeamTextRPG.Managers
             SortedItems = new List<Item>();
             Inventory = new List<Item>();
             Shop = new List<Item>();
-            Dungeons = new List<Dungeon>();
             Shelters = new List<Shelter>();
             DiscoveredItem = new List<int>();
             MaxStage = 1;
@@ -316,71 +316,13 @@ namespace TeamTextRPG.Managers
             #endregion
 
             #region 던전 세팅
-            Dungeons.Add(new Dungeon(Player, "마을 동굴", 5, 1000));
-            Dungeons[0].AddMonster(0);
-            Dungeons[0].AddMonster(2);
-            Dungeons[0].AddMonster(3);
-            Dungeons[0].AddMonster(4);
-            Dungeons[0].AddMonster(6);
-
-            Dungeons.Add(new Dungeon(Player, "옆 마을", 17, 2500));
-            Dungeons[1].AddMonster(1);
-            Dungeons[1].AddMonster(5);
-            Dungeons[1].AddMonster(6);
-            Dungeons[1].AddMonster(7);
-            Dungeons[1].AddMonster(8);
-
-            Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 28, 6000));
-            Dungeons[2].AddMonster(5);
-            Dungeons[2].AddMonster(9);
-            Dungeons[2].AddMonster(10);
-            Dungeons[2].AddMonster(11);
-            Dungeons[2].AddMonster(12);
-
-            Dungeons.Add(new Dungeon(Player, "대형 거미줄", 42, 11000));
-            Dungeons[3].AddMonster(8);
-            Dungeons[3].AddMonster(13);
-            Dungeons[3].AddMonster(14);
-            Dungeons[3].AddMonster(15);
-            Dungeons[3].AddMonster(16);
-            //------- 보상 -------//
-            Dungeons[3].AddReward(4);
-
-            Dungeons.Add(new Dungeon(Player, "초원 지대", 61, 24000));
-            Dungeons[4].AddReward(14);
-            Dungeons[4].AddReward(15);
-            Dungeons[4].AddReward(24);
-            Dungeons[4].AddReward(34);
-            Dungeons[4].AddReward(44);
-            Dungeons.Add(new Dungeon(Player, "곰의 절벽", 85, 38000));
-            Dungeons[5].AddReward(5);
-            Dungeons[5].AddReward(25);
-            Dungeons[5].AddReward(35);
-            Dungeons[5].AddReward(45);
-            Dungeons.Add(new Dungeon(Player, "지룡의 둥지", 120, 62000));
-            Dungeons[6].AddReward(6);
-            Dungeons[6].AddReward(16);
-            Dungeons[6].AddReward(26);
-            Dungeons[6].AddReward(36);
-            Dungeons[6].AddReward(46);
-            Dungeons.Add(new Dungeon(Player, "심연의 해구", 170, 80000));
-            Dungeons[7].AddReward(7);
-            Dungeons[7].AddReward(17);
-            Dungeons[7].AddReward(27);
-            Dungeons[7].AddReward(37);
-            Dungeons[7].AddReward(47);
-            Dungeons.Add(new Dungeon(Player, "달의 안개", 230, 110000));
-            Dungeons[8].AddReward(8);
-            Dungeons[8].AddReward(18);
-            Dungeons[8].AddReward(28);
-            Dungeons[8].AddReward(38);
-            Dungeons[8].AddReward(48);
-            Dungeons.Add(new Dungeon(Player, "격전지", 300, 150000));
-            Dungeons[9].AddReward(9);
-            Dungeons[9].AddReward(19);
-            Dungeons[9].AddReward(29);
-            Dungeons[9].AddReward(39);
-            Dungeons[9].AddReward(49);
+            using (FileStream fs = File.Open(_dungeonPath, FileMode.Open))
+            {
+                using (StreamReader reader = new StreamReader(fs))
+                {
+                    _dungeons = JsonConvert.DeserializeObject<Dungeon[]>(reader.ReadToEnd());
+                }
+            }
             #endregion
 
             #region 휴식 세팅
@@ -430,7 +372,7 @@ namespace TeamTextRPG.Managers
         {
             UIManager ui = GameManager.Instance.UIManager;
             int stage = num + StagePage;
-            Dungeon dungeon = Dungeons[stage - 1];
+            Dungeon dungeon = _dungeons[stage - 1];
             Random rnd = new Random();
 
             // 배틀 진입 후 결과 반환
@@ -681,7 +623,7 @@ namespace TeamTextRPG.Managers
             }
             else if (input == "]")
             {
-                if (StagePage == Dungeons.Count - 3)
+                if (StagePage == _dungeons.Length - 3)
                 {
                     Console.Beep();
                     ui.AddLog("마지막 페이지입니다.");
@@ -775,6 +717,11 @@ namespace TeamTextRPG.Managers
                 newMonster.Reward.Add(reward);
             }
             return newMonster;
+        }
+
+        public Dungeon GetDungeon(int num)
+        {
+            return _dungeons[num + StagePage];
         }
     }
 }

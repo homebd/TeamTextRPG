@@ -1,0 +1,72 @@
+[
+  {
+    "Name": "마을 동굴",
+    "Condition": 5,
+    "Gold": 1000,
+    "Reward": [ 50 ],
+    "MonsterIds": [ 0, 2, 3, 4, 6 ]
+  },
+  {
+    "Name": "옆 마을",
+    "Condition": 17,
+    "Gold": 2500,
+    "Reward": [ 50 ],
+    "MonsterIds": [ 1, 5, 6, 7, 8 ]
+  },
+  {
+    "Name": "대륙끝의 던전",
+    "Condition": 28,
+    "Gold": 6000,
+    "Reward": [ 50 ],
+    "MonsterIds": [ 5, 9, 10, 11, 12 ]
+  },
+  {
+    "Name": "대형 거미줄",
+    "Condition": 42,
+    "Gold": 11000,
+    "Reward": [ 50, 4 ],
+    "MonsterIds": [ 8, 13, 14, 15, 16 ]
+  },
+  {
+    "Name": "초원 지대",
+    "Condition": 61,
+    "Gold": 24000,
+    "Reward": [ 50, 14, 15, 24, 34, 44 ],
+    "MonsterIds": []
+  },
+  {
+    "Name": "곰의 절벽",
+    "Condition": 85,
+    "Gold": 38000,
+    "Reward": [ 50, 5, 25, 35, 45 ],
+    "MonsterIds": []
+  },
+  {
+    "Name": "지룡의 둥지",
+    "Condition": 120,
+    "Gold": 62000,
+    "Reward": [ 50, 6, 16, 26, 36, 46 ],
+    "MonsterIds": []
+  },
+  {
+    "Name": "심연의 해구",
+    "Condition": 170,
+    "Gold": 80000,
+    "Reward": [ 50, 7, 17, 27, 37, 47 ],
+    "MonsterIds": []
+  },
+  {
+    "Name": "달의 안개",
+    "Condition": 230,
+    "Gold": 110000,
+    "Reward": [ 50, 8, 18, 28, 38, 48 ],
+    "MonsterIds": []
+  },
+  {
+    "Name": "격전지",
+    "Condition": 300,
+    "Gold": 150000,
+    "Reward": [ 50, 9, 19, 29, 39, 49 ],
+    "MonsterIds": []
+  }
+]
