@@ -90,10 +90,41 @@ namespace TeamTextRPG.Classes
         }
 
         public virtual int GetEquipmentStatBonus(Stats stat) { return 0; }
-        
+
+        public int GetBuffStatBonus(Stats stat)
+        {
+            int bonus = 0;
+            
+            bonus += BuffStat[(int)stat];
+
+            return bonus;
+        }
+
         public bool IsDead()
         {
             return CurrentHp <= 0;
+        }
+
+        public int GetStatValue(Stats stat)
+        {
+            switch (stat)
+            {
+                case Stats.MAXHP:
+                    return MaxHp + GetEquipmentStatBonus(Stats.MAXHP) + GetBuffStatBonus(Stats.MAXHP);
+                case Stats.MAXMP:
+                    return MaxMp + GetBuffStatBonus(Stats.MAXMP);
+                case Stats.ATK:
+                    return Atk + GetEquipmentStatBonus(Stats.ATK) + GetBuffStatBonus(Stats.ATK);
+                case Stats.DEF:
+                    return Def + GetEquipmentStatBonus(Stats.DEF) + GetBuffStatBonus(Stats.DEF);
+                case Stats.CRITICALCHANCE:
+                    return CriticalChance + GetBuffStatBonus(Stats.CRITICALCHANCE);
+                case Stats.CRITICALDAMAGE:
+                    return CriticalDamage + GetBuffStatBonus(Stats.CRITICALDAMAGE);
+                case Stats.DODGECHANCE:
+                    return DodgeChance + GetEquipmentStatBonus(Stats.DODGECHANCE) + GetBuffStatBonus(Stats.DODGECHANCE);
+            }
+            return 0;
         }
     }
 }

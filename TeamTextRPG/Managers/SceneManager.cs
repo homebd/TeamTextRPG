@@ -253,7 +253,7 @@ namespace TeamTextRPG.Managers
                                 {
                                     var selectedItem = dm.SortedItems[ret - 1];
 
-                                    if (dm.Player.Equipments[(int)selectedItem.Part] == selectedItem)
+                                    if (selectedItem.IsEquipped)
                                     {
                                         dm.Player.Unwear(selectedItem.Part);
                                     }
@@ -322,7 +322,7 @@ namespace TeamTextRPG.Managers
                                 {
                                     var selectedItem = dm.SortedItems[ret - 1];
 
-                                    if (dm.Player.Equipments[(int)selectedItem.Part] == selectedItem)
+                                    if (selectedItem.IsEquipped)
                                     {
                                         ui.AddLog("장착 중인 장비는 판매할 수 없습니다.");
                                     }

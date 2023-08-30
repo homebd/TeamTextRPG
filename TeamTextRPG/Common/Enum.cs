@@ -19,6 +19,11 @@
         DAMAGE,
         BUFF
     }
+    public enum ValueTypeEnum
+    {
+        PROPOTIONAL,
+        FIXED // NOT TRUE(PURE) VALUE
+    }
     public enum Scenes
     {
         GAME_INTRO,

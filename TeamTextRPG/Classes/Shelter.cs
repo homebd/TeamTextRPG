@@ -7,13 +7,15 @@ namespace TeamTextRPG.Classes
     internal class Shelter
     {
         public string Name { get; }
-        public int Heal { get; }
+        public int Healing { get; }
+        public int Refreshing { get; }
         public int Cost { get; }
 
-        public Shelter(string name, int heal, int cost)
+        public Shelter(string name, int heal, int mana, int cost)
         {
             Name = name;
-            Heal = heal;
+            Healing = heal;
+            Refreshing = mana;
             Cost = cost;
         }
     }

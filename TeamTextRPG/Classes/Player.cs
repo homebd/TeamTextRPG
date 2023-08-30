@@ -16,7 +16,7 @@ namespace TeamTextRPG.Classes
         private Dictionary<string,int> StatsPerLevel;
 
         public Player(string name, JOB job, int level, int atk, int def, int maxHp, int maxMp, int gold
-            , int currentHp = -1, int currentMp = -1, int exp = 0, int cc = 15, int cd = 160, int dc = 5)
+            , int exp = 0, int cc = 10, int cd = 160, int dc = 5, int currentHp = -1, int currentMp = -1)
         {
             Name = name;
             Job = job;
@@ -110,6 +110,8 @@ namespace TeamTextRPG.Classes
             {
                 ChangeHP(item.Stat + item.BonusStat);
             }
+
+            item.IsEquipped = true;
         }
 
         public void Unwear(Parts part)
@@ -124,8 +126,10 @@ namespace TeamTextRPG.Classes
 
                 ChangeHP(-hp);
             }
-            Equipments[(int)part] = null;
 
+            Item item = Equipments[(int)part];
+            Equipments[(int)part] = null;
+            item.IsEquipped = false;
         }
 
         // 레벨업 함수입니다 StatsPerLevel에 따라 각각의 스탯과 레벨을 증가 시킵니다.
