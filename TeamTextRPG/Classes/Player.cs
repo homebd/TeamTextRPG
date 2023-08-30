@@ -45,7 +45,7 @@ namespace TeamTextRPG.Classes
             StatsPerLevel = new Dictionary<string, int>();
         }
 
-        // StatsPerLevel -> 초기설정 함수
+        // StatsPerLevel -> 초기설정 함수(reference 참고)
         public void SetStatsPerLevel(int addAtk, int addDef, int addMaxHp, int addMaxMp, int addCriticalChance, int addDodgeChance)
         {
             StatsPerLevel.Add("Atk", addAtk);
@@ -132,7 +132,7 @@ namespace TeamTextRPG.Classes
             item.IsEquipped = false;
         }
 
-        // 레벨업 함수
+        // 레벨업 함수입니다 StatsPerLevel에 따라 각각의 스탯과 레벨을 증가 시킵니다.
         public void LevelUp()
         {
             Atk += StatsPerLevel["Atk"];

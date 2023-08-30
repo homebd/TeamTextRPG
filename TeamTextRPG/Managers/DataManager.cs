@@ -425,9 +425,7 @@ namespace TeamTextRPG.Managers
             if (Player.Exp >= levelThresholdExp)
             {
                 Player.Exp -= levelThresholdExp;
-                Player.Level++;
-                Player.Atk++;
-                Player.Def++;
+                Player.LevelUp();
 
                 ui.AddLog("레벨이 올랐습니다.");
             }
