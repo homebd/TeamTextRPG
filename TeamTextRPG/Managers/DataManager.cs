@@ -181,16 +181,16 @@ namespace TeamTextRPG.Managers
             _items.Add(new Item("흑월", 38, Parts.LEGGINGS, 0, 14, 150000, "달이 없던 그날 밤, 그 그림자에 물들었습니다."));
             _items.Add(new Item("빨간 반바지", 39, Parts.LEGGINGS, 0, 17, 270000, "반바지에서조차 그의 예절과 겸손이 느껴집니다."));
             
-            _items.Add(new Item("발싸개", 40, Parts.BOOTS, 0, 5, 500, "신발이라고 부르기 민망한 천 쪼가리입니다."));
-            _items.Add(new Item("수련자 단화", 41, Parts.BOOTS, 0, 20, 2000, "수련에 도움을 주는 단화입니다."));
-            _items.Add(new Item("모험자의 부츠", 42, Parts.BOOTS, 0, 45, 5000, "대륙 끝까지 도달했던 모험자의 부츠입니다."));
-            _items.Add(new Item("실크 부츠", 43, Parts.BOOTS, 0, 80, 13000, "마력이 깃든 거미줄로 만든 부츠입니다."));
-            _items.Add(new Item("늑대 부츠", 44, Parts.BOOTS, 0, 125, 22000, "걸랑 \'울\'의 발바닥을 밑창에 붙인 부츠입니다."));
-            _items.Add(new Item("곰가죽 장화", 45, Parts.BOOTS, 0, 180, 35000, "폭군 \'비틀즈\'의 가죽으로 만든 장화입니다."));
-            _items.Add(new Item("지룡의 각반", 46, Parts.BOOTS, 0, 245, 55000, "지룡 \'메테오\'의 뿔을 감아 만든 각반입니다."));
-            _items.Add(new Item("수룡각", 47, Parts.BOOTS, 0, 320, 90000, "수룡 \'네시\'의 보주로 만든 각반입니다."));
-            _items.Add(new Item("청월", 48, Parts.BOOTS, 0, 405, 150000, "달은 물에 잠겨서도 은은한 빛을 만들었습니다."));
-            _items.Add(new Item("살구색 양말", 49, Parts.BOOTS, 0, 500, 270000, "맨발은 위험합니다."));
+            _items.Add(new Item("발싸개", 40, Parts.BOOTS, 0, 2, 500, "신발이라고 부르기 민망한 천 쪼가리입니다."));
+            _items.Add(new Item("수련자 단화", 41, Parts.BOOTS, 0, 4, 2000, "수련에 도움을 주는 단화입니다."));
+            _items.Add(new Item("모험자의 부츠", 42, Parts.BOOTS, 0, 6, 5000, "대륙 끝까지 도달했던 모험자의 부츠입니다."));
+            _items.Add(new Item("실크 부츠", 43, Parts.BOOTS, 0, 8, 13000, "마력이 깃든 거미줄로 만든 부츠입니다."));
+            _items.Add(new Item("늑대 부츠", 44, Parts.BOOTS, 0, 10, 22000, "걸랑 \'울\'의 발바닥을 밑창에 붙인 부츠입니다."));
+            _items.Add(new Item("곰가죽 장화", 45, Parts.BOOTS, 0, 12, 35000, "폭군 \'비틀즈\'의 가죽으로 만든 장화입니다."));
+            _items.Add(new Item("지룡의 각반", 46, Parts.BOOTS, 0, 14, 55000, "지룡 \'메테오\'의 뿔을 감아 만든 각반입니다."));
+            _items.Add(new Item("수룡각", 47, Parts.BOOTS, 0, 16, 90000, "수룡 \'네시\'의 보주로 만든 각반입니다."));
+            _items.Add(new Item("청월", 48, Parts.BOOTS, 0, 18, 150000, "달은 물에 잠겨서도 은은한 빛을 만들었습니다."));
+            _items.Add(new Item("살구색 양말", 49, Parts.BOOTS, 0, 20, 270000, "맨발은 위험합니다."));
 
             // id가 50 이상은 몬스터에게 드랍되는 아이템
             _items.Add(new Item("거미 눈 헬멧", 50, Parts.HELMET, 0, 10, 1000, "거미 눈을 달아놓은 헬멧입니다."));
