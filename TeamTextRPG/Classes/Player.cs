@@ -11,7 +11,7 @@ namespace TeamTextRPG.Classes
     {
         public JOB Job { get; }
         public Item[]? Equipments { get; set; }
-        public List<Skill> Skills { get; set; }
+        //public List<Skill> Skills { get; set; }
 
         public Player(string name, JOB job, int level, int atk, int def, int maxHp, int gold
             , int currentHp = -1, int exp = 0, float cc = 0.15f, float cd = 1.6f, float dc = 0.05f)
@@ -34,7 +34,7 @@ namespace TeamTextRPG.Classes
 
             Inventory = new List<Item>();
             Equipments = new Item[Enum.GetValues(typeof(Parts)).Length];
-            Skills = new List<Skill>();
+            //Skills = new List<Skill>();
         }
 
         public void ChangeHP(int hp)
