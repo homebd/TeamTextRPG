@@ -179,11 +179,9 @@ namespace TeamTextRPG.Managers
                                 switch(ret)
                                 {
                                     case 1: // 회원가입
-                                        ui.AddLog("ID를 입력하세요.(영어로)");
                                         dm.CreateId();
                                         return;
                                     case 2: // 로그인
-                                        ui.AddLog("ID를 입력하세요.(영어로)");
                                         dm.LoginId();
                                         return;
                                     case 0:
@@ -226,6 +224,9 @@ namespace TeamTextRPG.Managers
                                 {
                                     case 0:
                                         Scene = Scenes.TOWN;
+                                        return;
+                                    case 1:
+                                        dm.ChangeNick();
                                         return;
                                 }
                                 break;
