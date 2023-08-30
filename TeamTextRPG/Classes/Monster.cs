@@ -7,7 +7,7 @@ namespace TeamTextRPG.Classes
         public int Id { get; }
 
         public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp, int rewardItemId = -1,
-             float cc = 0.15f, float cd = 1.6f, float dc = 0.05f)
+             float cc = 0.1f, float cd = 1.6f, float dc = 0.05f)
         {
             Name = name;
             Id = id;
@@ -26,6 +26,7 @@ namespace TeamTextRPG.Classes
             if (rewardItemId > -1)
             {
                 Inventory.Add(GameManager.Instance.DataManager.MakeNewItem(rewardItemId));
+                
             }
         }
 
