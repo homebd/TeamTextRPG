@@ -10,7 +10,7 @@ namespace TeamTextRPG.Classes
     public class Item
     {
         public string Name { get; }
-        public int Id { get; }
+        public int Id { get; private set; }
         public Parts Part { get; }
         public int Stat { get; }
         public string Description { get; }
@@ -24,7 +24,9 @@ namespace TeamTextRPG.Classes
             }
         }
 
-        public Item(string name, int id, Parts part, int level, int stat, int price, string description)
+        public bool IsEquipped { get; set; }
+
+        public Item(string name, int id, Parts part, int level, int stat, int price, string description, bool isEquipped = false)
         {
             Name = name;
             Id = id;
@@ -33,11 +35,12 @@ namespace TeamTextRPG.Classes
             Description = description;
             Price = price;
             Level = level;
+            IsEquipped = isEquipped;
         }
 
         public void PrintInfo(bool showPrice, int num = 0, float sale = 1)
         {
-            string equip = (GameManager.Instance.DataManager.Player.Equipments[(int)Part] == this) ? "[E]" : "";
+            string equip = (IsEquipped) ? "[E]" : "";
             string printNum = (num == 0) ? "" : $"{num} ";
             string level = (Level == 0) ? "" : $"(+{Level})";
             string bonus = (Level == 0) ? "" : $"(+{BonusStat})";
@@ -69,7 +72,7 @@ namespace TeamTextRPG.Classes
 
         public void PrintInfoAtSmithy(int num)
         {
-            string equip = (GameManager.Instance.DataManager.Player.Equipments[(int)Part] == this) ? "[E]" : "";
+            string equip = (IsEquipped) ? "[E]" : "";
             string printNum = (num == 0) ? "" : $"{num} ";
             string level = (Level == 0) ? "" : $"(+{Level})";
             string bonus = (Level == 0) ? "" : $"(+{BonusStat})";
