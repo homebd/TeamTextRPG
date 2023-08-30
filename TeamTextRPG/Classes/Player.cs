@@ -2,6 +2,7 @@
 /// 플레이어 클래스
 /// </summary>
 
+using System.Runtime.ConstrainedExecution;
 using System.Transactions;
 using TeamTextRPG.Common;
 
@@ -12,6 +13,7 @@ namespace TeamTextRPG.Classes
         public JOB Job { get; }
         public Item[]? Equipments { get; set; }
         public List<Skill> Skills { get; set; }
+        private Dictionary<string,int> StatsPerLevel;
 
         public Player(string name, JOB job, int level, int atk, int def, int maxHp, int maxMp, int gold
             , int currentHp = -1, int currentMp = -1, int exp = 0, int cc = 15, int cd = 160, int dc = 5)
@@ -40,6 +42,17 @@ namespace TeamTextRPG.Classes
             Inventory = new List<Item>();
             Equipments = new Item[Enum.GetValues(typeof(Parts)).Length];
             Skills = new List<Skill>();
+        }
+
+        // StatsPerLevel -> 초기설정 함수
+        public void SetStatsPerLevel(int addAtk, int addDef, int addMaxHp, int addMaxMp, int addCriticalChance, int addDodgeChance)
+        {
+            StatsPerLevel.Add("Atk", addAtk);
+            StatsPerLevel.Add("Def", addDef);
+            StatsPerLevel.Add("MaxHp", addMaxHp);
+            StatsPerLevel.Add("MaxMp", addMaxMp);
+            StatsPerLevel.Add("CriticalChance", addCriticalChance);
+            StatsPerLevel.Add("DodgeChance", addDodgeChance);
         }
 
         public void ChangeHP(int hp)
@@ -112,6 +125,22 @@ namespace TeamTextRPG.Classes
             }
             Equipments[(int)part] = null;
 
+        }
+
+        // 레벨업 함수
+        public void LevelUp()
+        {
+            // 최대 레벨 컷
+            if (Level == 10)
+                return;
+
+            Atk += StatsPerLevel["Atk"];
+            Def += StatsPerLevel["Def"];
+            MaxHp += StatsPerLevel["MaxHp"];
+            MaxMp += StatsPerLevel["MaxMp"];
+            CriticalChance += StatsPerLevel["CriticalChance"];
+            DodgeChance += StatsPerLevel["DodgeChance"];
+            Level++;
         }
     }
 }
