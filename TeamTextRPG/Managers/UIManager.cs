@@ -597,8 +597,11 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(left + 9, 9);
             Console.Write($"{dm.Shelters[num].Name}");
 
-            Console.SetCursorPosition(left + 3, 14);
-            Console.Write($"회복량        {dm.Shelters[num].Heal} H");
+            Console.SetCursorPosition(left + 3, 13);
+            Console.Write($"회복량        {dm.Shelters[num].Healing} H");
+
+            Console.SetCursorPosition(left + 3, 15);
+            Console.Write($"수련량        {dm.Shelters[num].Refreshing} M");
 
             Console.SetCursorPosition(left + 3, 17);
             Console.Write($"비  용        {dm.Shelters[num].Cost} G");
@@ -637,7 +640,7 @@ namespace TeamTextRPG.Managers
             var player = GameManager.Instance.DataManager.Player;
 
             int rate = 15;
-            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + player.GetEquipmentStatBonus(Stats.MAXHP) + 0.5f);
+            int fillExpBar = (int)(rate * (float)player.CurrentMp / player.MaxMp + player.GetEquipmentStatBonus(Stats.MAXMP) + 0.5f);
             if (fillExpBar >= rate) fillExpBar = rate;
 
             Console.SetCursorPosition(50, _goldTopPostion);

@@ -1,4 +1,5 @@
-﻿using TeamTextRPG.Common;
+﻿using Newtonsoft.Json;
+using TeamTextRPG.Common;
 
 namespace TeamTextRPG.Classes
 {
@@ -7,7 +8,8 @@ namespace TeamTextRPG.Classes
         public string Name { get; set; }
         public string Description { get; set; }
         public int ManaCost { get; set; }
-        public SkillType Type { get; set; } // 아직 안 쓰는 중
+        public SkillType SkillType { get; set; }
+        public ValueTypeEnum ValueType { get; set; }
         public Stats Stat { get; set; }
         public int Value { get; set; }
         public int Duration { get; set; }
@@ -19,15 +21,27 @@ namespace TeamTextRPG.Classes
             Name = name;
             Description = description;
             ManaCost = manaCost;
-            Type = type;
+            SkillType = type;
             Stat = stat;
             Value = value;
             Duration = duration;
+            ValueType = ValueTypeEnum.PROPOTIONAL;
+        }
+
+        public Skill(string name, string description, int manaCost, SkillType type, int value, int duration)
+        {
+            Name = name;
+            Description = description;
+            ManaCost = manaCost;
+            SkillType = type;
+            Value = value;
+            Duration = duration;
+            ValueType = ValueTypeEnum.FIXED;
         }
 
         public Skill UseSkill(Character caster, Character target)
         {
-            Skill skillToken = new Skill(Name, Description, ManaCost, Type, Stat, Value, Duration);
+            Skill skillToken = new Skill(Name, Description, ManaCost, SkillType, Stat, Value, Duration);
             skillToken.Caster = caster;
             skillToken.Target = target;
 
@@ -36,40 +50,28 @@ namespace TeamTextRPG.Classes
             return skillToken;
         }
 
+        [JsonConstructor]
+        public Skill()
+        {
+
+        }
+
         public int DoSkill()
         {
             Duration--;
+            int value = 0;
 
-            switch(Type)
+            switch (ValueType)
             {
-                case SkillType.DAMAGE:
-                    return (int)(GetStatValue() * Value / 100f);
-                case SkillType.BUFF:
-                    return Value;
+                case ValueTypeEnum.PROPOTIONAL:
+                    value = (int)(Caster.GetStatValue(Stat) * Value / 100f);
+                    break;
+                case ValueTypeEnum.FIXED:
+                    value = Value;
+                    break;
             }
 
-            return 0;
-        }
-
-        public int GetStatValue()
-        {
-            switch(Stat) {
-                case Stats.MAXHP:
-                    return Caster.MaxHp + Caster.GetEquipmentStatBonus(Stats.MAXHP);
-                case Stats.MAXMP:
-                    return Caster.MaxMp;
-                case Stats.ATK:
-                    return Caster.Atk + Caster.GetEquipmentStatBonus(Stats.ATK);
-                case Stats.DEF:
-                    return Caster.Def + Caster.GetEquipmentStatBonus(Stats.DEF);
-                case Stats.CRITICALCHANCE:
-                    return Caster.CriticalChance;
-                case Stats.CRITICALDAMAGE:
-                    return Caster.CriticalDamage;
-                case Stats.DODGECHANCE:
-                    return Caster.DodgeChance + Caster.GetEquipmentStatBonus(Stats.DODGECHANCE);
-            }
-            return 0;
+            return value;
         }
     }
 }
