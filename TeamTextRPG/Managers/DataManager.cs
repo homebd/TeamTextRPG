@@ -133,7 +133,7 @@ namespace TeamTextRPG.Managers
                     for (int i = 0; i < monsters.Count; i++)
                     {
                         JObject monster = (JObject)monsters[i];
-                        _monsters.Add(new Monster((string)monster["Name"], (int)monster["Id"], (int)monster["Level"], (int)monster["Atk"], (int)monster["Def"], (int)monster["MaxHp"], (int)monster["Gold"], (int)monster["Exp"], (int)monster["RewardItemId"], (float)monster["CriticalChance"], (float)monster["CriticalDamage"], (float)monster["DodgeChance"]));
+                        _monsters.Add(new Monster((string)monster["Name"], (int)monster["Id"], (int)monster["Level"], (int)monster["Atk"], (int)monster["Def"], (int)monster["MaxHp"], (int)monster["Gold"], (int)monster["Exp"], (int)monster["RewardItemId"], (int)monster["CriticalChance"], (int)monster["CriticalDamage"], (int)monster["DodgeChance"]));
                     }
                 }
             }
@@ -146,31 +146,7 @@ namespace TeamTextRPG.Managers
                 return;
             _items.AddRange(LoadedItems);
         }
-        public void Wear(Item item)
-        {
-            Player.Equipments[(int)item.Part] = item;
 
-            if (item.Part == Parts.HELMET || item.Part == Parts.BOOTS)
-            {
-                Player.ChangeHP(item.Stat + item.BonusStat);
-            }
-        }
-
-        public void Unwear(Parts part)
-        {
-            if (part == Parts.HELMET || part == Parts.BOOTS)
-            {
-                int hp;
-                if (Player.CurrentHp <= Player.Equipments[(int)part].Stat + Player.Equipments[(int)part].BonusStat)
-                    hp = (int)Player.CurrentHp - 1;
-                else
-                    hp = Player.Equipments[(int)part].Stat + Player.Equipments[(int)part].BonusStat;
-                
-                Player.ChangeHP(-hp);
-            }
-            Player.Equipments[(int)part] = null;
-
-        }
         public void BuyItem(Item item)
         {
             Player.Gold -= item.Price;
