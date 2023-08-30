@@ -130,10 +130,6 @@ namespace TeamTextRPG.Classes
         // 레벨업 함수
         public void LevelUp()
         {
-            // 최대 레벨 컷
-            if (Level == 10)
-                return;
-
             Atk += StatsPerLevel["Atk"];
             Def += StatsPerLevel["Def"];
             MaxHp += StatsPerLevel["MaxHp"];
