@@ -133,7 +133,7 @@ namespace TeamTextRPG.Managers
                     for (int i = 0; i < monsters.Count; i++)
                     {
                         JObject monster = (JObject)monsters[i];
-                        _monsters.Add(new Monster((string)monster["Name"], (int)monster["Id"], (int)monster["Level"], (int)monster["Atk"], (int)monster["Def"], (int)monster["MaxHp"], (int)monster["Gold"], (int)monster["Exp"], (int)monster["RewardItemId"], (float)monster["CriticalChance"], (float)monster["CriticalDamage"], (float)monster["DodgeChance"]));
+                        _monsters.Add(new Monster((string)monster["Name"], (int)monster["Id"], (int)monster["Level"], (int)monster["Atk"], (int)monster["Def"], (int)monster["MaxHp"], (int)monster["Gold"], (int)monster["Exp"], (int)monster["RewardItemId"], (int)monster["CriticalChance"], (int)monster["CriticalDamage"], (int)monster["DodgeChance"]));
                     }
                 }
             }
