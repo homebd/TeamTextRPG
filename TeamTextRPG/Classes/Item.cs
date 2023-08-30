@@ -3,7 +3,6 @@
 /// </summary>
 /// 
 using TeamTextRPG.Common;
-using TeamTextRPG.Managers;
 
 namespace TeamTextRPG.Classes
 {

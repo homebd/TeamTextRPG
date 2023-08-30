@@ -83,9 +83,7 @@ namespace TeamTextRPG.Managers
                             {
                                 if (targetNum == _size + 1)
                                 {
-                                    SkillList.Push(selectedSkill.UseSkill(
-                                        GameManager.Instance.DataManager.Player,
-                                        GameManager.Instance.DataManager.Player));
+                                    Battle(GameManager.Instance.DataManager.Player, selectedSkill);
                                 } //버프 임시로
                                 else {
                                     Battle(Monsters[targetNum - 1], selectedSkill);
@@ -194,7 +192,7 @@ namespace TeamTextRPG.Managers
 
         }
 
-        public void Battle(Monster monster, Skill? skill)
+        public void Battle(Character monster, Skill? skill)
         {
 
             var ui = GameManager.Instance.UIManager;
@@ -210,7 +208,7 @@ namespace TeamTextRPG.Managers
 
             ManageSkillList();
             Console.CursorVisible = false;
-            Thread.Sleep(500);
+            Thread.Sleep(100);
             Console.CursorVisible = true;
 
             //몬스터 턴

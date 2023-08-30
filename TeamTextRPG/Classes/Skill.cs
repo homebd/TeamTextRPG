@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using TeamTextRPG.Common;
 
 namespace TeamTextRPG.Classes
@@ -41,7 +42,18 @@ namespace TeamTextRPG.Classes
 
         public Skill UseSkill(Character caster, Character target)
         {
-            Skill skillToken = new Skill(Name, Description, ManaCost, SkillType, Stat, Value, Duration);
+            Skill skillToken = null;
+
+            switch (ValueType)
+            {
+                case ValueTypeEnum.PROPOTIONAL:
+                    skillToken = new Skill(Name, Description, ManaCost, SkillType, Stat, Value, Duration);
+                    break;
+                case ValueTypeEnum.FIXED:
+                    skillToken = new Skill(Name, Description, ManaCost, SkillType, Value, Duration);
+                    break;
+            }
+
             skillToken.Caster = caster;
             skillToken.Target = target;
 
