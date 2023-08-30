@@ -324,7 +324,7 @@ namespace TeamTextRPG.Managers
             // 최소데미지 1로 고정
             if (-temp >= 0 && damage == 0)
             {
-                damage = 1;
+                damage = -1;
             }
             #endregion
 
