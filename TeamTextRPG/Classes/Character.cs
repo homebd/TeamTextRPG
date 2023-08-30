@@ -1,7 +1,9 @@
-﻿/// <summary
+/// <summary>
 /// 캐릭터 클래스
 /// </summary>
 
+using Newtonsoft.Json.Linq;
+using System.Numerics;
 using TeamTextRPG.Common;
 
 namespace TeamTextRPG.Classes
@@ -88,6 +90,7 @@ namespace TeamTextRPG.Classes
         }
 
         public virtual int GetEquipmentStatBonus(Stats stat) { return 0; }
+        
         public bool IsDead()
         {
             return CurrentHp <= 0;

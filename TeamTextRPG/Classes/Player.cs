@@ -1,4 +1,4 @@
-﻿/// <summary
+/// <summary>
 /// 플레이어 클래스
 /// </summary>
 
@@ -11,7 +11,7 @@ namespace TeamTextRPG.Classes
     {
         public JOB Job { get; }
         public Item[]? Equipments { get; set; }
-        //public List<Skill> Skills { get; set; }
+        public List<Skill> Skills { get; set; }
 
         public Player(string name, JOB job, int level, int atk, int def, int maxHp, int maxMp, int gold
             , int currentHp = -1, int currentMp = -1, int exp = 0, int cc = 15, int cd = 160, int dc = 5)
@@ -39,7 +39,7 @@ namespace TeamTextRPG.Classes
 
             Inventory = new List<Item>();
             Equipments = new Item[Enum.GetValues(typeof(Parts)).Length];
-            //Skills = new List<Skill>();
+            Skills = new List<Skill>();
         }
 
         public void ChangeHP(int hp)
@@ -65,23 +65,23 @@ namespace TeamTextRPG.Classes
             switch (stat)
             {
                 case Stats.MAXHP:
-                    bonus += Equipments[(int)Parts.HELMET].Stat;
+                    if(Equipments[(int)Parts.HELMET] != null)  bonus += Equipments[(int)Parts.HELMET].Stat; 
                     break;
                 case Stats.MAXMP:
                     break;
                 case Stats.ATK:
-                    bonus += Equipments[(int)Parts.WEAPON].Stat;
+                    if (Equipments[(int)Parts.WEAPON] != null) bonus += Equipments[(int)Parts.WEAPON].Stat;
                     break;
                 case Stats.DEF:
-                    bonus += Equipments[(int)Parts.CHESTPLATE].Stat;
-                    bonus += Equipments[(int)Parts.LEGGINGS].Stat;
+                    if (Equipments[(int)Parts.CHESTPLATE] != null) bonus += Equipments[(int)Parts.CHESTPLATE].Stat;
+                    if (Equipments[(int)Parts.LEGGINGS] != null) bonus += Equipments[(int)Parts.LEGGINGS].Stat;
                     break;
                 case Stats.CRITICALCHANCE:
                     break;
                 case Stats.CRITICALDAMAGE:
                     break;
                 case Stats.DODGECHANCE:
-                    bonus += Equipments[(int)Parts.BOOTS].Stat;
+                    if (Equipments[(int)Parts.BOOTS] != null) bonus += Equipments[(int)Parts.BOOTS].Stat;
                     break;
             }
 
