@@ -288,6 +288,7 @@ namespace TeamTextRPG.Managers
                 Shop.Add(MakeNewItem(i));
             }
             Shop = Shop.OrderBy(item => item.Id).ToList();
+           
             #endregion
 
             #region 휴식 세팅
@@ -723,7 +724,7 @@ namespace TeamTextRPG.Managers
         {
             UIManager ui = GameManager.Instance.UIManager;
 
-            int cost = 5000;
+            int cost = 50000;
 
             ui.AddLog("닉네임을 입력하세요.");
 

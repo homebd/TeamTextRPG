@@ -63,8 +63,8 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(0, _categoryTopPostion);
 
-            Console.WriteLine("┌───────┐───────┐───────┐───────┐───────┐───────┐");
-            Console.WriteLine("│  전체 │  무기 │  투구 │  갑옷 │  바지 │  신발 │");
+            Console.WriteLine("┌───────┐───────┐───────┐───────┐───────┐───────┐───────┐");
+            Console.WriteLine("│  전체 │  무기 │  투구 │  갑옷 │  바지 │  신발 │  소모 │");
             switch (Category)
             {
                 case null:
@@ -85,8 +85,11 @@ namespace TeamTextRPG.Managers
                 case Parts.BOOTS:
                     Console.Write("────────────────────────────────────────┘       └─────");
                     break;
+                case Parts.USEABlE:
+                    Console.Write("────────────────────────────────────────────────┘       └─");
+                    break;
             }
-            Console.Write("".PadRight(Console.WindowWidth - 54, '─'));
+            Console.Write("".PadRight(Console.WindowWidth - 58, '─'));
             Console.Write("\n\n");
 
             if (forRefresh) Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
