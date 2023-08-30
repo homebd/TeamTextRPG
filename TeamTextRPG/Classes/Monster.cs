@@ -7,7 +7,7 @@ namespace TeamTextRPG.Classes
         public int Id { get; }
 
         public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp, int rewardItemId = -1,
-             float cc = 0.1f, float cd = 1.6f, float dc = 0.05f)
+             int cc = 15, int cd = 160, int dc = 5)
         {
             Name = name;
             Id = id;
@@ -45,12 +45,6 @@ namespace TeamTextRPG.Classes
             {
                 CurrentHp = 0;
             }
-        }
-            
-
-        public bool IsDead()
-        {
-            return CurrentHp == 0;
         }
     }
 }

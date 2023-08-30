@@ -1,4 +1,4 @@
-﻿/// <summary
+/// <summary
 /// 플레이어 데이터 및 아이템과 던전 등의 데이터를 관리하는 클래스
 /// </summary>
 
@@ -142,7 +142,6 @@ namespace TeamTextRPG.Managers
         public void LoadItems()
         {
             List<Item>? LoadedItems = JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText(_dataPath + @"/Items.json"));
-
             if (LoadedItems == null)
                 return;
             _items.AddRange(LoadedItems);
@@ -172,7 +171,6 @@ namespace TeamTextRPG.Managers
             Player.Equipments[(int)part] = null;
 
         }
-
         public void BuyItem(Item item)
         {
             Player.Gold -= item.Price;
@@ -458,7 +456,14 @@ namespace TeamTextRPG.Managers
                             {
                                 if (job >= 1 && job <= (int)JOB.ARCHER + 1)
                                 {
-                                    Player = new Player(name, (JOB)(job - 1), 1, 10, 5, 100, 1500);
+                                    // 인덱스로 교체
+                                    job--;
+                                    // 초기 스텟 설정
+                                    Player = new Player(name, (JOB)(job), 1, (int)data["Atk"][(job)], (int)data["Def"][(job)], (int)data["MaxHp"][(job)], (int)data["MaxMp"][(job)], 1500);
+                                    // 닷지 찬스 설정 (Player의 생성자 문제)
+                                    Player.DodgeChance = (int)data["DodgeChance"][job];
+                                    // 레벨 당 스탯 증가 수치 설정
+                                    Player.SetStatsPerLevel((int)data["AddAtk"][job], (int)data["AddDef"][job], (int)data["AddMaxHp"][job], (int)data["AddMaxMp"][job], (int)data["AddCriticalChance"][job], (int)data["AddDodgeChance"][job]);
                                     GetBasicItem();
                                     SaveData();
                                     GameManager.Instance.SceneManager.Scene = Scenes.TOWN;
@@ -582,7 +587,7 @@ namespace TeamTextRPG.Managers
                 {
                     if (Player.Equipments[(int)item.Part] == item)
                     {
-                        Unwear(item.Part);
+                        Player.Unwear(item.Part);
                     }
 
                     item.Level = 0;

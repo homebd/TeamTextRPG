@@ -1,7 +1,8 @@
-﻿/// <summary
+/// <summary>
 /// 플레이어 클래스
 /// </summary>
 
+using System.Runtime.ConstrainedExecution;
 using System.Transactions;
 using TeamTextRPG.Common;
 
@@ -11,10 +12,11 @@ namespace TeamTextRPG.Classes
     {
         public JOB Job { get; }
         public Item[]? Equipments { get; set; }
-        //public List<Skill> Skills { get; set; }
+        public List<Skill> Skills { get; set; }
+        private Dictionary<string,int> StatsPerLevel;
 
-        public Player(string name, JOB job, int level, int atk, int def, int maxHp, int gold
-            , int currentHp = -1, int exp = 0, float cc = 0.15f, float cd = 1.6f, float dc = 0.05f)
+        public Player(string name, JOB job, int level, int atk, int def, int maxHp, int maxMp, int gold
+            , int currentHp = -1, int currentMp = -1, int exp = 0, int cc = 15, int cd = 160, int dc = 5)
         {
             Name = name;
             Job = job;
@@ -22,10 +24,15 @@ namespace TeamTextRPG.Classes
             Atk = atk;
             Def = def;
             MaxHp = maxHp;
+            MaxMp = maxMp;
             Gold = gold;
 
             if (currentHp == -1) CurrentHp = maxHp;
             else CurrentHp = currentHp;
+
+            if (currentMp == -1) CurrentMp = maxMp;
+            else CurrentMp = currentMp;
+
             Exp = exp;
 
             CriticalChance = cc;
@@ -34,20 +41,24 @@ namespace TeamTextRPG.Classes
 
             Inventory = new List<Item>();
             Equipments = new Item[Enum.GetValues(typeof(Parts)).Length];
-            //Skills = new List<Skill>();
+            Skills = new List<Skill>();
+            StatsPerLevel = new Dictionary<string, int>();
+        }
+
+        // StatsPerLevel -> 초기설정 함수
+        public void SetStatsPerLevel(int addAtk, int addDef, int addMaxHp, int addMaxMp, int addCriticalChance, int addDodgeChance)
+        {
+            StatsPerLevel.Add("Atk", addAtk);
+            StatsPerLevel.Add("Def", addDef);
+            StatsPerLevel.Add("MaxHp", addMaxHp);
+            StatsPerLevel.Add("MaxMp", addMaxMp);
+            StatsPerLevel.Add("CriticalChance", addCriticalChance);
+            StatsPerLevel.Add("DodgeChance", addDodgeChance);
         }
 
         public void ChangeHP(int hp)
         {
-            var totalHp = MaxHp;
-
-            var helmet = Equipments[(int)(Parts.HELMET)];
-            var boots = Equipments[(int)(Parts.BOOTS)];
-
-            if (helmet != null)
-                totalHp += helmet.Stat + helmet.BonusStat;
-            if (boots != null)
-                totalHp += boots.Stat + boots.BonusStat;
+            var totalHp = MaxHp + GetEquipmentStatBonus(Stats.MAXHP);
 
             CurrentHp += hp;
 
@@ -62,47 +73,71 @@ namespace TeamTextRPG.Classes
             }
         }
 
-        public int GetAtkBonus(bool print = true)
+        public int GetEquipmentStatBonus(Stats stat)
         {
-            int atkBonus = 0;
-
-            if (Equipments[(int)Parts.WEAPON] != null)
+            int bonus = 0;
+            switch (stat)
             {
-                atkBonus = Equipments[(int)Parts.WEAPON].Stat
-                    + Equipments[(int)Parts.WEAPON].BonusStat;
+                case Stats.MAXHP:
+                    if(Equipments[(int)Parts.HELMET] != null)  bonus += Equipments[(int)Parts.HELMET].Stat; 
+                    break;
+                case Stats.MAXMP:
+                    break;
+                case Stats.ATK:
+                    if (Equipments[(int)Parts.WEAPON] != null) bonus += Equipments[(int)Parts.WEAPON].Stat;
+                    break;
+                case Stats.DEF:
+                    if (Equipments[(int)Parts.CHESTPLATE] != null) bonus += Equipments[(int)Parts.CHESTPLATE].Stat;
+                    if (Equipments[(int)Parts.LEGGINGS] != null) bonus += Equipments[(int)Parts.LEGGINGS].Stat;
+                    break;
+                case Stats.CRITICALCHANCE:
+                    break;
+                case Stats.CRITICALDAMAGE:
+                    break;
+                case Stats.DODGECHANCE:
+                    if (Equipments[(int)Parts.BOOTS] != null) bonus += Equipments[(int)Parts.BOOTS].Stat;
+                    break;
             }
 
-            return atkBonus;
+            return bonus;
         }
 
-        public int GetDefBonus(bool print = true)
+        public void Wear(Item item)
         {
-            int defBonus = 0;
+            Equipments[(int)item.Part] = item;
 
-            if (Equipments[(int)Parts.CHESTPLATE] != null)
-                defBonus += Equipments[(int)Parts.CHESTPLATE].Stat
-                    + Equipments[(int)Parts.CHESTPLATE].BonusStat;
-
-            if (Equipments[(int)Parts.LEGGINGS] != null)
-                defBonus += Equipments[(int)Parts.LEGGINGS].Stat
-                    + Equipments[(int)Parts.LEGGINGS].BonusStat;
-
-            return defBonus;
+            if (item.Part == Parts.HELMET || item.Part == Parts.BOOTS)
+            {
+                ChangeHP(item.Stat + item.BonusStat);
+            }
         }
 
-        public int GetHpBonus(bool print = true)
+        public void Unwear(Parts part)
         {
-            int hpBonus = 0;
+            if (part == Parts.HELMET || part == Parts.BOOTS)
+            {
+                int hp;
+                if (CurrentHp <= Equipments[(int)part].Stat + Equipments[(int)part].BonusStat)
+                    hp = (int)CurrentHp - 1;
+                else
+                    hp = Equipments[(int)part].Stat + Equipments[(int)part].BonusStat;
 
-            if (Equipments[(int)Parts.HELMET] != null)
-                hpBonus += Equipments[(int)Parts.HELMET].Stat
-                    + Equipments[(int)Parts.HELMET].BonusStat;
+                ChangeHP(-hp);
+            }
+            Equipments[(int)part] = null;
 
-            if (Equipments[(int)Parts.BOOTS] != null)
-                hpBonus += Equipments[(int)Parts.BOOTS].Stat
-                    + Equipments[(int)Parts.BOOTS].BonusStat;
+        }
 
-            return hpBonus;
+        // 레벨업 함수
+        public void LevelUp()
+        {
+            Atk += StatsPerLevel["Atk"];
+            Def += StatsPerLevel["Def"];
+            MaxHp += StatsPerLevel["MaxHp"];
+            MaxMp += StatsPerLevel["MaxMp"];
+            CriticalChance += StatsPerLevel["CriticalChance"];
+            DodgeChance += StatsPerLevel["DodgeChance"];
+            Level++;
         }
     }
 }
