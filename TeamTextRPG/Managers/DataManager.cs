@@ -173,10 +173,10 @@ namespace TeamTextRPG.Managers
             #region 던전 세팅
             Dungeons.Add(new Dungeon(Player, "마을 동굴", 3, 300));
             Dungeons[0].AddMonster(0);
+            Dungeons[0].AddMonster(1);
             Dungeons[0].AddMonster(2);
             Dungeons[0].AddMonster(3);
             Dungeons[0].AddMonster(4);
-            Dungeons[0].AddMonster(6);
             Dungeons[0].AddReward(0);
             Dungeons[0].AddReward(10);
             Dungeons[0].AddReward(20);
@@ -184,7 +184,6 @@ namespace TeamTextRPG.Managers
             Dungeons[0].AddReward(40);
 
             Dungeons.Add(new Dungeon(Player, "옆 마을", 5, 600));
-            Dungeons[1].AddMonster(1);
             Dungeons[1].AddMonster(5);
             Dungeons[1].AddMonster(6);
             Dungeons[1].AddMonster(7);
@@ -196,7 +195,6 @@ namespace TeamTextRPG.Managers
             Dungeons[1].AddReward(41);
 
             Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 7, 1000));
-            Dungeons[2].AddMonster(5);
             Dungeons[2].AddMonster(9);
             Dungeons[2].AddMonster(10);
             Dungeons[2].AddMonster(11);
