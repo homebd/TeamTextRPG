@@ -6,7 +6,8 @@
         HELMET,
         CHESTPLATE,
         LEGGINGS,
-        BOOTS
+        BOOTS,
+        USEABlE
     }
     public enum JOB
     {

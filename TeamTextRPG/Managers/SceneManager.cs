@@ -259,9 +259,10 @@ namespace TeamTextRPG.Managers
                                     }
                                     else
                                     {
+                                       // if((int)selectedItem.Part < 5){ }
                                         if (dm.Player.Equipments[(int)selectedItem.Part] != null)
-                                            dm.Player.Unwear(selectedItem.Part);
-
+                                                dm.Player.Unwear(selectedItem.Part);
+                                   
                                         dm.Player.Wear(selectedItem);
                                     }
 

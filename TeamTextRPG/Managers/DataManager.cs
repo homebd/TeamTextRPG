@@ -288,6 +288,7 @@ namespace TeamTextRPG.Managers
                 Shop.Add(MakeNewItem(i));
             }
             Shop = Shop.OrderBy(item => item.Id).ToList();
+           
             #endregion
 
             #region 휴식 세팅
