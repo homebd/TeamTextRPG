@@ -106,7 +106,7 @@ namespace TeamTextRPG.Classes
         {
             Equipments[(int)item.Part] = item;
 
-            if (item.Part == Parts.HELMET || item.Part == Parts.BOOTS)
+            if (item.Part == Parts.HELMET)
             {
                 ChangeHP(item.Stat + item.BonusStat);
             }
