@@ -255,14 +255,14 @@ namespace TeamTextRPG.Managers
 
                                     if (dm.Player.Equipments[(int)selectedItem.Part] == selectedItem)
                                     {
-                                        dm.Unwear(selectedItem.Part);
+                                        dm.Player.Unwear(selectedItem.Part);
                                     }
                                     else
                                     {
                                         if (dm.Player.Equipments[(int)selectedItem.Part] != null)
-                                            dm.Unwear(selectedItem.Part);
+                                            dm.Player.Unwear(selectedItem.Part);
 
-                                        dm.Wear(selectedItem);
+                                        dm.Player.Wear(selectedItem);
                                     }
 
                                     return;

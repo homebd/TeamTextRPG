@@ -11,7 +11,7 @@ namespace TeamTextRPG.Classes
     {
         public JOB Job { get; }
         public Item[]? Equipments { get; set; }
-        public List<Skill> Skills { get; set; }
+        //public List<Skill> Skills { get; set; }
 
         public Player(string name, JOB job, int level, int atk, int def, int maxHp, int maxMp, int gold
             , int currentHp = -1, int currentMp = -1, int exp = 0, int cc = 15, int cd = 160, int dc = 5)
@@ -39,7 +39,7 @@ namespace TeamTextRPG.Classes
 
             Inventory = new List<Item>();
             Equipments = new Item[Enum.GetValues(typeof(Parts)).Length];
-            Skills = new List<Skill>();
+            //Skills = new List<Skill>();
         }
 
         public void ChangeHP(int hp)
@@ -86,6 +86,32 @@ namespace TeamTextRPG.Classes
             }
 
             return bonus;
+        }
+
+        public void Wear(Item item)
+        {
+            Equipments[(int)item.Part] = item;
+
+            if (item.Part == Parts.HELMET || item.Part == Parts.BOOTS)
+            {
+                ChangeHP(item.Stat + item.BonusStat);
+            }
+        }
+
+        public void Unwear(Parts part)
+        {
+            if (part == Parts.HELMET || part == Parts.BOOTS)
+            {
+                int hp;
+                if (CurrentHp <= Equipments[(int)part].Stat + Equipments[(int)part].BonusStat)
+                    hp = (int)CurrentHp - 1;
+                else
+                    hp = Equipments[(int)part].Stat + Equipments[(int)part].BonusStat;
+
+                ChangeHP(-hp);
+            }
+            Equipments[(int)part] = null;
+
         }
     }
 }
