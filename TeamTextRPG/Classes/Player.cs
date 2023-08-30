@@ -106,15 +106,20 @@ namespace TeamTextRPG.Classes
         {
             Equipments[(int)item.Part] = item;
 
-            if (item.Part == Parts.HELMET || item.Part == Parts.BOOTS)
+            if (item.Part == Parts.HELMET)
             {
                 ChangeHP(item.Stat + item.BonusStat);
+            }
+
+            if(item.Part == Parts.BOOTS )
+            {
+                DodgeChance += (item.Stat + item.BonusStat);
             }
         }
 
         public void Unwear(Parts part)
         {
-            if (part == Parts.HELMET || part == Parts.BOOTS)
+            if (part == Parts.HELMET)
             {
                 int hp;
                 if (CurrentHp <= Equipments[(int)part].Stat + Equipments[(int)part].BonusStat)
@@ -123,6 +128,11 @@ namespace TeamTextRPG.Classes
                     hp = Equipments[(int)part].Stat + Equipments[(int)part].BonusStat;
 
                 ChangeHP(-hp);
+            }
+
+            if (part == Parts.BOOTS)
+            {
+                DodgeChance -= (Equipments[(int)part].Stat + Equipments[(int)part].BonusStat);
             }
             Equipments[(int)part] = null;
 
