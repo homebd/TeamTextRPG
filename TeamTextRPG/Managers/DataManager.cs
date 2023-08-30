@@ -405,6 +405,9 @@ namespace TeamTextRPG.Managers
         public void PrintDungeonExploreResult(Dungeon dungeon, bool clear, int rewardGold, int rewardExp, List<Item>rewardItems)
         {
             UIManager ui = GameManager.Instance.UIManager;
+
+            ui.ClearLog();
+
             if (clear)
                 ui.AddLog($"{dungeon.Name} 클리어");
             else

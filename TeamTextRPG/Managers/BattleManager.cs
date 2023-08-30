@@ -215,7 +215,7 @@ namespace TeamTextRPG.Managers
             foreach(var livingMonster in Monsters.Where(x => !x.IsDead()))
             {
                 var monsterSkill = new Skill("공격", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1);
-                SkillList.Push(monsterSkill.UseSkill(monster, player));
+                SkillList.Push(monsterSkill.UseSkill(livingMonster, player));
             }
 
             ManageSkillList();
