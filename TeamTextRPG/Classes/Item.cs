@@ -52,12 +52,14 @@ namespace TeamTextRPG.Classes
                     statByPart = "공격력";
                     break;
                 case Parts.HELMET:
-                case Parts.BOOTS:
                     statByPart = "체  력";
                     break;
                 case Parts.CHESTPLATE:
                 case Parts.LEGGINGS:
                     statByPart = "방어력";
+                    break;
+                case Parts.BOOTS:
+                    statByPart = "회피율";
                     break;
             }
 
@@ -84,13 +86,16 @@ namespace TeamTextRPG.Classes
                     statByPart = "공격력";
                     break;
                 case Parts.HELMET:
-                case Parts.BOOTS:
                     statByPart = "체  력";
                     break;
                 case Parts.CHESTPLATE:
                 case Parts.LEGGINGS:
                     statByPart = "방어력";
                     break;
+                case Parts.BOOTS:
+                    statByPart = "회피율";
+                    break;
+
             }
 
             Console.Write($"- {printNum}{equip}{level}{Name}");
