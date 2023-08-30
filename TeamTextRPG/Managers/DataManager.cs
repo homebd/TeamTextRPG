@@ -282,13 +282,10 @@ namespace TeamTextRPG.Managers
             #endregion
 
             #region 상점 세팅
-            for (int i = 0; i < _items.Count; i++)
+            // 70 번부터 상점 아이템입니다.
+            for (int i = 70; i < _items.Count; i++)
             {
-                if (i % 10 > 3) i += 9 - i % 10;
-                else
-                {
-                    Shop.Add(MakeNewItem(i));
-                }
+                Shop.Add(MakeNewItem(i));
             }
             Shop = Shop.OrderBy(item => item.Id).ToList();
             #endregion
