@@ -6,9 +6,6 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using TeamTextRPG.Classes;
 using TeamTextRPG.Common;
-using static TeamTextRPG.Managers.SceneManager;
-using System.Text.Json.Nodes;
-using System.Threading;
 
 namespace TeamTextRPG.Managers
 {
@@ -186,9 +183,9 @@ namespace TeamTextRPG.Managers
             #endregion
 
             #region 휴식 세팅
-            Shelters.Add(new Shelter("약초 처방", 100, 1500));
-            Shelters.Add(new Shelter("전문 진료", 500, 7500));
-            Shelters.Add(new Shelter("입원 치료", 1000, 15000));
+            Shelters.Add(new Shelter("약초 처방", 100, 300, 1500));
+            Shelters.Add(new Shelter("전문 진료", 500, 1500, 7500));
+            Shelters.Add(new Shelter("입원 치료", 1000, 3000, 15000));
             #endregion
         }
 
@@ -346,7 +343,8 @@ namespace TeamTextRPG.Managers
                 var iGold = Player.Gold;
 
                 Player.Gold -= st.Cost;
-                Player.ChangeHP(st.Heal);
+                Player.ChangeHP(st.Healing);
+                Player.ChangeMP(st.Refreshing);
 
                 ui.AddLog($"{st.Name}(을)를 완료했습니다.");
                 ui.AddLog($"체력 {iHp} -> {Player.CurrentHp}");
