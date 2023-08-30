@@ -455,13 +455,13 @@ namespace TeamTextRPG.Managers
             Console.Write($"직  업  {jop}");
 
             Console.SetCursorPosition(31, 13);
-            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp}(+{player.GetHpBonus()})");
+            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp}(+{player.GetEquipmentStatBonus(Stats.MAXHP)})");
 
             Console.SetCursorPosition(31, 15);
-            Console.Write($"공격력  {player.Atk}(+{player.GetAtkBonus()})");
+            Console.Write($"공격력  {player.Atk}(+{player.GetEquipmentStatBonus(Stats.ATK)})");
 
             Console.SetCursorPosition(31, 17);
-            Console.Write($"방어력  {player.Def}(+{player.GetDefBonus()})");
+            Console.Write($"방어력  {player.Def}(+{player.GetEquipmentStatBonus(Stats.DEF)})");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
@@ -553,7 +553,7 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(_goldLeftPostion, _goldTopPostion);
             Console.Write("┌─────────────────────────┐");
             Console.SetCursorPosition(_goldLeftPostion, _goldTopPostion + 1);
-            Console.Write($"│ 방어력│ {(player.Def + player.GetDefBonus()).ToString().PadLeft(16, ' ')}│");
+            Console.Write($"│ 방어력│ {(player.Def + player.GetEquipmentStatBonus(Stats.DEF)).ToString().PadLeft(16, ' ')}│");
             Console.SetCursorPosition(_goldLeftPostion, _goldTopPostion + 2);
             Console.Write("┴─────────────────────────┤");
 
@@ -612,7 +612,7 @@ namespace TeamTextRPG.Managers
             var player = GameManager.Instance.DataManager.Player;
 
             int rate = 20;
-            int fillExpBar = (int)(rate * (float)player.CurrentHp / (player.MaxHp + player.GetHpBonus()) + 0.5f);
+            int fillExpBar = (int)(rate * (float)player.CurrentHp / (player.MaxHp + player.GetEquipmentStatBonus(Stats.MAXHP)) + 0.5f);
             if (fillExpBar >= rate) fillExpBar = rate;
 
             Console.SetCursorPosition(0, _goldTopPostion);
@@ -637,7 +637,7 @@ namespace TeamTextRPG.Managers
             var player = GameManager.Instance.DataManager.Player;
 
             int rate = 15;
-            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + player.GetHpBonus() + 0.5f);
+            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + player.GetEquipmentStatBonus(Stats.MAXHP) + 0.5f);
             if (fillExpBar >= rate) fillExpBar = rate;
 
             Console.SetCursorPosition(50, _goldTopPostion);
