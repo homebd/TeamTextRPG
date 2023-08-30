@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using Newtonsoft.Json.Linq;
+using System.Numerics;
 using System.Threading;
 using TeamTextRPG.Classes;
 using TeamTextRPG.Common;
@@ -201,25 +202,25 @@ namespace TeamTextRPG.Managers
             // 플레이어 턴
             if (skill == null)
             {
-                skill = new Skill("attack", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1);
+                skill = new Skill("공격", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1);
             }
             
             SkillList.Push(skill.UseSkill(player, monster));
 
             ManageSkillList();
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
 
             //몬스터 턴
             foreach(var livingMonster in Monsters.Where(x => !x.IsDead()))
             {
-                var monsterSkill = new Skill("attack", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1);
+                var monsterSkill = new Skill("공격", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1);
                 SkillList.Push(monsterSkill.UseSkill(monster, player));
             }
 
             ManageSkillList();
 
-            Thread.Sleep(500);
+            Thread.Sleep(100);
 
             if (player.CurrentHp == 0)
             {
@@ -240,45 +241,10 @@ namespace TeamTextRPG.Managers
             }
         }
 
-        public void NormalHitPlayer(Monster monster)
-        {
-            Random rnd = new Random();
-            Player player = GameManager.Instance.DataManager.Player;
-            bool critical = false;
-
-            int damage;
-            // 회피 계산
-            if(rnd.Next(0, 100) <= player.DodgeChance)
-            {
-                damage = 0;
-            }
-            else
-            {
-                damage = (int)(rnd.Next(90, 110) * 0.01f * monster.Atk);
-
-                if (rnd.Next(0, 100) <= monster.CriticalChance)
-                {
-                    damage = (int)(damage * monster.CriticalDamage / 100f);
-                    critical = true;
-                }
-
-                damage -= player.Def;
-            }
-
-            if (damage > 0)
-            {
-                player.ChangeHP(-damage);
-                GameManager.Instance.UIManager.AddLog($"{monster.Name}의 {(critical ? "치명타" : "")} 공격! [데미지: {damage}]");
-            }
-            else
-            {
-                GameManager.Instance.UIManager.AddLog($"{monster.Name}의 공격은 빗나갔다!");
-            }
-        }
-
         public void ManageSkillList()
         {
             Stack<Skill> newSkillList = new Stack<Skill>();
+            var ui = GameManager.Instance.UIManager;
 
             while(SkillList.Count > 0)
             {
@@ -292,14 +258,16 @@ namespace TeamTextRPG.Managers
                     case SkillType.DAMAGE:
                         if(value < 0)
                         {
-                            // 스킬 데미지 적용 방식
-                            value = value + token.Target.Def;
-                            if (value > 0) value = 0;
+                            Damage(value, token);
+
                         }
-                        
+
                         // 치명타, 회피 계산 X
                         token.Target.ChangeHP(value);
-                        if (token.Target.IsDead()) KillMonster();
+                        if (token.Target.IsDead())
+                        {
+                            KillMonster();
+                        }
                         break;
                     case SkillType.BUFF:
                         token.Target.ChangeStat(token.Stat, value);
@@ -325,38 +293,44 @@ namespace TeamTextRPG.Managers
             _left--;
         }
 
-        public void Damage(int damage, Character target)
+        public void Damage(int damage, Skill skill)
         {
             Random rnd = new Random();
-            Player player = GameManager.Instance.DataManager.Player;
             bool critical = false;
 
             #region 회피 공식
-            if (rnd.Next(0, 100) <= target.GetStatValue(Stats.DODGECHANCE))
+            if (rnd.Next(0, 100) <= skill.Target.GetStatValue(Stats.DODGECHANCE))
             {
-                GameManager.Instance.UIManager.AddLog("공격이 빗나갔다!");
+                GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 공격은 빗나갔다!");
                 return;
             }
             #endregion
 
             #region 데미지 공식
-            float control = 1f - MathF.Pow(((float)target.GetStatValue(Stats.DEF) / -damage), 2);
+            float control = 1f - MathF.Pow(((float)skill.Target.GetStatValue(Stats.DEF) / -damage), 2);
             if (control < 0.2f) control = 0.2f;
 
             damage = (int)(damage * control);
             #endregion
 
             #region 치명타 공식
-            if (rnd.Next(0, 100) <= player.CriticalChance)
+            if (rnd.Next(0, 100) <= skill.Caster.CriticalChance)
             {
-                damage = (int)(damage * player.CriticalDamage / 100f);
+                damage = (int)(damage * skill.Caster.CriticalDamage / 100f);
                 critical = true;
             }
             #endregion
 
-            target.ChangeHP(damage);
+            skill.Target.ChangeHP(damage);
 
-            GameManager.Instance.UIManager.AddLog($"{target.Name}에게 {-damage}의 {(critical ? "치명타" : "")} 데미지!");
+            if(skill.Caster == GameManager.Instance.DataManager.Player)
+            {
+                GameManager.Instance.UIManager.AddLog($"[{skill.Name}]{skill.Target.Name}에게 {-damage} {(critical ? "치명타 " : "")}피해!");
+            }
+            else
+            {
+                GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 {skill.Name}! {-damage} {(critical ? "치명타 " : "")}피해!");
+            }
         }
     }
 }
