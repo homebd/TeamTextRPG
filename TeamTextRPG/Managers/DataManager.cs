@@ -111,6 +111,13 @@ namespace TeamTextRPG.Managers
             dynamic data = JsonConvert.DeserializeObject(jsonContent);
 
             Player = data.Player.ToObject<Player>();
+            foreach(var item in Player.Inventory)
+            {
+                if(item.IsEquipped)
+                {
+                    Player.Equipments[(int)item.Part] = item;
+                }
+            }
             DiscoveredItem = data.DiscoveredItem.ToObject<List<int>>();
             foreach (var id in DiscoveredItem)
             {
@@ -724,7 +731,7 @@ namespace TeamTextRPG.Managers
         {
             UIManager ui = GameManager.Instance.UIManager;
 
-            int cost = 5000;
+            int cost = 50000;
 
             ui.AddLog("닉네임을 입력하세요.");
 

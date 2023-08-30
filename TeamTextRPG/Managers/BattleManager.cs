@@ -268,9 +268,11 @@ namespace TeamTextRPG.Managers
                             Damage(value, token);
 
                         }
-
-                        // 치명타, 회피 계산 X
-                        token.Target.ChangeHP(value);
+                        else if(value > 0)
+                        {
+                            token.Target.ChangeHP(value);
+                        }
+                        
                         if (token.Target.IsDead())
                         {
                             KillMonster();
