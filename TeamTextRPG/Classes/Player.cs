@@ -1,4 +1,4 @@
-﻿/// <summary
+/// <summary>
 /// 플레이어 클래스
 /// </summary>
 
@@ -11,7 +11,7 @@ namespace TeamTextRPG.Classes
     {
         public JOB Job { get; }
         public Item[]? Equipments { get; set; }
-        //public List<Skill> Skills { get; set; }
+        public List<Skill> Skills { get; set; }
 
         public Player(string name, JOB job, int level, int atk, int def, int maxHp, int gold
             , int currentHp = -1, int exp = 0, float cc = 0.15f, float cd = 1.6f, float dc = 0.05f)
@@ -34,7 +34,7 @@ namespace TeamTextRPG.Classes
 
             Inventory = new List<Item>();
             Equipments = new Item[Enum.GetValues(typeof(Parts)).Length];
-            //Skills = new List<Skill>();
+            Skills = new List<Skill>();
         }
 
         public void ChangeHP(int hp)
@@ -68,8 +68,25 @@ namespace TeamTextRPG.Classes
 
             if (Equipments[(int)Parts.WEAPON] != null)
             {
-                atkBonus = Equipments[(int)Parts.WEAPON].Stat
-                    + Equipments[(int)Parts.WEAPON].BonusStat;
+                case Stats.MAXHP:
+                    if(Equipments[(int)Parts.HELMET] != null)  bonus += Equipments[(int)Parts.HELMET].Stat; 
+                    break;
+                case Stats.MAXMP:
+                    break;
+                case Stats.ATK:
+                    if (Equipments[(int)Parts.WEAPON] != null) bonus += Equipments[(int)Parts.WEAPON].Stat;
+                    break;
+                case Stats.DEF:
+                    if (Equipments[(int)Parts.CHESTPLATE] != null) bonus += Equipments[(int)Parts.CHESTPLATE].Stat;
+                    if (Equipments[(int)Parts.LEGGINGS] != null) bonus += Equipments[(int)Parts.LEGGINGS].Stat;
+                    break;
+                case Stats.CRITICALCHANCE:
+                    break;
+                case Stats.CRITICALDAMAGE:
+                    break;
+                case Stats.DODGECHANCE:
+                    if (Equipments[(int)Parts.BOOTS] != null) bonus += Equipments[(int)Parts.BOOTS].Stat;
+                    break;
             }
 
             return atkBonus;
