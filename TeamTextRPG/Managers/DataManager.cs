@@ -196,9 +196,9 @@ namespace TeamTextRPG.Managers
             _items.Add(new Item("거미 눈 헬멧", 50, Parts.HELMET, 0, 10, 1000, "거미 눈을 달아놓은 헬멧입니다."));
             _items.Add(new Item("뱀 독 단검", 51, Parts.WEAPON, 0, 2, 1200, "뱀의 독을 발라놓은 단검입니다."));
             _items.Add(new Item("고블린의 누더기 갑옷", 52, Parts.CHESTPLATE, 0, 2, 1500, "고블린이 입던 더러운 가죽 갑옷입니다."));
-            _items.Add(new Item("멧돼지 가죽 부츠", 53, Parts.BOOTS, 0, 10, 1000, "단단한 멧돼지의 가죽으로 만들어졌습니다."));
+            _items.Add(new Item("멧돼지 가죽 부츠", 53, Parts.BOOTS, 0, 3, 1000, "단단한 멧돼지의 가죽으로 만들어졌습니다."));
             _items.Add(new Item("코볼트 곡괭이", 54, Parts.WEAPON, 0, 5, 5000, "코볼트가 쓰던 곡괭이로 굉장히 무겁습니다."));
-            _items.Add(new Item("궁수의 신발", 55, Parts.BOOTS, 0, 30, 3500, "도적 궁수가 신던 신발로 가볍고 튼튼합니다."));
+            _items.Add(new Item("궁수의 신발", 55, Parts.BOOTS, 0, 5, 3500, "도적 궁수가 신던 신발로 가볍고 튼튼합니다."));
             _items.Add(new Item("도적의 바지", 56, Parts.LEGGINGS, 0, 3, 3500, "도적이 입던 바지로 손때가 탄 것 말고는 괜찮습니다."));
             _items.Add(new Item("사마귀 갑각", 57, Parts.CHESTPLATE, 0, 5, 9000, "사마귀의 갑각을 다듬어서 만든 갑옷입니다."));
             _items.Add(new Item("말벌 투구", 58, Parts.HELMET, 0, 60, 9000, "말벌의 겹눈을 가공해서 덧댄 투구입니다."));
@@ -206,14 +206,14 @@ namespace TeamTextRPG.Managers
 
             _items.Add(new Item("놀 가죽 바지", 60, Parts.LEGGINGS, 0, 5, 17000, "놀의 가죽과 털로 만들어진 바지입니다."));
             _items.Add(new Item("우르순의 가죽 갑옷", 61, Parts.CHESTPLATE, 0, 9, 30000, "각성한 곰의 가죽으로 만든 갑옷입니다."));
-            _items.Add(new Item("숨 죽인 신발", 62, Parts.BOOTS, 0, 150, 30000, "재규어의 발가죽으로 만든 소음이 적은 신발입니다."));
+            _items.Add(new Item("숨 죽인 신발", 62, Parts.BOOTS, 0, 11, 30000, "재규어의 발가죽으로 만든 소음이 적은 신발입니다."));
             _items.Add(new Item("와이번 이빨 창", 63, Parts.WEAPON, 0, 27, 75000, "와이번의 이빨을 가공해서 만든 창입니다"));
             _items.Add(new Item("독수리 깃털 투구", 64, Parts.HELMET, 0, 220, 40000, "변종 독수리의 깃털로 장식된 투구입니다."));
             _items.Add(new Item("인어족의 비늘각반", 65, Parts.LEGGINGS, 0, 11, 75000, "인어족의 비늘로 이뤄진 각반입니다."));
             _items.Add(new Item("아귀 머리", 66, Parts.HELMET, 0, 280, 75000, "미끌미끌한 아귀의 머리입니다."));
             _items.Add(new Item("그림자 검", 67, Parts.WEAPON, 0, 45, 200000, "칠흑의 검신을 가진 검입니다."));
             _items.Add(new Item("차크람의 갑옷", 68, Parts.CHESTPLATE, 0, 17, 120000, "차크람이 한 때 입었던 갑옷입니다."));
-            _items.Add(new Item("드래곤 비늘 신발", 69, Parts.BOOTS, 0, 450, 220000, "드래곤의 비늘을 덧댄 신발로 아주 튼튼합니다."));
+            _items.Add(new Item("드래곤 비늘 신발", 69, Parts.BOOTS, 0, 19, 220000, "드래곤의 비늘을 덧댄 신발로 아주 튼튼합니다."));
             #endregion
 
             #region 상점 세팅
