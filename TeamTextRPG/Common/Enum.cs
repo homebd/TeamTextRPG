@@ -16,10 +16,8 @@
     }
     public enum SkillType
     {
-        DD,
-        DOT,
-        BUFF,
-        DEBUFF
+        DAMAGE,
+        BUFF
     }
     public enum Scenes
     {
@@ -36,5 +34,16 @@
         DUNGEON,
         SHELTER,
         SMITHY
+    }
+
+    public enum Stats
+    {
+        MAXHP,
+        MAXMP,
+        ATK,
+        DEF,
+        CRITICALCHANCE,
+        CRITICALDAMAGE,
+        DODGECHANCE
     }
 }

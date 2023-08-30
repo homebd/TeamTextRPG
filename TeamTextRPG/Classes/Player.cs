@@ -13,8 +13,8 @@ namespace TeamTextRPG.Classes
         public Item[]? Equipments { get; set; }
         public List<Skill> Skills { get; set; }
 
-        public Player(string name, JOB job, int level, int atk, int def, int maxHp, int gold
-            , int currentHp = -1, int exp = 0, float cc = 0.15f, float cd = 1.6f, float dc = 0.05f)
+        public Player(string name, JOB job, int level, int atk, int def, int maxHp, int maxMp, int gold
+            , int currentHp = -1, int currentMp = -1, int exp = 0, int cc = 15, int cd = 160, int dc = 5)
         {
             Name = name;
             Job = job;
@@ -22,10 +22,15 @@ namespace TeamTextRPG.Classes
             Atk = atk;
             Def = def;
             MaxHp = maxHp;
+            MaxMp = maxMp;
             Gold = gold;
 
             if (currentHp == -1) CurrentHp = maxHp;
             else CurrentHp = currentHp;
+
+            if (currentMp == -1) CurrentMp = maxMp;
+            else CurrentMp = currentMp;
+
             Exp = exp;
 
             CriticalChance = cc;
@@ -39,15 +44,7 @@ namespace TeamTextRPG.Classes
 
         public void ChangeHP(int hp)
         {
-            var totalHp = MaxHp;
-
-            var helmet = Equipments[(int)(Parts.HELMET)];
-            var boots = Equipments[(int)(Parts.BOOTS)];
-
-            if (helmet != null)
-                totalHp += helmet.Stat + helmet.BonusStat;
-            if (boots != null)
-                totalHp += boots.Stat + boots.BonusStat;
+            var totalHp = MaxHp + GetEquipmentStatBonus(Stats.MAXHP);
 
             CurrentHp += hp;
 
@@ -62,11 +59,10 @@ namespace TeamTextRPG.Classes
             }
         }
 
-        public int GetAtkBonus(bool print = true)
+        public int GetEquipmentStatBonus(Stats stat)
         {
-            int atkBonus = 0;
-
-            if (Equipments[(int)Parts.WEAPON] != null)
+            int bonus = 0;
+            switch (stat)
             {
                 case Stats.MAXHP:
                     if(Equipments[(int)Parts.HELMET] != null)  bonus += Equipments[(int)Parts.HELMET].Stat; 
@@ -89,37 +85,7 @@ namespace TeamTextRPG.Classes
                     break;
             }
 
-            return atkBonus;
-        }
-
-        public int GetDefBonus(bool print = true)
-        {
-            int defBonus = 0;
-
-            if (Equipments[(int)Parts.CHESTPLATE] != null)
-                defBonus += Equipments[(int)Parts.CHESTPLATE].Stat
-                    + Equipments[(int)Parts.CHESTPLATE].BonusStat;
-
-            if (Equipments[(int)Parts.LEGGINGS] != null)
-                defBonus += Equipments[(int)Parts.LEGGINGS].Stat
-                    + Equipments[(int)Parts.LEGGINGS].BonusStat;
-
-            return defBonus;
-        }
-
-        public int GetHpBonus(bool print = true)
-        {
-            int hpBonus = 0;
-
-            if (Equipments[(int)Parts.HELMET] != null)
-                hpBonus += Equipments[(int)Parts.HELMET].Stat
-                    + Equipments[(int)Parts.HELMET].BonusStat;
-
-            if (Equipments[(int)Parts.BOOTS] != null)
-                hpBonus += Equipments[(int)Parts.BOOTS].Stat
-                    + Equipments[(int)Parts.BOOTS].BonusStat;
-
-            return hpBonus;
+            return bonus;
         }
 
         public void Wear(Item item)
