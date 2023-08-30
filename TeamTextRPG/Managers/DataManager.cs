@@ -405,6 +405,9 @@ namespace TeamTextRPG.Managers
         public void PrintDungeonExploreResult(Dungeon dungeon, bool clear, int rewardGold, int rewardExp, List<Item>rewardItems)
         {
             UIManager ui = GameManager.Instance.UIManager;
+
+            ui.ClearLog();
+
             if (clear)
                 ui.AddLog($"{dungeon.Name} 클리어");
             else
@@ -473,6 +476,8 @@ namespace TeamTextRPG.Managers
         public void CreateId()
         {
             UIManager ui = GameManager.Instance.UIManager;
+
+            ui.AddLog("ID를 입력하세요.(영어로)");
 
             // 직업정보 읽기---------------
             string jobPath = @"../../../Data";
@@ -565,6 +570,8 @@ namespace TeamTextRPG.Managers
         public void LoginId()
         {
             UIManager ui = GameManager.Instance.UIManager;
+
+            ui.AddLog("ID를 입력하세요.(영어로)");
 
             while (true)
             {
@@ -712,6 +719,68 @@ namespace TeamTextRPG.Managers
                 newMonster.Inventory.Add(reward);
             }
             return newMonster;
+        }
+
+        public void ChangeNick()
+        {
+            UIManager ui = GameManager.Instance.UIManager;
+
+            int cost = 5000;
+
+            ui.AddLog("닉네임을 입력하세요.");
+
+            string? name;
+            while (true)
+            {
+                ui.SetCursorPositionForOption();
+                name = Console.ReadLine();
+                if (name == null)
+                {
+                    ui.AddLog("잘못된 입력입니다.");
+                }
+                else if (name == Player.Name)
+                {
+                    ui.AddLog("현재 닉네임과 동일합니다.");
+                }
+                else break;
+            }
+
+            ui.AddLog($"{name}으로 변경하시겠습니까? [{cost} G]");
+
+            List<string> option = new List<string>
+            {
+                "1. 예",
+                "0. 아니오"
+            };
+
+            ui.MakeOptionBox(option);
+
+            while (true)
+            {
+                ui.SetCursorPositionForOption();
+                string input = Console.ReadLine();
+                int ret;
+                int.TryParse(input, out ret);
+                switch(ret)
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        if (Player.Gold < cost)
+                        {
+                            ui.AddLog("소지금이 부족합니다.");
+                            return;
+                        }
+                        else
+                        {
+                            Player.Gold -= cost;
+                            Player.Name = name;
+                            ui.AddLog("닉네임이 변경되었습니다.");
+                            return;
+                        }
+                }
+            }
+
         }
     }
 }
