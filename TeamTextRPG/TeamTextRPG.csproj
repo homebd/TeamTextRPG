@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Save\" />
+    <Folder Include="Data\Save\" />
   </ItemGroup>
 
 </Project>
