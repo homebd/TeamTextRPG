@@ -209,14 +209,9 @@ namespace TeamTextRPG.Managers
             SkillList.Push(skill.UseSkill(player, monster));
 
             ManageSkillList();
-<<<<<<< HEAD
             Console.CursorVisible = false;
             Thread.Sleep(500);
             Console.CursorVisible = true;
-=======
-
-            Thread.Sleep(100);
->>>>>>> e1c622244b9fea6a0e10de32d7402ebdfc7d6dd0
 
             //몬스터 턴
             foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
@@ -226,14 +221,12 @@ namespace TeamTextRPG.Managers
             }
 
             ManageSkillList();
-<<<<<<< HEAD
             Console.CursorVisible = false;
             Thread.Sleep(500);
             Console.CursorVisible = true;
-=======
+
 
             Thread.Sleep(100);
->>>>>>> e1c622244b9fea6a0e10de32d7402ebdfc7d6dd0
 
             if (player.CurrentHp == 0)
             {
