@@ -104,5 +104,31 @@ namespace TeamTextRPG.Classes
 
             return hpBonus;
         }
+
+        public void Wear(Item item)
+        {
+            Equipments[(int)item.Part] = item;
+
+            if (item.Part == Parts.HELMET || item.Part == Parts.BOOTS)
+            {
+                ChangeHP(item.Stat + item.BonusStat);
+            }
+        }
+
+        public void Unwear(Parts part)
+        {
+            if (part == Parts.HELMET || part == Parts.BOOTS)
+            {
+                int hp;
+                if (CurrentHp <= Equipments[(int)part].Stat + Equipments[(int)part].BonusStat)
+                    hp = (int)CurrentHp - 1;
+                else
+                    hp = Equipments[(int)part].Stat + Equipments[(int)part].BonusStat;
+
+                ChangeHP(-hp);
+            }
+            Equipments[(int)part] = null;
+
+        }
     }
 }

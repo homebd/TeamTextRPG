@@ -84,32 +84,6 @@ namespace TeamTextRPG.Managers
             MaxStage = data.MaxStage.ToObject<int>();
         }
 
-        public void Wear(Item item)
-        {
-            Player.Equipments[(int)item.Part] = item;
-
-            if (item.Part == Parts.HELMET || item.Part == Parts.BOOTS)
-            {
-                Player.ChangeHP(item.Stat + item.BonusStat);
-            }
-        }
-
-        public void Unwear(Parts part)
-        {
-            if (part == Parts.HELMET || part == Parts.BOOTS)
-            {
-                int hp;
-                if (Player.CurrentHp <= Player.Equipments[(int)part].Stat + Player.Equipments[(int)part].BonusStat)
-                    hp = (int)Player.CurrentHp - 1;
-                else
-                    hp = Player.Equipments[(int)part].Stat + Player.Equipments[(int)part].BonusStat;
-                
-                Player.ChangeHP(-hp);
-            }
-            Player.Equipments[(int)part] = null;
-
-        }
-
         public void BuyItem(Item item)
         {
             Player.Gold -= item.Price;
@@ -750,7 +724,7 @@ namespace TeamTextRPG.Managers
                 {
                     if (Player.Equipments[(int)item.Part] == item)
                     {
-                        Unwear(item.Part);
+                        Player.Unwear(item.Part);
                     }
 
                     item.Level = 0;
