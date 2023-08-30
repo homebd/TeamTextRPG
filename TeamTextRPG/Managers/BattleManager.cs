@@ -201,7 +201,7 @@ namespace TeamTextRPG.Managers
             // 플레이어 턴
             if (skill == null)
             {
-                skill = new Skill("attack", "", 0, SkillType.DAMAGE, player.GetStatValue(Stats.ATK), 1);
+                skill = new Skill("attack", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1);
             }
             
             SkillList.Push(skill.UseSkill(player, monster));
@@ -213,7 +213,7 @@ namespace TeamTextRPG.Managers
             //몬스터 턴
             foreach(var livingMonster in Monsters.Where(x => !x.IsDead()))
             {
-                var monsterSkill = new Skill("attack", "", 0, SkillType.DAMAGE, livingMonster.GetStatValue(Stats.ATK), 1);
+                var monsterSkill = new Skill("attack", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1);
                 SkillList.Push(monsterSkill.UseSkill(monster, player));
             }
 
