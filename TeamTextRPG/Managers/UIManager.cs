@@ -673,7 +673,6 @@ namespace TeamTextRPG.Managers
         public void ShowMonsterCard(List<Monster> monsters)
         {
             var currentCursor = Console.GetCursorPosition();
-
             int size = monsters.Count;
             int top = 6, bottom = 19;
             int width = 22;
@@ -734,6 +733,7 @@ namespace TeamTextRPG.Managers
             }
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+
         }
     }
 }

@@ -195,6 +195,7 @@ namespace TeamTextRPG.Managers
 
         public void Battle(Monster monster, Skill? skill)
         {
+
             var ui = GameManager.Instance.UIManager;
             var player = GameManager.Instance.DataManager.Player;
 
@@ -207,19 +208,21 @@ namespace TeamTextRPG.Managers
             SkillList.Push(skill.UseSkill(player, monster));
 
             ManageSkillList();
-
+            Console.CursorVisible = false;
             Thread.Sleep(500);
+            Console.CursorVisible = true;
 
             //몬스터 턴
-            foreach(var livingMonster in Monsters.Where(x => !x.IsDead()))
+            foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
             {
                 var monsterSkill = new Skill("attack", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1);
                 SkillList.Push(monsterSkill.UseSkill(monster, player));
             }
 
             ManageSkillList();
-
+            Console.CursorVisible = false;
             Thread.Sleep(500);
+            Console.CursorVisible = true;
 
             if (player.CurrentHp == 0)
             {
@@ -278,6 +281,7 @@ namespace TeamTextRPG.Managers
 
         public void ManageSkillList()
         {
+
             Stack<Skill> newSkillList = new Stack<Skill>();
 
             while(SkillList.Count > 0)

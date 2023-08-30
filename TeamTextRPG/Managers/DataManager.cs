@@ -291,9 +291,9 @@ namespace TeamTextRPG.Managers
             #endregion
 
             #region 휴식 세팅
-            Shelters.Add(new Shelter("약초 처방", 100, 300, 1500));
-            Shelters.Add(new Shelter("전문 진료", 500, 1500, 7500));
-            Shelters.Add(new Shelter("입원 치료", 1000, 3000, 15000));
+            Shelters.Add(new Shelter("약초 처방", 100, 50, 1500));
+            Shelters.Add(new Shelter("전문 진료", 500, 200, 7500));
+            Shelters.Add(new Shelter("입원 치료", 1000, 400, 15000));
             #endregion
         }
 
