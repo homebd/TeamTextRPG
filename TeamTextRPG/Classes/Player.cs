@@ -110,11 +110,6 @@ namespace TeamTextRPG.Classes
             {
                 ChangeHP(item.Stat + item.BonusStat);
             }
-            // 부츠 장착시 깡으로 닷지 찬스에 추가.
-            if(item.Part == Parts.BOOTS )
-            {
-                DodgeChance += (item.Stat + item.BonusStat);
-            }
         }
 
         public void Unwear(Parts part)
@@ -129,12 +124,6 @@ namespace TeamTextRPG.Classes
 
                 ChangeHP(-hp);
             }
-            // 부츠 해제시 깡으로 닷지 찬스에 빼기.
-            if (part == Parts.BOOTS)
-            {
-                DodgeChance -= (Equipments[(int)part].Stat + Equipments[(int)part].BonusStat);
-            }
-
             Equipments[(int)part] = null;
 
         }
