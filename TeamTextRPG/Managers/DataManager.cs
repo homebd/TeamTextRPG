@@ -626,7 +626,7 @@ namespace TeamTextRPG.Managers
                             {
                                 if (job >= 1 && job <= (int)JOB.ARCHER + 1)
                                 {
-                                    Player = new Player(name, (JOB)(job - 1), 1, 10, 5, 100, 1500);
+                                    Player = new Player(name, (JOB)(job - 1), 1, 10, 5, 100, 50, 1500);
                                     GetBasicItem();
                                     SaveData();
                                     GameManager.Instance.SceneManager.Scene = Scenes.TOWN;
