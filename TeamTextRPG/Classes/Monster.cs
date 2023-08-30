@@ -26,6 +26,7 @@ namespace TeamTextRPG.Classes
             if (rewardItemId > -1)
             {
                 Inventory.Add(GameManager.Instance.DataManager.MakeNewItem(rewardItemId));
+                
             }
         }
 
