@@ -63,7 +63,11 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(0, _categoryTopPostion);
 
             Console.WriteLine("┌───────┐───────┐───────┐───────┐───────┐───────┐───────┐");
+<<<<<<< Updated upstream
             Console.WriteLine("│  전체 │  무기 │  투구 │  갑옷 │  바지 │  신발 │  포션 │");
+=======
+            Console.WriteLine("│  전체 │  무기 │  투구 │  갑옷 │  바지 │  신발 │  소모 │");
+>>>>>>> Stashed changes
             switch (Category)
             {
                 case null:
@@ -84,9 +88,16 @@ namespace TeamTextRPG.Managers
                 case Item.Parts.BOOTS:
                     Console.Write("────────────────────────────────────────┘       └─────");
                     break;
+<<<<<<< Updated upstream
                 case Item.Parts.POTIONS:
                     Console.Write("────────────────────────────────────────────────┘       └");
                     break;
+=======
+                case Parts.USEABLE:
+                      Console.Write("────────────────────────────────────────────────┘       └");
+                    break;
+
+>>>>>>> Stashed changes
             }
             Console.Write("".PadRight(Console.WindowWidth - 58, '─'));
             Console.Write("\n\n");

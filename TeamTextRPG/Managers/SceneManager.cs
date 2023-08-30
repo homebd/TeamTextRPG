@@ -188,10 +188,10 @@ namespace TeamTextRPG.Managers
                 {
                     if (ret >= min && ret <= max)
                     {
-                        switch(Scene)
+                        switch (Scene)
                         {
                             case Scenes.GAME_INTRO:
-                                switch(ret)
+                                switch (ret)
                                 {
                                     case 1:
                                         ui.AddLog("ID를 입력하세요.(영어로)");
@@ -207,7 +207,7 @@ namespace TeamTextRPG.Managers
                                 }
                                 break;
                             case Scenes.GAME_OUTRO:
-                                if(ret == 0)
+                                if (ret == 0)
                                     Environment.Exit(0);
                                 break;
                             case Scenes.TOWN:
@@ -396,7 +396,7 @@ namespace TeamTextRPG.Managers
 
                 if (Scene >= Scenes.INVENTORY_MAIN && Scene <= Scenes.SHOP_SELL || Scene == Scenes.SMITHY)
                 {
-                    if(ui.ShiftCategory(input)) return;
+                    if (ui.ShiftCategory(input)) return;
                 }
                 else if (Scene >= Scenes.DUNGEON)
                 {

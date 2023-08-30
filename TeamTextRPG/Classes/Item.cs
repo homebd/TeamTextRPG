@@ -46,7 +46,15 @@ namespace TeamTextRPG.Classes
 
         public void PrintInfo(bool showPrice, int num = 0, float sale = 1)
         {
+<<<<<<< Updated upstream
             string equip = (IsEquipped) ? "[E]" : "";
+=======
+            string equip="";
+            if ((int)Part < 5)
+            {
+                equip = (GameManager.Instance.DataManager.Player.Equipments[(int)Part] == this) ? "[E]" : "";
+            }
+>>>>>>> Stashed changes
             string printNum = (num == 0) ? "" : $"{num} ";
             string level = (Level == 0) ? "" : $"(+{Level})";
             string bonus = (Level == 0) ? "" : $"(+{BonusStat})";
@@ -65,8 +73,13 @@ namespace TeamTextRPG.Classes
                 case Parts.LEGGINGS:
                     statByPart = "방어력";
                     break;
+<<<<<<< Updated upstream
                 case Parts.POTIONS:
                     statByPart = "회복량";
+=======
+                case Parts.USEABLE:
+                    statByPart = "회복력";
+>>>>>>> Stashed changes
                     break;
             }
 
