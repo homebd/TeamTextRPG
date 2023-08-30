@@ -398,7 +398,7 @@ namespace TeamTextRPG.Managers
                     Player.Inventory = Player.Inventory.OrderBy(item => item.Price).ToList();
                     break;
                 case 4:
-                    Player.Inventory = Player.Inventory.OrderByDescending(item => GameManager.Instance.DataManager.Player.Equipments[(int)item.Part] == item).ToList();
+                    Player.Inventory = Player.Inventory.OrderByDescending(item => item.IsEquipped).ToList();
                     break;
                 case 5:
                     Player.Inventory = Player.Inventory.OrderByDescending(item => item.Level).ToList();

@@ -637,7 +637,7 @@ namespace TeamTextRPG.Managers
             var player = GameManager.Instance.DataManager.Player;
 
             int rate = 15;
-            int fillExpBar = (int)(rate * (float)player.CurrentHp / player.MaxHp + player.GetEquipmentStatBonus(Stats.MAXHP) + 0.5f);
+            int fillExpBar = (int)(rate * (float)player.CurrentMp / player.MaxMp + player.GetEquipmentStatBonus(Stats.MAXMP) + 0.5f);
             if (fillExpBar >= rate) fillExpBar = rate;
 
             Console.SetCursorPosition(50, _goldTopPostion);

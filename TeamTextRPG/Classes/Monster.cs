@@ -7,7 +7,7 @@ namespace TeamTextRPG.Classes
         public int Id { get; }
 
         public Monster(string name, int id, int level, int atk, int def, int maxHp, int gold, int exp, int rewardItemId = -1,
-             int cc = 15, int cd = 160, int dc = 5)
+             int cc = 10, int cd = 160, int dc = 5)
         {
             Name = name;
             Id = id;
