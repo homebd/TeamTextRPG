@@ -42,6 +42,7 @@ namespace TeamTextRPG.Classes
             Inventory = new List<Item>();
             Equipments = new Item[Enum.GetValues(typeof(Parts)).Length];
             Skills = new List<Skill>();
+            StatsPerLevel = new Dictionary<string, int>();
         }
 
         // StatsPerLevel -> 초기설정 함수
