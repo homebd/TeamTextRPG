@@ -204,7 +204,12 @@ namespace TeamTextRPG.Classes
             DodgeChance += StatsPerLevel["DodgeChance"];
             Level++;
         }
-
-                    
+        public void SetSkillList(dynamic data)
+        {
+            Skills.Add(data.Skill1.ToObject<Skill>());
+            Skills.Add(data.Skill2.ToObject<Skill>());
+            Skills.Add(data.Skill3.ToObject<Skill>());
+            Skills.Add(data.Skill4.ToObject<Skill>());
+        }
     }
 }
