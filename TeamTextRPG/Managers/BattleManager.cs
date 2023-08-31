@@ -355,15 +355,21 @@ namespace TeamTextRPG.Managers
             int def = skill.Target.GetStatValue(Stats.DEF);
             if (def > -damage)
             {
-                damage = -1;
+                int minDamage = (int)(damage * 0.2f);
+                if (minDamage == 0)
+                    minDamage--;
+                damage = minDamage;
             }
             else
             {
                 int temp = damage;
                 float control = MathF.Pow(1f - ((float)def / -damage), 1.4f);
-                if (control < 0.2f) control = 0.2f;
+
+                // 최소데미지는 공격력의 20%
+                if (control < 0.2f) 
+                    control = 0.2f;
                 damage = (int)Math.Round(damage * control);
-                // 최소데미지 1로 고정
+                // 20%가 1 미만이라면 1로 고정
                 if (-temp >= 0 && damage == 0)
                 {
                     damage = -1;
