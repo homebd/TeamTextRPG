@@ -470,14 +470,26 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(31, 11);
             Console.Write($"직  업  {jop}");
 
-            Console.SetCursorPosition(31, 13);
-            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp}(+{player.GetEquipmentStatBonus(Stats.MAXHP)})");
-
             Console.SetCursorPosition(31, 15);
-            Console.Write($"공격력  {player.Atk}(+{player.GetEquipmentStatBonus(Stats.ATK)})");
+            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp} (+{player.GetEquipmentStatBonus(Stats.MAXHP)})");
 
             Console.SetCursorPosition(31, 17);
-            Console.Write($"방어력  {player.Def}(+{player.GetEquipmentStatBonus(Stats.DEF)})");
+            Console.Write($"마  나  {player.CurrentMp} / {player.MaxMp} (+{player.GetEquipmentStatBonus(Stats.MAXMP)})");
+
+            Console.SetCursorPosition(62, 9);
+            Console.Write($"공격력  {player.Atk} (+{player.GetEquipmentStatBonus(Stats.ATK)})");
+
+            Console.SetCursorPosition(62, 11);
+            Console.Write($"방어력  {player.Def} (+{player.GetEquipmentStatBonus(Stats.DEF)})");
+
+            Console.SetCursorPosition(62, 13);
+            Console.Write($"치명률  {player.CriticalChance}% (+{player.GetEquipmentStatBonus(Stats.CRITICALCHANCE)}%)");
+
+            Console.SetCursorPosition(62, 15);
+            Console.Write($"치명타  {player.CriticalDamage}% (+{player.GetEquipmentStatBonus(Stats.CRITICALDAMAGE)}%)");
+
+            Console.SetCursorPosition(62, 17);
+            Console.Write($"회피률  {player.DodgeChance}% (+{player.GetEquipmentStatBonus(Stats.DODGECHANCE)}%)");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
