@@ -27,7 +27,7 @@ namespace TeamTextRPG.Classes
 
         public virtual void ChangeHP(int hp)
         {
-            var totalHp = MaxHp;
+            var totalHp = GetStatValue(Stats.MAXHP);
 
             CurrentHp += hp;
 
@@ -44,7 +44,7 @@ namespace TeamTextRPG.Classes
 
         public void ChangeMP(int mp)
         {
-            var totalMp = MaxMp;
+            var totalMp = GetStatValue(Stats.MAXMP);
 
             CurrentMp += mp;
 
@@ -61,29 +61,6 @@ namespace TeamTextRPG.Classes
 
         public void ChangeStat(Stats stat, int value)
         {
-            /*int statValue;
-            switch(stat)
-            {
-                case Stats.MAXHP:
-                    statValue = MaxHp;
-                    break;
-                case Stats.ATK:
-                    statValue = Atk;
-                    break;
-                case Stats.DEF:
-                    statValue = Def;
-                    break;
-                case Stats.CRITICALCHANCE:
-                    statValue = CriticalChance;
-                    break;
-                case Stats.CRITICALDAMAGE:
-                    statValue = CriticalDamage;
-                    break;
-                case Stats.DODGECHANCE:
-                    statValue = DodgeChance;
-                    break;
-
-            }*/
             BuffStat[(int)stat] += value;
         }
 
@@ -110,15 +87,15 @@ namespace TeamTextRPG.Classes
                 case Stats.MAXHP:
                     return MaxHp + GetEquipmentStatBonus(Stats.MAXHP) + GetBuffStatBonus(Stats.MAXHP);
                 case Stats.MAXMP:
-                    return MaxMp + GetBuffStatBonus(Stats.MAXMP);
+                    return MaxMp + GetEquipmentStatBonus(Stats.MAXMP) + GetBuffStatBonus(Stats.MAXMP);
                 case Stats.ATK:
                     return Atk + GetEquipmentStatBonus(Stats.ATK) + GetBuffStatBonus(Stats.ATK);
                 case Stats.DEF:
                     return Def + GetEquipmentStatBonus(Stats.DEF) + GetBuffStatBonus(Stats.DEF);
                 case Stats.CRITICALCHANCE:
-                    return CriticalChance + GetBuffStatBonus(Stats.CRITICALCHANCE);
+                    return CriticalChance + GetEquipmentStatBonus(Stats.CRITICALCHANCE) + GetBuffStatBonus(Stats.CRITICALCHANCE);
                 case Stats.CRITICALDAMAGE:
-                    return CriticalDamage + GetBuffStatBonus(Stats.CRITICALDAMAGE);
+                    return CriticalDamage + GetEquipmentStatBonus(Stats.CRITICALDAMAGE) + GetBuffStatBonus(Stats.CRITICALDAMAGE);
                 case Stats.DODGECHANCE:
                     return DodgeChance + GetEquipmentStatBonus(Stats.DODGECHANCE) + GetBuffStatBonus(Stats.DODGECHANCE);
             }

@@ -461,6 +461,8 @@ namespace TeamTextRPG.Managers
 
             }
 
+            string bonus;
+
             Console.SetCursorPosition(38, 6);
             Console.Write("< 현재 능력치 >");
 
@@ -471,25 +473,35 @@ namespace TeamTextRPG.Managers
             Console.Write($"직  업  {jop}");
 
             Console.SetCursorPosition(31, 15);
-            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp} (+{player.GetEquipmentStatBonus(Stats.MAXHP)})");
+            bonus = (player.GetEquipmentStatBonus(Stats.MAXHP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXHP)})";
+            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp}{bonus}");
 
             Console.SetCursorPosition(31, 17);
-            Console.Write($"마  나  {player.CurrentMp} / {player.MaxMp} (+{player.GetEquipmentStatBonus(Stats.MAXMP)})");
+            bonus = (player.GetEquipmentStatBonus(Stats.MAXMP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXMP)})";
+            Console.Write($"마  나  {player.CurrentMp} / {player.MaxMp}{bonus}");
+
+            Console.SetCursorPosition(69, 6);
+            Console.Write("< 세부 능력치 >");
 
             Console.SetCursorPosition(62, 9);
-            Console.Write($"공격력  {player.Atk} (+{player.GetEquipmentStatBonus(Stats.ATK)})");
+            bonus = (player.GetEquipmentStatBonus(Stats.ATK) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.ATK)})";
+            Console.Write($"공격력  {player.Atk}{bonus}");
 
             Console.SetCursorPosition(62, 11);
-            Console.Write($"방어력  {player.Def} (+{player.GetEquipmentStatBonus(Stats.DEF)})");
+            bonus = (player.GetEquipmentStatBonus(Stats.DEF) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.DEF)})";
+            Console.Write($"방어력  {player.Def}{bonus}");
 
             Console.SetCursorPosition(62, 13);
-            Console.Write($"치명률  {player.CriticalChance}% (+{player.GetEquipmentStatBonus(Stats.CRITICALCHANCE)}%)");
+            bonus = (player.GetEquipmentStatBonus(Stats.CRITICALCHANCE) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.CRITICALCHANCE)}%)";
+            Console.Write($"치명률  {player.CriticalChance}%{bonus}");
 
             Console.SetCursorPosition(62, 15);
-            Console.Write($"치명타  {player.CriticalDamage}% (+{player.GetEquipmentStatBonus(Stats.CRITICALDAMAGE)}%)");
+            bonus = (player.GetEquipmentStatBonus(Stats.CRITICALDAMAGE) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.CRITICALDAMAGE)}%)";
+            Console.Write($"치명타  {player.CriticalDamage}%{bonus}");
 
             Console.SetCursorPosition(62, 17);
-            Console.Write($"회피률  {player.DodgeChance}% (+{player.GetEquipmentStatBonus(Stats.DODGECHANCE)}%)");
+            bonus = (player.GetEquipmentStatBonus(Stats.DODGECHANCE) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.DODGECHANCE)}%)";
+            Console.Write($"회피율  {player.DodgeChance}%{bonus}");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
@@ -561,6 +573,9 @@ namespace TeamTextRPG.Managers
             DataManager dm = GameManager.Instance.DataManager;
 
             dm.SortItems(dm.Player.Inventory);
+
+            //카테고리가 null이거나 useable일 때만 해줘도 되는데 귀찮..
+            dm.SortedItems = dm.SortedItems.Where(x => x.Part != Parts.USEABLE).ToList();
 
             for (int i = 0; i < dm.SortedItems.Count && i < 12; i++)
             {

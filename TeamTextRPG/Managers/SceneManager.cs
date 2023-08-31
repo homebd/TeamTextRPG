@@ -306,6 +306,7 @@ namespace TeamTextRPG.Managers
                                                 dm.Player.Unwear(selectedItem.Part);
                                    
                                         dm.Player.Wear(selectedItem);
+                                      
                                     }
 
                                     return;

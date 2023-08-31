@@ -70,11 +70,14 @@ namespace TeamTextRPG.Managers
                 if (int.TryParse(input, out var ret) && ret >= 0 && ret < option.Count)
                 {
                     int targetNum;
+                    Player player = GameManager.Instance.DataManager.Player;
                     switch (ret)
                     {
                         case 0:
                             Random rnd = new Random();
-                            if(rnd.Next(0, 100) < 50)
+                            
+                            // 100% HP -> 40% RUN / 20% HP -> 80% RUN
+                            if(rnd.Next(0, 100) < (90 - 100f * player.CurrentHp / player.GetStatValue(Stats.MAXHP) / 2))
                             {
                                 ui.AddLog("성공적으로 도망쳤습니다!");
                                 return;
@@ -99,8 +102,7 @@ namespace TeamTextRPG.Managers
 
                             int skillNum;
                             Skill? selectedSkill = null;
-                            Player player = GameManager.Instance.DataManager.Player;
-                            while(true)
+                            while (true)
                             {
                                 ui.SetCursorPositionForOption();
 
@@ -201,7 +203,7 @@ namespace TeamTextRPG.Managers
         {
             var ui = GameManager.Instance.UIManager;
             var dm = GameManager.Instance.DataManager;
-
+            var player = GameManager.Instance.DataManager.Player;
             ui.MakeTab();
             ui.PrintUseables();
             int input;
@@ -220,14 +222,60 @@ namespace TeamTextRPG.Managers
                     }
                     else
                     {
+                        int ItemId = dm.SortedItems[input - 1].Id;
+
+                        switch (ItemId)
+                        {
+                            //스테로이드
+                            case 92:
+                                Skill atkBuff = new Skill("공격력 상승", "", 0, SkillType.BUFF, Stats.ATK, 5, 1, false);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(player, atkBuff);
+                                break;
+                            //철분제
+                            case 93:
+                                Skill defBuff = new Skill("방어력 상승", "", 0, SkillType.BUFF, Stats.DEF, 5, 1, false);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(player, defBuff);
+                                break;
+                            // 수류탄
+                            case 94:
+                                int targetNum = PrintBattleOption(BattleType.SKILL);
+                                Skill grade = new Skill("수류탄", "", 0, SkillType.DAMAGE, -100, 1, true);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(Monsters[targetNum - 1], grade);
+                                break;
+                            //연막탄, 회피율 증가
+                            case 95:
+                                Skill SmokeShell = new Skill("연막탄", "", 0, SkillType.BUFF, Stats.DODGECHANCE, 10, 1, true);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(player, SmokeShell);
+                                break;
+                            //독안개
+                            case 96:
+                                targetNum = PrintBattleOption(BattleType.SKILL);
+                                Skill poisonMist = new Skill("독안개", "", 0, SkillType.BUFF, Stats.ATK, -5, 1, true);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(Monsters[targetNum - 1], poisonMist);
+                                break;
+                            default:
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                break;
+                        }
+
                         dm.Player.Wear(dm.SortedItems[input - 1]);
-                        ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                        ui.PrintUseables();
+                       // ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                        //ui.PrintUseables();
                     }
                 }
-                else ui.AddLog("잘못된 입력입니다.");
+                else { ui.AddLog("잘못된 입력입니다."); }
+                LoadBattle();
+                break;
+             
             }
         }
+
+    
 
         public void Battle(Character? target, Skill? skill)
         {
@@ -237,7 +285,7 @@ namespace TeamTextRPG.Managers
             // 도망 실패로 배틀에 끌려왔을 시 플레이어 턴 무시
             if(target != null)
             {
-                // 플레이어 턴
+                //플레이어 턴
                 if (skill == null)
                 {
                     skill = new Skill("공격", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1, false);
@@ -273,6 +321,10 @@ namespace TeamTextRPG.Managers
                 Console.CursorVisible = true;
             }
             
+            if(_left == 0)
+            {
+                return;
+            }
 
             //몬스터 턴
             foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
@@ -317,14 +369,14 @@ namespace TeamTextRPG.Managers
                 if (token.Target.IsDead()) continue;
 
                 int value = token.DoSkill();
-
+             
                 switch (token.SkillType)
                 {
                     case SkillType.DAMAGE:
                         if(value < 0)
                         {
                             Damage(value, token);
-
+                            
                         }
                         else if(value > 0)
                         {
@@ -359,7 +411,7 @@ namespace TeamTextRPG.Managers
         {
             _left--;
         }
-
+    
         public void Damage(int damage, Skill skill)
         {
             Random rnd = new Random();
@@ -372,7 +424,7 @@ namespace TeamTextRPG.Managers
                 return;
             }
             #endregion
-
+        
             #region 데미지 공식
             int def = skill.Target.GetStatValue(Stats.DEF);
             float input = 0f;
@@ -402,7 +454,9 @@ namespace TeamTextRPG.Managers
             }
             #endregion
 
+          
             #region 치명타 공식
+           
             if (rnd.Next(0, 100) <= skill.Caster.CriticalChance)
             {
                 damage = (int)(damage * skill.Caster.CriticalDamage / 100f);
