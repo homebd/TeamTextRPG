@@ -71,7 +71,18 @@ namespace TeamTextRPG.Managers
                     switch (ret)
                     {
                         case 0:
-                            return;
+                            Random rnd = new Random();
+                            if(rnd.Next(0, 100) < 50)
+                            {
+                                ui.AddLog("성공적으로 도망쳤습니다!");
+                                return;
+                            }
+                            else
+                            {
+                                ui.AddLog("붙잡혔습니다!");
+                                Battle(null, null);
+                                break;
+                            }
                         case 1:
                             targetNum = PrintBattleOption(BattleType.NORMAL);
                             if(targetNum != 0)
@@ -196,45 +207,50 @@ namespace TeamTextRPG.Managers
 
         }
 
-        public void Battle(Character target, Skill? skill)
+        public void Battle(Character? target, Skill? skill)
         {
             var ui = GameManager.Instance.UIManager;
             var player = GameManager.Instance.DataManager.Player;
 
-            // 플레이어 턴
-            if (skill == null)
+            // 도망 실패로 배틀에 끌려왔을 시 플레이어 턴 무시
+            if(target != null)
             {
-                skill = new Skill("공격", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1, false);
-            }
-            
-            SkillList.Push(skill.UseSkill(player, target));
-
-            if(skill.IsAoE && target != player)
-            {
-                int index = Monsters.IndexOf((Monster)target);
-
-                if(Monsters.Count > 1)
+                // 플레이어 턴
+                if (skill == null)
                 {
-                    if (index == 0)
+                    skill = new Skill("공격", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1, false);
+                }
+
+                SkillList.Push(skill.UseSkill(player, target));
+
+                if (skill.IsAoE && target != player)
+                {
+                    int index = Monsters.IndexOf((Monster)target);
+
+                    if (Monsters.Count > 1)
                     {
-                        SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
-                    }
-                    else if (index == Monsters.Count - 1)
-                    {
-                        SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
-                    }
-                    else
-                    {
-                        SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
-                        SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                        if (index == 0)
+                        {
+                            SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                        }
+                        else if (index == Monsters.Count - 1)
+                        {
+                            SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
+                        }
+                        else
+                        {
+                            SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
+                            SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                        }
                     }
                 }
-            }
 
-            ManageSkillList();
-            Console.CursorVisible = false;
-            Thread.Sleep(100);
-            Console.CursorVisible = true;
+                ManageSkillList();
+                Console.CursorVisible = false;
+                Thread.Sleep(100);
+                Console.CursorVisible = true;
+            }
+            
 
             //몬스터 턴
             foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
@@ -244,12 +260,10 @@ namespace TeamTextRPG.Managers
             }
 
             ManageSkillList();
+
             Console.CursorVisible = false;
-            Thread.Sleep(500);
-            Console.CursorVisible = true;
-
-
             Thread.Sleep(100);
+            Console.CursorVisible = true;
 
             if (player.CurrentHp == 0)
             {
