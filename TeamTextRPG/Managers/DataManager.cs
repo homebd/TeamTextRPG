@@ -188,7 +188,7 @@ namespace TeamTextRPG.Managers
         public void SellItem(Item item)
         {
           
-            Player.Gold += (int)(item.Price * 0.85f);
+            Player.Gold += (int)(item.Price * 0.3f);
             //판매한 아이템이 소모품인 경우.
             if (item.Part == Parts.USEABLE)
             {

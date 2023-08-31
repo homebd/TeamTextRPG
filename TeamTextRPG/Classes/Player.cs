@@ -80,12 +80,12 @@ namespace TeamTextRPG.Classes
                     {
                         bonus += Equipments[(int)Parts.CHESTPLATE].Stat + Equipments[(int)Parts.CHESTPLATE].BonusStat;
                     }
+                    break;
+                case Stats.CRITICALCHANCE:
                     if (Equipments[(int)Parts.LEGGINGS] != null)
                     {
                         bonus += Equipments[(int)Parts.LEGGINGS].Stat + Equipments[(int)Parts.LEGGINGS].BonusStat;
                     }
-                    break;
-                case Stats.CRITICALCHANCE:
                     break;
                 case Stats.CRITICALDAMAGE:
                     break;
