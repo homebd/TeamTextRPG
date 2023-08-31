@@ -73,6 +73,27 @@ namespace TeamTextRPG.Classes
             }
         }
 
+        public void ChangeMP(int mp)
+        {
+            var totalMp = MaxMp + GetEquipmentStatBonus(Stats.MAXMP);
+
+            CurrentMp += mp;
+
+            if (totalMp < CurrentMp)
+            {
+                CurrentMp = totalMp;
+            }
+
+            if (CurrentMp < 0)
+            {
+                CurrentMp = 0;
+            }
+        }
+
+        public void ChangeATk(int atk)
+        {
+            Atk += atk;
+        }
         public int GetEquipmentStatBonus(Stats stat)
         {
             int bonus = 0;
@@ -118,6 +139,30 @@ namespace TeamTextRPG.Classes
         }
         public void ItemUse(Item item)
         {
+            //아이템 id 에 따라 다르게 작동하도록 한다. 
+            // 
+            switch (item.Id)
+            {
+                case 90:
+                    //HP 회복
+                    ChangeHP(item.Stat);
+                    break; 
+                case 91:
+                    //MP 회복
+                    ChangeMP(item.Stat);
+                    break;
+                case 92:
+                    //공격력 증가
+                   ChangeATk(item.Stat);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+
+            }
             Inventory.Remove(item);
         }
         public void Unwear(Parts part)
