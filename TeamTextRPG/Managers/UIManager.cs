@@ -805,7 +805,7 @@ namespace TeamTextRPG.Managers
                 int paddingSize = (17 - monster.Name.Length * 2) / 2;
                 if (monster.Name.IndexOf(' ') > 0)
                     paddingSize++;
-                Console.Write("".PadLeft(paddingSize,' ') + monster.Name);
+                Console.Write("".PadLeft(paddingSize, ' ') + monster.Name);
 
                 int fillHpBar = (int)(7 * (float)monster.CurrentHp / monster.MaxHp + 0.9f);
                 if (fillHpBar >= 7) fillHpBar = 7;
@@ -813,7 +813,7 @@ namespace TeamTextRPG.Managers
                 Console.SetCursorPosition(leftPosition[i] + 2, top + 4);
                 string atkString = $"공격력 : {monsters[i].Atk}";
                 paddingSize = (17 - (atkString.Length + 3)) / 2;
-                Console.Write("".PadLeft(paddingSize,' ') + atkString);
+                Console.Write("".PadLeft(paddingSize, ' ') + atkString);
                 Console.SetCursorPosition(leftPosition[i] + 2, top + 5);
                 string defString = $"방어력 : {monsters[i].Def}";
                 paddingSize = (17 - (defString.Length + 3)) / 2;
@@ -880,20 +880,60 @@ namespace TeamTextRPG.Managers
             {
                 Skill skill = skillList[i];
                 Console.SetCursorPosition(4, 6 + i);
-                Console.Write($"{(i+1).ToString().PadRight(4, ' ')}{skill.Name}");
+                Console.Write($"{(i + 1).ToString().PadRight(4, ' ')}{skill.Name}");
                 Console.SetCursorPosition(20, 6 + i);
                 Console.Write($"ㅣ{skill.ManaCost.ToString().PadLeft(9, ' ')}ㅣ");
 
-                switch(skill.ValueType)
+                int value = 0;
+                switch (skill.ValueType)
                 {
                     case ValueTypeEnum.PROPOTIONAL:
-                        Console.Write((int)(-GameManager.Instance.DataManager.Player.GetStatValue(skill.Stat) * skill.Value / 100f));
+                        value = (int)(GameManager.Instance.DataManager.Player.GetStatValue(skill.Stat) * skill.Value / 100f);
                         break;
                     case ValueTypeEnum.FIXED:
-                        Console.Write(skill.Value);
+                        value = skill.Value;
                         break;
                 }
-                Console.Write("의 피해를 입힙니다.");
+
+                string aoe = skill.IsAoE ? "(광역기) " : "";
+                switch (skill.SkillType)
+                {
+                    case SkillType.DAMAGE:
+                        if (skill.Duration > 1)
+                        {
+                            Console.Write($"{aoe}{skill.Duration}턴 동안 ");
+                            if (value > 0)
+                            {
+                                Console.Write($"대상의 체력을 {value}씩 회복합니다.");
+                            }
+                            else if (value < 0)
+                            {
+                                Console.Write($"대상에게 {-value}의 지속 피해를 입힙니다.");
+                            }
+                        }
+                        else
+                        {
+                            if (value > 0)
+                            {
+                                Console.Write($"{aoe}대상의 체력을 {value}만큼 회복합니다.");
+                            }
+                            else if (value < 0)
+                            {
+                                Console.Write($"{aoe}대상에게 {-value}의 피해를 입힙니다.");
+                            }
+                        }                        
+                        break;
+                    case SkillType.BUFF:
+                        if (value > 0)
+                        {
+                            Console.Write($"{aoe}대상의 {skill.Stat}을(를) {skill.Duration}턴 동안 {value}만큼 증가시킵니다.");
+                        }
+                        else if (value < 0)
+                        {
+                            Console.Write($"{aoe}대상의 {skill.Stat}을(를) {skill.Duration}턴 동안 {value}만큼 감소시킵니다.");
+                        }
+                        break;
+                }
             }
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
@@ -907,20 +947,60 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(4, 6 + num);
             Console.BackgroundColor = ConsoleColor.DarkGray;
-            Console.Write($"{(num + 1).ToString().PadRight(4, ' ')}{skill.Name}      ");
+            Console.Write($"{(num + 1).ToString().PadRight(4, ' ')}{skill.Name}                        ");
             Console.SetCursorPosition(20, 6 + num);
             Console.Write($"ㅣ{skill.ManaCost.ToString().PadLeft(9, ' ')}ㅣ");
 
+            int value = 0;
             switch (skill.ValueType)
             {
                 case ValueTypeEnum.PROPOTIONAL:
-                    Console.Write((int)(-GameManager.Instance.DataManager.Player.GetStatValue(skill.Stat) * skill.Value / 100f));
+                    value = (int)(GameManager.Instance.DataManager.Player.GetStatValue(skill.Stat) * skill.Value / 100f);
                     break;
                 case ValueTypeEnum.FIXED:
-                    Console.Write(skill.Value);
+                    value = skill.Value;
                     break;
             }
-            Console.Write("의 피해를 입힙니다.");
+
+            string aoe = skill.IsAoE ? "(광역기) " : "";
+            switch (skill.SkillType)
+            {
+                case SkillType.DAMAGE:
+                    if (skill.Duration > 1)
+                    {
+                        Console.Write($"{aoe}{skill.Duration}턴 동안 ");
+                        if (value > 0)
+                        {
+                            Console.Write($"대상의 체력을 {value}씩 회복합니다.");
+                        }
+                        else if (value < 0)
+                        {
+                            Console.Write($"대상에게 {-value}의 지속 피해를 입힙니다.");
+                        }
+                    }
+                    else
+                    {
+                        if (value > 0)
+                        {
+                            Console.Write($"{aoe}대상의 체력을 {value}만큼 회복합니다.");
+                        }
+                        else if (value < 0)
+                        {
+                            Console.Write($"{aoe}대상에게 {-value}의 피해를 입힙니다.");
+                        }
+                    }
+                    break;
+                case SkillType.BUFF:
+                    if (value > 0)
+                    {
+                        Console.Write($"{aoe}대상의 {skill.Stat}을(를) {skill.Duration}턴 동안 {value}만큼 증가시킵니다.");
+                    }
+                    else if (value < 0)
+                    {
+                        Console.Write($"{aoe}대상의 {skill.Stat}을(를) {skill.Duration}턴 동안 {value}만큼 감소시킵니다.");
+                    }
+                    break;
+            }
 
             Console.BackgroundColor = currentColor;
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
