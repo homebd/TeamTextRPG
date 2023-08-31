@@ -160,7 +160,6 @@ namespace TeamTextRPG.Managers
                 //플레이어에게 이미 동일한 아이템이 존재하는 경우
                 if (Player.Inventory.Exists(playeritem => playeritem == item))
                 {
-                    //스택을 증가시키고 상점에서는 삭제하지 않는다.
                     Player.ItemStackAdd(item);
                 }
                 else

@@ -129,13 +129,15 @@ namespace TeamTextRPG.Classes
             {
                 ItemUse(item);
             }
-            if (item.Part == Parts.HELMET)
+            else if (item.Part == Parts.HELMET)
             {
                 ChangeHP(item.Stat + item.BonusStat);
                 item.IsEquipped = true;
             }
             else
+            {
                 item.IsEquipped = true;
+            }
         
         }
         public void ItemUse(Item item)
@@ -191,6 +193,11 @@ namespace TeamTextRPG.Classes
         //소모성 아이템 스택 구현
         public void ItemStackAdd(Item item)
         {
+            item.Stack++;
+        }
+        public void ItemStackAdd(Item item, int cuStack)
+        {
+            item.Stack = cuStack;
             item.Stack++;
         }
         public void ItemStackRemove(Item item)
