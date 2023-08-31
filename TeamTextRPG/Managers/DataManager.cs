@@ -631,8 +631,7 @@ namespace TeamTextRPG.Managers
         public Item MakeNewItem(int id)
         {
             Item item = _items[id];
-            Item newItem = new Item(item.Name, item.Id, item.Part, item.Level, item.Stat, item.Price, item.Description);
-
+            Item newItem = new Item(item.Name, item.Id, item.Part, item.Level, item.Stat, item.Price, item.Description, item.IsEquipped ,item?.UsableItemType);
             return newItem;
         }
 

@@ -11,6 +11,7 @@ namespace TeamTextRPG.Classes
         public string Name { get; }
         public int Id { get; private set; }
         public Parts Part { get; }
+        public UsableItemTypes? UsableItemType { get; set; }
         public int Stat { get; }
         public string Description { get; }
         public int Price { get; }
@@ -26,7 +27,7 @@ namespace TeamTextRPG.Classes
 
         public bool IsEquipped { get; set; }
 
-        public Item(string name, int id, Parts part, int level, int stat, int price, string description, bool isEquipped = false)
+        public Item(string name, int id, Parts part, int level, int stat, int price, string description, bool isEquipped = false, UsableItemTypes? usableItemType = null)
         {
             Name = name;
             Id = id;
@@ -37,6 +38,7 @@ namespace TeamTextRPG.Classes
             Level = level;
             IsEquipped = isEquipped;
             Stack = 1;
+            UsableItemType = usableItemType;
         }
 
         public void PrintInfo(bool showPrice, int num = 0, float sale = 1)
@@ -63,16 +65,31 @@ namespace TeamTextRPG.Classes
                     statByPart = "회피율";
                     break;
                 case Parts.USEABLE:
-                    switch (Id)
+                    switch (UsableItemType)
                     {
-                        case 90:
+                        case UsableItemTypes.ATTACK_BUFF:
+                            statByPart = "공격력";
+                            break;
+                        case UsableItemTypes.CRITICAL_CHANCE_BUFF:
+                            statByPart = "치명율";
+                            break;
+                        case UsableItemTypes.CRITICAL_DAMAGE_BUFF:
+                            statByPart = "치명타";
+                            break;
+                        case UsableItemTypes.DAMAGE:
+                            statByPart = "데미지";
+                            break;
+                        case UsableItemTypes.DEFENCE_BUFF:
+                            statByPart = "방어력";
+                            break;
+                        case UsableItemTypes.DODGE_BUFF:
+                            statByPart = "회피율";
+                            break;
+                        case UsableItemTypes.HEAL_HP:
                             statByPart = "HP회복";
                             break;
-                        case 91:
+                        case UsableItemTypes.HEAL_MP:
                             statByPart = "MP회복";
-                            break;
-                        case 92:
-                            statByPart = "공격력";
                             break;
                         default:
                             statByPart = "아이템";

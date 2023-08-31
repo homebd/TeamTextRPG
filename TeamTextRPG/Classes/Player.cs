@@ -123,31 +123,32 @@ namespace TeamTextRPG.Classes
         {
 
             //아이템 id 에 따라 다르게 작동하도록 한다. 
-            switch (item.Id)
+            switch (item.UsableItemType)
             {
-                case 90:
-                    //HP 회복
+                case UsableItemTypes.ATTACK_BUFF:
+                    //공격력 증가
+                    ChangeATk(item.Stat);
+                    break; 
+                case UsableItemTypes.CRITICAL_CHANCE_BUFF:
+                    ChangeStat(Stats.CRITICALCHANCE, item.Stat);
+                    break;
+                case UsableItemTypes.CRITICAL_DAMAGE_BUFF:
+                    ChangeStat(Stats.CRITICALDAMAGE, item.Stat);
+                    break;
+                case UsableItemTypes.DAMAGE:
+                    // 타겟 설정하고 배틀 매니저에서 진행할 수 있도록 해야 함.
+                    break;
+                case UsableItemTypes.DEFENCE_BUFF:
+                    ChangeStat(Stats.DEF, item.Stat);
+                    break;
+                case UsableItemTypes.DODGE_BUFF:
+                    ChangeStat(Stats.DODGECHANCE, item.Stat);
+                    break;
+                case UsableItemTypes.HEAL_HP:
                     ChangeHP(item.Stat);
                     break;
-                case 91:
-                    //MP 회복
+                case UsableItemTypes.HEAL_MP:
                     ChangeMP(item.Stat);
-                    break;
-                case 92:
-                    //공격력 증가
-                   ChangeStat(Stats.ATK, item.Stat);
-                    break;
-                case 93:
-                    //철분제
-                    break;
-                case 94:
-                    //수류탄
-                    break;
-                case 95:
-                    //연막탄
-                    break;
-                case 96:
-                    //독안개
                     break;
                 default:
                     break;

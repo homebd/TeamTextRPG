@@ -7,7 +7,9 @@
   "Description": "금방이라도 부러질 듯한 목검입니다.",
   "Price": 800,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "낡은 검",
@@ -17,7 +19,9 @@
   "Description": "너무 무뎌져 종이조차 자르지 못하는 검입니다.",
   "Price": 3000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "모험자의 도끼",
@@ -27,7 +31,9 @@
   "Description": "대륙 끝까지 도달했던 모험자의 도끼입니다.",
   "Price": 8000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "거미 독 창",
@@ -37,7 +43,9 @@
   "Description": "거미의 맹독이 발린 창입니다.",
   "Price": 20000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "사자발톱 검 ",
@@ -47,7 +55,9 @@
   "Description": "초왕 '라이언'의 발톱으로 만든 검입니다.",
   "Price": 38000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "곰 장갑",
@@ -57,7 +67,9 @@
   "Description": "폭군 '비틀즈'의 발톱이 달린 장갑입니다.",
   "Price": 55000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "지룡의 단검",
@@ -67,7 +79,9 @@
   "Description": "지룡 '메테오'의 어금니를 벼려 만든 단검입니다.",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수룡장",
@@ -77,7 +91,9 @@
   "Description": "수룡 '네시'의 두개골로 만든 지팡이입니다.",
   "Price": 150000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "백월",
@@ -87,7 +103,9 @@
   "Description": "무명의 밤, 이 차크람이 세상을 비췄습니다.",
   "Price": 240000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "초월한 창",
@@ -97,7 +115,9 @@
   "Description": "이 창을 쥐면 용맹함이 샘솟는 것 같습니다.",
   "Price": 440000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "가벼운 천 모자",
@@ -107,7 +127,9 @@
   "Description": "머리에 꼭 맞는 모자입니다.",
   "Price": 500,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수련자 두건",
@@ -117,7 +139,9 @@
   "Description": "수련에 도움을 주는 두건입니다.",
   "Price": 2000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "모험자의 투구",
@@ -127,7 +151,9 @@
   "Description": "대륙 끝까지 도달했던 모험자의 투구입니다.",
   "Price": 5000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "실크 모자",
@@ -137,7 +163,9 @@
   "Description": "마력이 깃든 거미줄로 만든 모자입니다.",
   "Price": 13000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "사슴뿔 투구",
@@ -147,7 +175,9 @@
   "Description": "성록 '데이지'의 뿔로 장식한 투구입니다.",
   "Price": 22000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "공작깃 투구",
@@ -157,7 +187,9 @@
   "Description": "명조 '무지개'의 깃털로 장식한 투구입니다.",
   "Price": 35000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "지룡의 투구",
@@ -167,7 +199,9 @@
   "Description": "지룡 '메테오'의 비늘로 덮은 투구입니다.",
   "Price": 55000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수룡의 투구",
@@ -177,7 +211,9 @@
   "Description": "수룡 '네시'의 지느러미로 덮은 투구입니다",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "월관",
@@ -187,7 +223,9 @@
   "Description": "흑백청적 네 빛의 보석이 찬란하게 빛납니다.",
   "Price": 150000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "초월한 투구 ",
@@ -197,7 +235,9 @@
   "Description": "이 투구를 쓰면 강인함 샘솟는 것 같습니다.",
   "Price": 270000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "얇은 천 상의",
@@ -207,7 +247,9 @@
   "Description": "얇은 천으로 만들어진 상의입니다.",
   "Price": 500,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수련자 상의",
@@ -217,7 +259,9 @@
   "Description": "수련에 도움을 주는 옷입니다.",
   "Price": 2000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "모험자의 갑옷",
@@ -227,7 +271,9 @@
   "Description": "대륙 끝까지 도달했던 모험자의 갑옷입니다.",
   "Price": 5000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "실크 로브",
@@ -237,7 +283,9 @@
   "Description": "마력이 깃든 거미줄로 만든 로브입니다.",
   "Price": 13000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "악어 갑옷",
@@ -247,7 +295,9 @@
   "Description": "늪의 군주 '샤로'의 가죽으로 만든 갑옷입니다.",
   "Price": 22000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "곰가죽 갑옷",
@@ -257,7 +307,9 @@
   "Description": "폭군 '비틀즈'의 가죽을 받친 갑옷입니다.",
   "Price": 35000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "지룡의 갑주",
@@ -267,7 +319,9 @@
   "Description": "지룡 '메테오'의 날갯가죽으로 만든 갑옷입니다.",
   "Price": 55000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수룡 갑주",
@@ -277,7 +331,9 @@
   "Description": "수룡 '네시'의 비늘로 덮은 갑옷입니다.",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "적월",
@@ -287,7 +343,9 @@
   "Description": "붉은 땅, 달만이 외로이 피어 몽우리졌습니다.",
   "Price": 150000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "빨간 망토",
@@ -297,7 +355,9 @@
   "Description": "이 망토만 있다면 갑옷은 불필요합니다.",
   "Price": 270000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "얇은 천 바지",
@@ -307,7 +367,9 @@
   "Description": "군데군데 헤진 바지입니다.",
   "Price": 500,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수련자 하의",
@@ -317,7 +379,9 @@
   "Description": "수련에 도움을 주는 바지입니다.",
   "Price": 2000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "모험자의 바지",
@@ -327,7 +391,9 @@
   "Description": "대륙 끝까지 도달했던 모험자의 바지입니다.",
   "Price": 5000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "실크 바지",
@@ -337,7 +403,9 @@
   "Description": "마력이 깃든 거미줄로 만든 바지입니다.",
   "Price": 13000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "뱀가죽 바지",
@@ -347,7 +415,9 @@
   "Description": "교사 '스니키'의 가죽으로 만든 레깅스입니다.",
   "Price": 22000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "곰가죽 바지",
@@ -357,7 +427,9 @@
   "Description": "폭군 '비틀즈'의 가죽으로 만든 바지입니다.",
   "Price": 35000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "지룡의 바지",
@@ -367,7 +439,9 @@
   "Description": "지룡 '메테오'의 지느러미로 덮은 바지입니다.",
   "Price": 55000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수룡의 문양",
@@ -377,7 +451,9 @@
   "Description": "수룡 '네시'의 표식이 박힌 바지입니다.",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "흑월",
@@ -387,7 +463,9 @@
   "Description": "달이 없던 그날 밤, 그 그림자에 물들었습니다.",
   "Price": 150000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "빨간 반바지",
@@ -397,7 +475,9 @@
   "Description": "반바지에서조차 그의 예절과 겸손이 느껴집니다.",
   "Price": 270000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "발싸개",
@@ -407,7 +487,9 @@
   "Description": "신발이라고 부르기 민망한 천 쪼가리입니다.",
   "Price": 500,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수련자 단화",
@@ -417,7 +499,9 @@
   "Description": "수련에 도움을 주는 단화입니다.",
   "Price": 2000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "모험자의 부츠",
@@ -427,7 +511,9 @@
   "Description": "대륙 끝까지 도달했던 모험자의 부츠입니다.",
   "Price": 5000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "실크 부츠",
@@ -437,7 +523,9 @@
   "Description": "마력이 깃든 거미줄로 만든 부츠입니다.",
   "Price": 13000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "늑대 부츠",
@@ -447,7 +535,9 @@
   "Description": "걸랑 '울'의 발바닥을 밑창에 붙인 부츠입니다.",
   "Price": 22000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "곰가죽 장화",
@@ -457,7 +547,9 @@
   "Description": "폭군 '비틀즈'의 가죽으로 만든 장화입니다.",
   "Price": 35000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "지룡의 각반",
@@ -467,7 +559,9 @@
   "Description": "지룡 '메테오'의 뿔을 감아 만든 각반입니다.",
   "Price": 55000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "수룡각",
@@ -477,7 +571,9 @@
   "Description": "수룡 '네시'의 보주로 만든 각반입니다.",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "청월",
@@ -487,7 +583,9 @@
   "Description": "달은 물에 잠겨서도 은은한 빛을 만들었습니다.",
   "Price": 150000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "살구색 양말",
@@ -497,7 +595,9 @@
   "Description": "맨발은 위험합니다.",
   "Price": 270000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "거미 눈 헬멧",
@@ -507,7 +607,9 @@
   "Description": "거미 눈을 달아놓은 헬멧입니다.",
   "Price": 700,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "뱀 독 단검",
@@ -517,7 +619,9 @@
   "Description": "뱀의 독을 발라놓은 단검입니다.",
   "Price": 1500,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "고블린의 누더기 갑옷",
@@ -527,7 +631,9 @@
   "Description": "고블린이 입던 더러운 가죽 갑옷입니다.",
   "Price": 1500,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "멧돼지 가죽 부츠",
@@ -537,7 +643,9 @@
   "Description": "단단한 멧돼지의 가죽으로 만들어졌습니다.",
   "Price": 1000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "코볼트 곡괭이",
@@ -547,7 +655,9 @@
   "Description": "코볼트가 쓰던 곡괭이로 굉장히 무겁습니다.",
   "Price": 5000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "궁수의 신발",
@@ -557,7 +667,9 @@
   "Description": "도적 궁수가 신던 신발로 가볍고 튼튼합니다.",
   "Price": 3500,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "도적의 바지",
@@ -567,7 +679,9 @@
   "Description": "도적이 입던 바지로 손때가 탄 것 말고는 괜찮습니다.",
   "Price": 3500,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "사마귀 갑각",
@@ -577,7 +691,9 @@
   "Description": "사마귀의 갑각을 다듬어서 만든 갑옷입니다.",
   "Price": 9000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "말벌 투구",
@@ -587,7 +703,9 @@
   "Description": "말벌의 겹눈을 가공해서 덧댄 투구입니다.",
   "Price": 9000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "오크 글레이브",
@@ -597,7 +715,9 @@
   "Description": "오크가 쓰던 글레이브입니다.",
   "Price": 30000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "놀 가죽 바지",
@@ -607,7 +727,9 @@
   "Description": "놀의 가죽과 털로 만들어진 바지입니다.",
   "Price": 17000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "우르순의 가죽 갑옷",
@@ -617,7 +739,9 @@
   "Description": "각성한 곰의 가죽으로 만든 갑옷입니다.",
   "Price": 30000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "숨 죽인 신발",
@@ -627,7 +751,9 @@
   "Description": "재규어의 발가죽으로 만든 소음이 적은 신발입니다.",
   "Price": 30000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "와이번 이빨 창",
@@ -637,7 +763,9 @@
   "Description": "와이번의 이빨을 가공해서 만든 창입니다",
   "Price": 75000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "독수리 깃털 투구",
@@ -647,7 +775,9 @@
   "Description": "변종 독수리의 깃털로 장식된 투구입니다.",
   "Price": 40000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "인어족의 비늘각반",
@@ -657,7 +787,9 @@
   "Description": "인어족의 비늘로 이뤄진 각반입니다.",
   "Price": 75000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "아귀 머리",
@@ -667,7 +799,9 @@
   "Description": "미끌미끌한 아귀의 머리입니다.",
   "Price": 75000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "그림자 검",
@@ -677,7 +811,9 @@
   "Description": "칠흑의 검신을 가진 검입니다.",
   "Price": 200000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "차크람의 갑옷",
@@ -687,7 +823,9 @@
   "Description": "차크람이 한 때 입었던 갑옷입니다.",
   "Price": 120000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "드래곤 비늘 신발",
@@ -697,7 +835,9 @@
   "Description": "드래곤의 비늘을 덧댄 신발로 아주 튼튼합니다.",
   "Price": 220000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "적당한 검",
@@ -707,7 +847,9 @@
   "Description": "무난하게 사용 가능한 검입니다.",
   "Price": 3000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "적당한 투구",
@@ -717,7 +859,9 @@
   "Description": "무난하게 사용 가능한 투구입니다.",
   "Price": 2000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "적당한 갑옷",
@@ -727,7 +871,9 @@
   "Description": "무난하게 사용 가능한 갑옷입니다.",
   "Price": 2000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "적당한 각반",
@@ -737,7 +883,9 @@
   "Description": "무난하게 사용 가능한 각반입니다.",
   "Price": 2000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "적당한 부츠",
@@ -747,7 +895,9 @@
   "Description": "무난하게 사용 가능한 부츠입니다.",
   "Price": 2000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "용병의 검",
@@ -757,7 +907,9 @@
   "Description": "용병들이 자주 쓰는 검입니다.",
   "Price": 20000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "용병의 투구",
@@ -767,7 +919,9 @@
   "Description": "용병들이 자주 쓰는 투구입니다.",
   "Price": 13000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "용병의 갑옷",
@@ -777,7 +931,9 @@
   "Description": "용병들이 자주 쓰는 갑옷입니다.",
   "Price": 13000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "용병의 각반",
@@ -787,7 +943,9 @@
   "Description": "용병들이 자주 쓰는 각반입니다.",
   "Price": 13000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "용병의 부츠",
@@ -797,7 +955,9 @@
   "Description": "용병들이 자주 쓰는 부츠입니다.",
   "Price": 13000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "숙련자의 검",
@@ -807,7 +967,9 @@
   "Description": "숙련된 모험자가 쓰는 고급 검입니다.",
   "Price": 55000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "숙련자의 투구",
@@ -817,7 +979,9 @@
   "Description": "숙련된 모험자가 쓰는 고급 투구입니다.",
   "Price": 35000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "숙련자의 갑옷",
@@ -827,7 +991,9 @@
   "Description": "숙련된 모험자가 쓰는 고급 갑옷입니다.",
   "Price": 35000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "숙련자의 각반",
@@ -837,7 +1003,9 @@
   "Description": "숙련된 모험자가 쓰는 고급 각반입니다.",
   "Price": 35000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "숙련자의 부츠",
@@ -847,7 +1015,9 @@
   "Description": "숙련된 모험자가 쓰는 고급 부츠입니다.",
   "Price": 35000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "장인의 검",
@@ -857,7 +1027,9 @@
   "Description": "대장장이 장인이 빚어낸 검입니다.",
   "Price": 150000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "장인의 투구",
@@ -867,7 +1039,9 @@
   "Description": "대장장이 장인이 빚어낸 투구입니다.",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "장인의 갑옷",
@@ -877,7 +1051,9 @@
   "Description": "대장장이 장인이 빚어낸 갑옷입니다.",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "장인의 각반",
@@ -887,7 +1063,9 @@
   "Description": "대장장이 장인이 빚어낸 각반입니다.",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "장인의 부츠",
@@ -897,63 +1075,86 @@
   "Description": "대장장이 장인이 빚어낸 부츠입니다.",
   "Price": 90000,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "체력 물약(소)",
   "Id": 90,
   "Part": 5,
+  "UsableItemType": 0,
   "Stat": 50,
   "Description": "체력을 50 회복시켜줍니다",
   "Price": 400,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "마력 물약(소)",
   "Id": 91,
   "Part": 5,
+  "UsableItemType": 1,
   "Stat": 40,
   "Description": "마력을 40 회복시켜줍니다",
   "Price": 600,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "체력 물약(중)",
   "Id": 92,
   "Part": 5,
+  "UsableItemType": 0,
   "Stat": 200,
   "Description": "체력을 200 회복시켜줍니다",
   "Price": 1600,
   "Level": 0,
-  "BonusStat": 0
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "마력 물약(중)",
   "Id": 93,
   "Part": 5,
+  "UsableItemType": 1,
   "Stat": 80,
   "Description": "마력을 80 회복시켜줍니다",
   "Price": 2400,
-  "Level": 0
+  "Level": 0,
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "체력 물약(대)",
   "Id": 94,
   "Part": 5,
+  "UsableItemType": 0,
   "Stat": 400,
   "Description": "체력을 400 회복시켜줍니다",
   "Price": 3200,
-  "Level": 0
+  "Level": 0,
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  },
  {
   "Name": "마력 물약(대)",
   "Id": 95,
   "Part": 5,
+  "UsableItemType": 1,
   "Stat": 160,
   "Description": "마력을 160 회복시켜줍니다",
   "Price": 4800,
-  "Level": 0
+  "Level": 0,
+  "Stack": 1,
+  "BonusStat": 0,
+  "IsEquipped": false
  }
 ]
