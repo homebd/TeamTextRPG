@@ -57,68 +57,43 @@ namespace TeamTextRPG.Classes
             StatsPerLevel.Add("DodgeChance", addDodgeChance);
         }
 
-        public override void ChangeHP(int hp)
-        {
-            var totalHp = MaxHp + GetEquipmentStatBonus(Stats.MAXHP);
-
-            CurrentHp += hp;
-
-            if (totalHp < CurrentHp)
-            {
-                CurrentHp = totalHp;
-            }
-
-            if (CurrentHp < 0)
-            {
-                CurrentHp = 0;
-            }
-        }
-
-
-        public void ChangeMP(int mp)
-        {
-            var totalMp = MaxMp + GetEquipmentStatBonus(Stats.MAXMP);
-
-            CurrentMp += mp;
-
-            if (totalMp < CurrentMp)
-            {
-                CurrentMp = totalMp;
-            }
-
-            if (CurrentMp < 0)
-            {
-                CurrentMp = 0;
-            }
-        }
-
-        public void ChangeATk(int atk)
-        {
-            Atk += atk;
-        }
         public override int GetEquipmentStatBonus(Stats stat)
         {
             int bonus = 0;
             switch (stat)
             {
                 case Stats.MAXHP:
-                    if(Equipments[(int)Parts.HELMET] != null)  bonus += Equipments[(int)Parts.HELMET].Stat; 
+                    if(Equipments[(int)Parts.HELMET] != null)
+                    {
+                        bonus += Equipments[(int)Parts.HELMET].Stat + Equipments[(int)Parts.HELMET].BonusStat;
+                    }
                     break;
                 case Stats.MAXMP:
                     break;
                 case Stats.ATK:
-                    if (Equipments[(int)Parts.WEAPON] != null) bonus += Equipments[(int)Parts.WEAPON].Stat;
+                    if (Equipments[(int)Parts.WEAPON] != null) {
+                        bonus += Equipments[(int)Parts.WEAPON].Stat + Equipments[(int)Parts.WEAPON].BonusStat;
+                    }
                     break;
                 case Stats.DEF:
-                    if (Equipments[(int)Parts.CHESTPLATE] != null) bonus += Equipments[(int)Parts.CHESTPLATE].Stat;
-                    if (Equipments[(int)Parts.LEGGINGS] != null) bonus += Equipments[(int)Parts.LEGGINGS].Stat;
+                    if (Equipments[(int)Parts.CHESTPLATE] != null)
+                    {
+                        bonus += Equipments[(int)Parts.CHESTPLATE].Stat + Equipments[(int)Parts.CHESTPLATE].BonusStat;
+                    }
+                    if (Equipments[(int)Parts.LEGGINGS] != null)
+                    {
+                        bonus += Equipments[(int)Parts.LEGGINGS].Stat + Equipments[(int)Parts.LEGGINGS].BonusStat;
+                    }
                     break;
                 case Stats.CRITICALCHANCE:
                     break;
                 case Stats.CRITICALDAMAGE:
                     break;
                 case Stats.DODGECHANCE:
-                    if (Equipments[(int)Parts.BOOTS] != null) bonus += Equipments[(int)Parts.BOOTS].Stat;
+                    if (Equipments[(int)Parts.BOOTS] != null)
+                    {
+                        bonus += Equipments[(int)Parts.BOOTS].Stat + Equipments[(int)Parts.BOOTS].BonusStat;
+                    }
                     break;
             }
 
@@ -160,7 +135,7 @@ namespace TeamTextRPG.Classes
                     break;
                 case 92:
                     //공격력 증가
-                   ChangeATk(item.Stat);
+                   ChangeStat(Stats.ATK, item.Stat);
                     break;
                 case 3:
                     break;
@@ -197,11 +172,6 @@ namespace TeamTextRPG.Classes
         //소모성 아이템 스택 구현
         public void ItemStackAdd(Item item)
         {
-            item.Stack++;
-        }
-        public void ItemStackAdd(Item item, int cuStack)
-        {
-            item.Stack = cuStack;
             item.Stack++;
         }
         public void ItemStackRemove(Item item)

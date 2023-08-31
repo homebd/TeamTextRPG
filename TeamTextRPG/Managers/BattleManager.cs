@@ -70,11 +70,14 @@ namespace TeamTextRPG.Managers
                 if (int.TryParse(input, out var ret) && ret >= 0 && ret < option.Count)
                 {
                     int targetNum;
+                    Player player = GameManager.Instance.DataManager.Player;
                     switch (ret)
                     {
                         case 0:
                             Random rnd = new Random();
-                            if(rnd.Next(0, 100) < 50)
+                            
+                            // 100% HP -> 40% RUN / 20% HP -> 80% RUN
+                            if(rnd.Next(0, 100) < (90 - 100f * player.CurrentHp / player.GetStatValue(Stats.MAXHP) / 2))
                             {
                                 ui.AddLog("성공적으로 도망쳤습니다!");
                                 return;
@@ -99,8 +102,7 @@ namespace TeamTextRPG.Managers
 
                             int skillNum;
                             Skill? selectedSkill = null;
-                            Player player = GameManager.Instance.DataManager.Player;
-                            while(true)
+                            while (true)
                             {
                                 ui.SetCursorPositionForOption();
 
@@ -273,6 +275,10 @@ namespace TeamTextRPG.Managers
                 Console.CursorVisible = true;
             }
             
+            if(_left == 0)
+            {
+                return;
+            }
 
             //몬스터 턴
             foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
