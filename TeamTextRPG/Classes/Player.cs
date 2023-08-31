@@ -73,6 +73,7 @@ namespace TeamTextRPG.Classes
             }
         }
 
+
         public void ChangeMP(int mp)
         {
             var totalMp = MaxMp + GetEquipmentStatBonus(Stats.MAXMP);
