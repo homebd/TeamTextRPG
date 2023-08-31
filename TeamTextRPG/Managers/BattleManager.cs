@@ -454,8 +454,8 @@ namespace TeamTextRPG.Managers
                 }
                 else
                 {
-                    input = ((float)characterATK / targetDef) - 1f;
-                    formulaResult = (float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2;
+                    input = 1f - ((float)characterATK / targetDef);
+                    formulaResult = 1 + (-(float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2);
                     float proportion = (characterATK * formulaResult * randomDamageRange) / characterATK;
                     damage = (int)(damage * proportion);
                     // 최소데미지 1 보장
