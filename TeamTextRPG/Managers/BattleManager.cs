@@ -11,7 +11,8 @@ namespace TeamTextRPG.Managers
     internal class BattleManager
     {
         public List<Monster> Monsters = new List<Monster>();
-        public Stack<Skill> SkillList = new Stack<Skill>();
+        public Stack<Skill> SkillStack = new Stack<Skill>();
+        private Dungeon currentDgn;
         int _size;
         int _left;
 
@@ -24,17 +25,18 @@ namespace TeamTextRPG.Managers
         public bool EntryBattle(Dungeon dungeon)
         {
             // 클리어 여부를 bool로 반환 false면 실패
+            currentDgn = dungeon;
 
             var ui = GameManager.Instance.UIManager;
-            SkillList.Clear();
+            SkillStack.Clear();
             Monsters.Clear();
-            ui.PrintTitle($"[{dungeon.Name}]", ConsoleColor.Green);
-            ui.PrintDescription(dungeon.Description);
+            ui.PrintTitle($"[{currentDgn.Name}]", ConsoleColor.Green);
+            ui.PrintDescription(currentDgn.Description);
             Random rnd = new Random();
             _size = rnd.Next(1, 5);
 
             // 던전의 몬스터 객체화: _size에 따라 수행
-            InstantiateMonster(dungeon);
+            InstantiateMonster(currentDgn);
             _left = Monsters.Count;
 
             ui.MakeBattleBox();
@@ -46,15 +48,15 @@ namespace TeamTextRPG.Managers
 
         private void BattleInput()
         {
-            GameManager.Instance.DataManager.Player.Skills.Add(new Skill("맹독성 공격", "도트뎀", 3, SkillType.DAMAGE, Stats.ATK, -80, 10, true));
             var ui = GameManager.Instance.UIManager;
 
-            List<string> option = new List<string>();
-
-            option.Add("1. 일반 공격");
-            option.Add("2. 특수 공격");
-            option.Add("3. 인벤토리");
-            option.Add("0. 도망가기");
+            List<string> option = new List<string>
+            {
+                "1. 일반 공격",
+                "2. 특수 공격",
+                "3. 소모품",
+                "0. 도망가기"
+            };
 
             while (_left > 0)
             {
@@ -68,11 +70,14 @@ namespace TeamTextRPG.Managers
                 if (int.TryParse(input, out var ret) && ret >= 0 && ret < option.Count)
                 {
                     int targetNum;
+                    Player player = GameManager.Instance.DataManager.Player;
                     switch (ret)
                     {
                         case 0:
                             Random rnd = new Random();
-                            if(rnd.Next(0, 100) < 50)
+                            
+                            // 100% HP -> 40% RUN / 20% HP -> 80% RUN
+                            if(rnd.Next(0, 100) < (90 - 100f * player.CurrentHp / player.GetStatValue(Stats.MAXHP) / 2))
                             {
                                 ui.AddLog("성공적으로 도망쳤습니다!");
                                 return;
@@ -91,7 +96,38 @@ namespace TeamTextRPG.Managers
                             }
                             break;
                         case 2:
-                            Skill selectedSkill = PrintSkillOption();
+                            #region 스킬창 열고 입력 받고 닫고 다 해무라
+                            ui.MakeTab();
+                            ui.PrintSkills();
+
+                            int skillNum;
+                            Skill? selectedSkill = null;
+                            while (true)
+                            {
+                                ui.SetCursorPositionForOption();
+
+                                if (int.TryParse(Console.ReadLine(), out skillNum) && skillNum >= 0 && skillNum <= player.Skills.Count)
+                                {
+                                    if (skillNum == 0)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        selectedSkill = player.Skills[skillNum - 1];
+                                        if (selectedSkill.ManaCost > player.CurrentMp) ui.AddLog("내공이 부족합니다.");
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                else ui.AddLog("잘못된 입력입니다.");
+                            }
+
+                            LoadBattle();
+
+                            #endregion
                             if (selectedSkill == null) continue;
                             targetNum = PrintBattleOption(BattleType.SKILL);
                             if (targetNum != 0)
@@ -106,7 +142,7 @@ namespace TeamTextRPG.Managers
                             }
                             break;
                         case 3:
-                            PrintInventoryOption();
+                            PrintUseableOption();
                             break;
                     }
                 }
@@ -163,48 +199,80 @@ namespace TeamTextRPG.Managers
             }
         }
 
-        private Skill PrintSkillOption()
+        private void PrintUseableOption()
         {
             var ui = GameManager.Instance.UIManager;
             var dm = GameManager.Instance.DataManager;
-            List<string> option = new List<string>();
-            bool playerTurn = true;
+            var player = GameManager.Instance.DataManager.Player;
+            ui.MakeTab();
+            ui.PrintUseables();
+            int input;
 
-            for (int i = 0; i < dm.Player.Skills.Count ; i++)
-            {
-                option.Add($"{i + 1}. {dm.Player.Skills[i].Name}");
-            }
-            option.Add("0. 취소");
 
             while (true)
             {
-                ui.MakeOptionBox(option);
                 ui.SetCursorPositionForOption();
 
-                string input = Console.ReadLine();
-                if (int.TryParse(input, out var ret) && ret >= 0 && ret <= dm.Player.Skills.Count)
+                if (int.TryParse(Console.ReadLine(), out input) && input >= 0 && input <= dm.SortedItems.Count)
                 {
-                    if (ret == 0)
+                    if (input == 0)
                     {
-                        return null;
+                        LoadBattle();
+                        break;
                     }
                     else
                     {
-                        Skill selectedSkill = dm.Player.Skills[ret - 1];
-                        if (selectedSkill.ManaCost > dm.Player.CurrentMp) ui.AddLog("내공이 부족합니다.");
-                        else
+                        int ItemId = dm.SortedItems[input - 1].Id;
+
+                        switch (ItemId)
                         {
-                            return selectedSkill;
+                            //스테로이드
+                            case 92:
+                                Skill atkBuff = new Skill("공격력 상승", "", 0, SkillType.BUFF, Stats.ATK, 5, 1, false);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(player, atkBuff);
+                                break;
+                            //철분제
+                            case 93:
+                                Skill defBuff = new Skill("방어력 상승", "", 0, SkillType.BUFF, Stats.DEF, 5, 1, false);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(player, defBuff);
+                                break;
+                            // 수류탄
+                            case 94:
+                                int targetNum = PrintBattleOption(BattleType.SKILL);
+                                Skill grade = new Skill("수류탄", "", 0, SkillType.DAMAGE, -100, 1, true);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(Monsters[targetNum - 1], grade);
+                                break;
+                            //연막탄, 회피율 증가
+                            case 95:
+                                Skill SmokeShell = new Skill("연막탄", "", 0, SkillType.BUFF, Stats.DODGECHANCE, 10, 1, true);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(player, SmokeShell);
+                                break;
+                            //독안개
+                            case 96:
+                                targetNum = PrintBattleOption(BattleType.SKILL);
+                                Skill poisonMist = new Skill("독안개", "", 0, SkillType.BUFF, Stats.ATK, -5, 1, true);
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                Battle(Monsters[targetNum - 1], poisonMist);
+                                break;
+                            default:
+                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                                break;
                         }
+
+                        dm.Player.Wear(dm.SortedItems[input - 1]);
+                       // ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                        //ui.PrintUseables();
                     }
                 }
-                else ui.AddLog("잘못된 입력입니다.");
+                else { ui.AddLog("잘못된 입력입니다."); }
+                LoadBattle();
+                break;
+             
             }
-        }
-
-        private void PrintInventoryOption()
-        {
-
         }
 
         public void Battle(Character? target, Skill? skill)
@@ -215,13 +283,13 @@ namespace TeamTextRPG.Managers
             // 도망 실패로 배틀에 끌려왔을 시 플레이어 턴 무시
             if(target != null)
             {
-                // 플레이어 턴
+                //플레이어 턴
                 if (skill == null)
                 {
                     skill = new Skill("공격", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1, false);
                 }
 
-                SkillList.Push(skill.UseSkill(player, target));
+                SkillStack.Push(skill.UseSkill(player, target));
 
                 if (skill.IsAoE && target != player)
                 {
@@ -231,16 +299,16 @@ namespace TeamTextRPG.Managers
                     {
                         if (index == 0)
                         {
-                            SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                            SkillStack.Push(skill.UseSkill(player, Monsters[index + 1]));
                         }
                         else if (index == Monsters.Count - 1)
                         {
-                            SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
+                            SkillStack.Push(skill.UseSkill(player, Monsters[index - 1]));
                         }
                         else
                         {
-                            SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
-                            SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                            SkillStack.Push(skill.UseSkill(player, Monsters[index - 1]));
+                            SkillStack.Push(skill.UseSkill(player, Monsters[index + 1]));
                         }
                     }
                 }
@@ -251,12 +319,16 @@ namespace TeamTextRPG.Managers
                 Console.CursorVisible = true;
             }
             
+            if(_left == 0)
+            {
+                return;
+            }
 
             //몬스터 턴
             foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
             {
                 var monsterSkill = new Skill("공격", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1, false);
-                SkillList.Push(monsterSkill.UseSkill(livingMonster, player));
+                SkillStack.Push(monsterSkill.UseSkill(livingMonster, player));
             }
 
             ManageSkillList();
@@ -286,23 +358,28 @@ namespace TeamTextRPG.Managers
 
         public void ManageSkillList()
         {
-            Stack<Skill> newSkillList = new Stack<Skill>();
+            Stack<Skill> newSkillStack = new Stack<Skill>();
             var ui = GameManager.Instance.UIManager;
 
-            while(SkillList.Count > 0)
+            GameManager.Instance.DataManager.Player.BuffStat = new int[] { 0, };
+
+            // 일단 버프를 정렬
+            SkillStack = new Stack<Skill>(SkillStack.OrderByDescending(x => x.SkillType).ToList());
+
+            while(SkillStack.Count > 0)
             {
-                Skill token = SkillList.Pop();
+                Skill token = SkillStack.Pop();
                 if (token.Target.IsDead()) continue;
 
                 int value = token.DoSkill();
-
+             
                 switch (token.SkillType)
                 {
                     case SkillType.DAMAGE:
                         if(value < 0)
                         {
                             Damage(value, token);
-
+                            
                         }
                         else if(value > 0)
                         {
@@ -318,15 +395,15 @@ namespace TeamTextRPG.Managers
                         token.Target.ChangeStat(token.Stat, value);
                         break;
                 }
-                newSkillList.Push(token);
+                newSkillStack.Push(token);
             }
 
-            while(newSkillList.Count > 0)
+            while(newSkillStack.Count > 0)
             {
-                Skill token = newSkillList.Pop();
+                Skill token = newSkillStack.Pop();
                 if (token.Duration > 0)
                 {
-                    SkillList.Push(token);
+                    SkillStack.Push(token);
                 }
             }
 
@@ -337,7 +414,7 @@ namespace TeamTextRPG.Managers
         {
             _left--;
         }
-
+    
         public void Damage(int damage, Skill skill)
         {
             Random rnd = new Random();
@@ -350,32 +427,39 @@ namespace TeamTextRPG.Managers
                 return;
             }
             #endregion
-
+        
             #region 데미지 공식
             int def = skill.Target.GetStatValue(Stats.DEF);
+            float input = 0f;
+            float formulaResult = 0f;
+            float randomDamageRange = (float)(rnd.NextDouble() * 0.4f) + 0.8f;
+
             if (def > -damage)
             {
-                damage = -1;
+                input = ((float)damage / def) + 1f;
+                formulaResult = (float)((Math.Exp(input * 4) / (Math.Exp(input * 4) + 1)) - 0.5) * 2;
+                // 최소 데미지는 공격력의 40%
+                if (formulaResult < 0.4f)
+                    formulaResult = 0.4f;
+                damage = (int)(damage * formulaResult * randomDamageRange);
+                // 최소데미지 1 보장
+                if (damage == 0)
+                    damage--;
             }
             else
             {
-                int temp = damage;
-                float control = MathF.Pow(1f - ((float)def / -damage), 1.4f);
-                if (control < 0.2f) control = 0.2f;
-                damage = (int)Math.Round(damage * control);
-                // 최소데미지 1로 고정
-                if (-temp >= 0 && damage == 0)
-                {
-                    damage = -1;
-                }
+                input = 1 - ((float)-damage / def);
+                formulaResult = (float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2;
+                damage = (int)(damage * (1 + formulaResult * randomDamageRange));
+                // 최소데미지 1 보장
+                if (damage == 0)
+                    damage--;
             }
-
-
-
-
             #endregion
 
+          
             #region 치명타 공식
+           
             if (rnd.Next(0, 100) <= skill.Caster.CriticalChance)
             {
                 damage = (int)(damage * skill.Caster.CriticalDamage / 100f);
@@ -393,6 +477,19 @@ namespace TeamTextRPG.Managers
             {
                 GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 {skill.Name}! {-damage} {(critical ? "치명타 " : "")}피해!");
             }
+        }
+
+        public void LoadBattle()
+        {
+            var ui = GameManager.Instance.UIManager;
+
+            Console.Clear();
+            ui.PrintTitle($"[{currentDgn.Name}]", ConsoleColor.Green);
+            ui.PrintDescription(currentDgn.Description);
+            ui.MakeBattleBox();
+            ui.MakeLogBox();
+            PrintPlayerUI();
+            ui.ShowMonsterCard(Monsters);
         }
     }
 }

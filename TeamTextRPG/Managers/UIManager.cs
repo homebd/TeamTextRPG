@@ -91,7 +91,7 @@ namespace TeamTextRPG.Managers
                 case Parts.BOOTS:
                     Console.Write("────────────────────────────────────────┘       └─────");
                     break;
-                case Parts.USEABlE:
+                case Parts.USEABLE:
                     Console.Write("────────────────────────────────────────────────┘       └─");
                     break;
             }
@@ -461,6 +461,8 @@ namespace TeamTextRPG.Managers
 
             }
 
+            string bonus;
+
             Console.SetCursorPosition(38, 6);
             Console.Write("< 현재 능력치 >");
 
@@ -471,25 +473,35 @@ namespace TeamTextRPG.Managers
             Console.Write($"직  업  {jop}");
 
             Console.SetCursorPosition(31, 15);
-            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp} (+{player.GetEquipmentStatBonus(Stats.MAXHP)})");
+            bonus = (player.GetEquipmentStatBonus(Stats.MAXHP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXHP)})";
+            Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp}{bonus}");
 
             Console.SetCursorPosition(31, 17);
-            Console.Write($"마  나  {player.CurrentMp} / {player.MaxMp} (+{player.GetEquipmentStatBonus(Stats.MAXMP)})");
+            bonus = (player.GetEquipmentStatBonus(Stats.MAXMP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXMP)})";
+            Console.Write($"마  나  {player.CurrentMp} / {player.MaxMp}{bonus}");
+
+            Console.SetCursorPosition(69, 6);
+            Console.Write("< 세부 능력치 >");
 
             Console.SetCursorPosition(62, 9);
-            Console.Write($"공격력  {player.Atk} (+{player.GetEquipmentStatBonus(Stats.ATK)})");
+            bonus = (player.GetEquipmentStatBonus(Stats.ATK) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.ATK)})";
+            Console.Write($"공격력  {player.Atk}{bonus}");
 
             Console.SetCursorPosition(62, 11);
-            Console.Write($"방어력  {player.Def} (+{player.GetEquipmentStatBonus(Stats.DEF)})");
+            bonus = (player.GetEquipmentStatBonus(Stats.DEF) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.DEF)})";
+            Console.Write($"방어력  {player.Def}{bonus}");
 
             Console.SetCursorPosition(62, 13);
-            Console.Write($"치명률  {player.CriticalChance}% (+{player.GetEquipmentStatBonus(Stats.CRITICALCHANCE)}%)");
+            bonus = (player.GetEquipmentStatBonus(Stats.CRITICALCHANCE) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.CRITICALCHANCE)}%)";
+            Console.Write($"치명률  {player.CriticalChance}%{bonus}");
 
             Console.SetCursorPosition(62, 15);
-            Console.Write($"치명타  {player.CriticalDamage}% (+{player.GetEquipmentStatBonus(Stats.CRITICALDAMAGE)}%)");
+            bonus = (player.GetEquipmentStatBonus(Stats.CRITICALDAMAGE) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.CRITICALDAMAGE)}%)";
+            Console.Write($"치명타  {player.CriticalDamage}%{bonus}");
 
             Console.SetCursorPosition(62, 17);
-            Console.Write($"회피률  {player.DodgeChance}% (+{player.GetEquipmentStatBonus(Stats.DODGECHANCE)}%)");
+            bonus = (player.GetEquipmentStatBonus(Stats.DODGECHANCE) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.DODGECHANCE)}%)";
+            Console.Write($"회피율  {player.DodgeChance}%{bonus}");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
@@ -532,7 +544,7 @@ namespace TeamTextRPG.Managers
             Console.Write($"권  장  방어력 {dm.Dungeons[stage].Condition} 이상");
 
             Console.SetCursorPosition(left, 17);
-            Console.Write($"보  상  {dm.Dungeons[stage].Reward[0].ToString().PadLeft(4, ' ')} G");
+            Console.Write($"보  상  {dm.Dungeons[stage].Reward[0]} G");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
@@ -561,6 +573,9 @@ namespace TeamTextRPG.Managers
             DataManager dm = GameManager.Instance.DataManager;
 
             dm.SortItems(dm.Player.Inventory);
+
+            //카테고리가 null이거나 useable일 때만 해줘도 되는데 귀찮..
+            dm.SortedItems = dm.SortedItems.Where(x => x.Part != Parts.USEABLE).ToList();
 
             for (int i = 0; i < dm.SortedItems.Count && i < 12; i++)
             {
@@ -674,7 +689,7 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(50, _goldTopPostion);
             Console.Write("┬──────┬────────────────────────────────┐");
             Console.SetCursorPosition(50, _goldTopPostion + 1);
-            Console.Write($"│ 내 공│  ");
+            Console.Write($"│ 마 나│  ");
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.Write("".PadRight(fillExpBar, '　'));
             Console.BackgroundColor = ConsoleColor.DarkBlue;
@@ -683,6 +698,49 @@ namespace TeamTextRPG.Managers
             Console.Write("│");
             Console.SetCursorPosition(50, _goldTopPostion + 2);
             Console.Write("┴──────┴────────────────────────────────┤");
+
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+        }
+        public void PrintHpAndMp()
+        {
+            var currentCursor = Console.GetCursorPosition();
+            var player = GameManager.Instance.DataManager.Player;
+
+            int rate = 14;
+            int fillExpBar = (int)(rate * (float)player.CurrentHp / (player.MaxHp + player.GetEquipmentStatBonus(Stats.MAXHP)) + 0.5f);
+            if (fillExpBar >= rate) fillExpBar = rate;
+
+            Console.SetCursorPosition(0, _goldTopPostion);
+            Console.Write("┌──────┬──────────────────────────────┐");
+            Console.SetCursorPosition(0, _goldTopPostion + 1);
+            Console.Write($"│ 체 력│  ");
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write("".PadRight(fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.Write("".PadRight(rate - fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("│");
+            Console.SetCursorPosition(0, _goldTopPostion + 2);
+            Console.Write("├──────┴──────────────────────────────┴");
+
+
+            rate = 12;
+            fillExpBar = (int)(rate * (float)player.CurrentMp / player.MaxMp + player.GetEquipmentStatBonus(Stats.MAXMP) + 0.5f);
+            if (fillExpBar >= rate) fillExpBar = rate;
+            int hpBarWidth = "┌──────┬──────────────────────────────┐".Length;
+
+            Console.SetCursorPosition(hpBarWidth - 1, _goldTopPostion);
+            Console.Write("┬──────┬──────────────────────────┐");
+            Console.SetCursorPosition(hpBarWidth - 1, _goldTopPostion + 1);
+            Console.Write($"│ 마 나│  ");
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Write("".PadRight(fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Write("".PadRight(rate - fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("│");
+            Console.SetCursorPosition(hpBarWidth - 1, _goldTopPostion + 2);
+            Console.Write("┴──────┴──────────────────────────┘");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
@@ -764,7 +822,13 @@ namespace TeamTextRPG.Managers
                 {
                     Console.SetCursorPosition(leftPosition[i] + 2, top + 7);
                     paddingSize = (17 - 4) / 2;
-                    Console.Write("".PadLeft(paddingSize, ' ') + "사망");
+                    Console.Write("".PadLeft(paddingSize, ' '));
+
+                    var color = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("사망");
+                    Console.ForegroundColor = color;
+                    Console.Write(" ");
                 }
 
 
@@ -779,6 +843,126 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
 
+        }
+
+        public void MakeTab()
+        {
+            var currentCursor = Console.GetCursorPosition();
+
+            int left = 2, top = 1, right = 90, bottom = 28;
+            MakeUIContainer(left, top, right, bottom);
+
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+        }
+
+        public void PrintSkills()
+        {
+            var currentCursor = Console.GetCursorPosition();
+
+            var skillList = GameManager.Instance.DataManager.Player.Skills;
+
+            Console.SetCursorPosition(4, 2);
+            Console.Write("SKILL");
+
+            Console.SetCursorPosition(81, 2);
+            Console.Write("0. 닫기");
+            Console.SetCursorPosition(4, 3);
+
+            Console.Write("────────────────┬──────────┬───────────────────────────────────────────────────────");
+
+            Console.SetCursorPosition(4, 4);
+            Console.Write("      스킬명    │ 소모 마나│                        스킬 설명");
+
+            Console.SetCursorPosition(4, 5);
+            Console.Write("────────────────┴──────────┴───────────────────────────────────────────────────────");
+
+            for (int i = 0; i < skillList.Count && i < 21; i++)
+            {
+                Skill skill = skillList[i];
+                Console.SetCursorPosition(4, 6 + i);
+                Console.Write($"{(i+1).ToString().PadRight(4, ' ')}{skill.Name}");
+                Console.SetCursorPosition(20, 6 + i);
+                Console.Write($"ㅣ{skill.ManaCost.ToString().PadLeft(9, ' ')}ㅣ");
+
+                switch(skill.ValueType)
+                {
+                    case ValueTypeEnum.PROPOTIONAL:
+                        Console.Write((int)(-GameManager.Instance.DataManager.Player.GetStatValue(skill.Stat) * skill.Value / 100f));
+                        break;
+                    case ValueTypeEnum.FIXED:
+                        Console.Write($"ㅣ{skill.Value}의 피해를 입힙니다.");
+                        break;
+                }
+                Console.Write("의 피해를 입힙니다.");
+            }
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+        }
+
+        public void MarkSkill(int num)
+        {
+            var currentCursor = Console.GetCursorPosition();
+            var currentColor = Console.BackgroundColor;
+
+            Skill skill = GameManager.Instance.DataManager.Player.Skills[num];
+
+            Console.SetCursorPosition(4, 6 + num);
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write($"{(num + 1).ToString().PadRight(4, ' ')}{skill.Name}      ");
+            Console.SetCursorPosition(20, 6 + num);
+            Console.Write($"ㅣ{skill.ManaCost.ToString().PadLeft(9, ' ')}ㅣ");
+
+            switch (skill.ValueType)
+            {
+                case ValueTypeEnum.PROPOTIONAL:
+                    Console.Write((int)(-GameManager.Instance.DataManager.Player.GetStatValue(skill.Stat) * skill.Value / 100f));
+                    break;
+                case ValueTypeEnum.FIXED:
+                    Console.Write($"ㅣ{skill.Value}의 피해를 입힙니다.");
+                    break;
+            }
+            Console.Write("의 피해를 입힙니다.");
+
+            Console.BackgroundColor = currentColor;
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+        }
+        public void PrintUseables()
+        {
+            var currentCursor = Console.GetCursorPosition();
+
+            var dm = GameManager.Instance.DataManager;
+            var tempC = Category;
+            Category = Parts.USEABLE;
+            dm.SortItems(dm.Player.Inventory);
+
+            Console.SetCursorPosition(4, 2);
+            Console.Write("소모품");
+
+            Console.SetCursorPosition(81, 2);
+            Console.Write("0. 닫기");
+            Console.SetCursorPosition(4, 3);
+
+            Console.Write("────────────────┬──────┬───────────────────────────────────────────────────────────");
+
+            Console.SetCursorPosition(4, 4);
+            Console.Write("     아이템명   │ 수 량│                       아이템 설명");
+
+            Console.SetCursorPosition(4, 5);
+            Console.Write("────────────────┴──────┴───────────────────────────────────────────────────────────");
+
+            for (int i = 0; i < dm.SortedItems.Count && i < 20; i++)
+            {
+                Item item = dm.SortedItems[i];
+                Console.SetCursorPosition(4, 6 + i);
+                Console.Write($"{(i + 1).ToString().PadRight(4, ' ')}{item.Name}");
+                Console.SetCursorPosition(20, 6 + i);
+                Console.Write($"ㅣ{item.Stack.ToString().PadLeft(5, ' ')}ㅣ");
+                Console.Write(item.Description);
+            }
+            Console.SetCursorPosition(4, 6 + ((dm.SortedItems.Count < 20) ? dm.SortedItems.Count : 20));
+            Console.Write("".PadRight(84, ' '));
+
+            Category = tempC;
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
     }
 }

@@ -11,23 +11,23 @@ namespace TeamTextRPG.Classes
         public string Name { get; }
         public int Id { get; private set; }
         public Parts Part { get; }
+        public UsableItemTypes? UsableItemType { get; set; }
         public int Stat { get; }
         public string Description { get; }
         public int Price { get; }
         public int Level { get; set; }
-
         public int Stack { get; set; }
         public int BonusStat
         {
             get
             {
-                return Stat * 2 * Level * Level / 100;
+                return (int)(Stat * (Math.Pow(Level * 5, 1.5) / 100));
             }
         }
 
         public bool IsEquipped { get; set; }
 
-        public Item(string name, int id, Parts part, int level, int stat, int price, string description, bool isEquipped = false)
+        public Item(string name, int id, Parts part, int level, int stat, int price, string description, bool isEquipped = false, UsableItemTypes? usableItemType = null)
         {
             Name = name;
             Id = id;
@@ -38,6 +38,7 @@ namespace TeamTextRPG.Classes
             Level = level;
             IsEquipped = isEquipped;
             Stack = 1;
+            UsableItemType = usableItemType;
         }
 
         public void PrintInfo(bool showPrice, int num = 0, float sale = 1)
@@ -63,23 +64,37 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
-                case Parts.USEABlE:
-                    switch (Id)
+                case Parts.USEABLE:
+                    switch (UsableItemType)
                     {
-                        case 90:
-                            statByPart = "체력";
-                            break;
-                        case 91:
-                            statByPart = "마력";
-                            break;
-                        case 92:
+                        case UsableItemTypes.ATTACK_BUFF:
                             statByPart = "공격력";
+                            break;
+                        case UsableItemTypes.CRITICAL_CHANCE_BUFF:
+                            statByPart = "치명율";
+                            break;
+                        case UsableItemTypes.CRITICAL_DAMAGE_BUFF:
+                            statByPart = "치명타";
+                            break;
+                        case UsableItemTypes.DAMAGE:
+                            statByPart = "데미지";
+                            break;
+                        case UsableItemTypes.DEFENCE_BUFF:
+                            statByPart = "방어력";
+                            break;
+                        case UsableItemTypes.DODGE_BUFF:
+                            statByPart = "회피율";
+                            break;
+                        case UsableItemTypes.HEAL_HP:
+                            statByPart = "HP회복";
+                            break;
+                        case UsableItemTypes.HEAL_MP:
+                            statByPart = "MP회복";
                             break;
                         default:
                             statByPart = "아이템";
                             break;
                     }
-                   
                     break;
             }
             if (Stack >= 2)
@@ -97,6 +112,7 @@ namespace TeamTextRPG.Classes
             if(showPrice) Console.WriteLine($"| {((int)(Price * sale)).ToString().PadLeft(8, ' ')} G");
             else Console.Write($"| {Description}\n");
         }
+       
 
         public void PrintInfoAtSmithy(int num)
         {
@@ -121,19 +137,9 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
-                case Parts.USEABlE:
-                    statByPart = "아이템";
-                    break;
 
             }
-            if(Stack >= 2)
-            {
-                Console.Write($"- {printNum}{equip}{level}{Name} X {Stack}");
-            }
-            else
-            {
-                Console.Write($"- {printNum}{equip}{level}{Name}");
-            }
+            Console.Write($"- {printNum}{equip}{level}{Name}");
             Console.SetCursorPosition(25, Console.GetCursorPosition().Top);
             Console.Write($"| {statByPart} + {Stat}{bonus}");
             Console.SetCursorPosition(45, Console.GetCursorPosition().Top);
@@ -144,7 +150,8 @@ namespace TeamTextRPG.Classes
             int cost = Price * (6 << Level) / 100;
 
             Console.WriteLine($"| 성공 확률: {prb.ToString().PadLeft(3, ' ')} %| 비용: {cost.ToString().PadLeft(10, ' ')} G");
-             
+
+           
         }
     }
 }

@@ -161,7 +161,7 @@ namespace TeamTextRPG.Managers
         {
             Player.Gold -= item.Price;
             //구매한 아이템이 소모품인 경우
-            if(item.Part == Parts.USEABlE)
+            if(item.Part == Parts.USEABLE)
             {
                 Item? playerItem = Player.Inventory.Find(x => x.Id == item.Id);
                 //플레이어에게 이미 동일한 아이템이 존재하는 경우
@@ -190,7 +190,7 @@ namespace TeamTextRPG.Managers
           
             Player.Gold += (int)(item.Price * 0.85f);
             //판매한 아이템이 소모품인 경우.
-            if (item.Part == Parts.USEABlE)
+            if (item.Part == Parts.USEABLE)
             {
                 Player.ItemStackRemove(item);
                 if (Player.CheckStack(item) == 0)
@@ -224,11 +224,12 @@ namespace TeamTextRPG.Managers
             Shop = Shop.OrderBy(item => item.Id).ToList();
            
             #endregion
+            
 
             #region 휴식 세팅
-            Shelters.Add(new Shelter("약초 처방", 100, 40, 300));
-            Shelters.Add(new Shelter("전문 진료", 500, 200, 1500));
-            Shelters.Add(new Shelter("입원 치료", 1000, 400, 3000));
+            Shelters.Add(new Shelter("약초 처방", 100, 40, 400));
+            Shelters.Add(new Shelter("전문 진료", 500, 200, 2000));
+            Shelters.Add(new Shelter("입원 치료", 1000, 400, 4000));
             #endregion
         }
 
@@ -383,6 +384,7 @@ namespace TeamTextRPG.Managers
                 Thread.Sleep(500);
 
                 var iHp = Player.CurrentHp;
+                var iMP = Player.CurrentMp;
                 var iGold = Player.Gold;
 
                 Player.Gold -= st.Cost;
@@ -391,6 +393,7 @@ namespace TeamTextRPG.Managers
 
                 ui.AddLog($"{st.Name}(을)를 완료했습니다.");
                 ui.AddLog($"체력 {iHp} -> {Player.CurrentHp}");
+                ui.AddLog($"마나 {iMP} -> {Player.CurrentMp}");
                 if (Player.Gold / 1000000 > 0)
                 {
                     ui.AddLog($"소지금 {iGold} ");
@@ -482,9 +485,6 @@ namespace TeamTextRPG.Managers
                                     // 닷지 찬스 설정 (Player의 생성자 문제)
                                     Player.DodgeChance = (int)data["DodgeChance"][job];
                                     // 레벨 당 스탯 증가 수치 설정
-<<<<<<< Updated upstream
-                                    Player.SetStatsPerLevel((int)data["AddAtk"][job], (int)data["AddDef"][job], (int)data["AddMaxHp"][job], (int)data["AddMaxMp"][job], (int)data["AddCriticalChance"][job], (int)data["AddDodgeChance"][job]);
-=======
                                     Player.SetStatsPerLevel((int)data["AddAtk"][job], (int)data["AddDef"][job], (int)data["AddMaxHp"][job], (int)data["AddMaxMp"][job], (int)data["AddCriticalChance"][job], (int)data["AddCriticalDamage"][job],(int)data["AddDodgeChance"][job]);
                                     string jobSkill = "";
                                     switch(job)
@@ -500,7 +500,7 @@ namespace TeamTextRPG.Managers
                                             break;
                                     }
                                     Player.SetSkillList(data[jobSkill]);
->>>>>>> Stashed changes
+
                                     GetBasicItem();
                                     SaveData();
                                     GameManager.Instance.SceneManager.Scene = Scenes.TOWN;
@@ -597,9 +597,9 @@ namespace TeamTextRPG.Managers
         public void StrengthenItem(Item item)
         {
             var ui = GameManager.Instance.UIManager;
-            if (Player.Gold >= item.Price * (6 << item.Level) / 100)
+            if (Player.Gold >= (item.Price / 20) * Math.Pow(item.Level, 2))
             {
-                Player.Gold -= item.Price * (6 << item.Level) / 100;
+                Player.Gold -= (int)((item.Price / 20) * Math.Pow(item.Level, 2));
 
                 Random rnd = new Random();
                 if (rnd.Next(0, 100) < (100 >> item.Level) + (100 >> item.Level + 1))
@@ -646,8 +646,7 @@ namespace TeamTextRPG.Managers
         public Item MakeNewItem(int id)
         {
             Item item = _items[id];
-            Item newItem = new Item(item.Name, item.Id, item.Part, item.Level, item.Stat, item.Price, item.Description);
-
+            Item newItem = new Item(item.Name, item.Id, item.Part, item.Level, item.Stat, item.Price, item.Description, item.IsEquipped ,item?.UsableItemType);
             return newItem;
         }
 
