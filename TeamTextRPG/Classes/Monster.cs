@@ -29,22 +29,5 @@ namespace TeamTextRPG.Classes
                 
             }
         }
-
-        public void ChangeHP(int hp)
-        {
-            var totalHp = MaxHp;
-
-            CurrentHp += hp;
-
-            if (totalHp < CurrentHp)
-            {
-                CurrentHp = totalHp;
-            }
-
-            if (CurrentHp < 0)
-            {
-                CurrentHp = 0;
-            }
-        }
     }
 }
