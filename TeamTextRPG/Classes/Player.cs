@@ -127,7 +127,7 @@ namespace TeamTextRPG.Classes
             {
                 case UsableItemTypes.ATTACK_BUFF:
                     //공격력 증가
-                    ChangeATk(item.Stat);
+                    ChangeStat(Stats.ATK, item.Stat);
                     break; 
                 case UsableItemTypes.CRITICAL_CHANCE_BUFF:
                     ChangeStat(Stats.CRITICALCHANCE, item.Stat);

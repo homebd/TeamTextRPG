@@ -917,7 +917,7 @@ namespace TeamTextRPG.Managers
                     Console.Write((int)(-GameManager.Instance.DataManager.Player.GetStatValue(skill.Stat) * skill.Value / 100f));
                     break;
                 case ValueTypeEnum.FIXED:
-                    Console.Write($"ㅣ{skill.Value}의 피해를 입힙니다.");
+                    Console.Write(skill.Value);
                     break;
             }
             Console.Write("의 피해를 입힙니다.");
