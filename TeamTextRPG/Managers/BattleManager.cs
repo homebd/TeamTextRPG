@@ -115,7 +115,11 @@ namespace TeamTextRPG.Managers
                                     else
                                     {
                                         selectedSkill = player.Skills[skillNum - 1];
-                                        if (selectedSkill.ManaCost > player.CurrentMp) ui.AddLog("내공이 부족합니다.");
+                                        if (selectedSkill.ManaCost > player.CurrentMp)
+                                        {
+                                            selectedSkill = null;
+                                            ui.AddLog("내공이 부족합니다.");
+                                        }
                                         else
                                         {
                                             break;
@@ -478,6 +482,7 @@ namespace TeamTextRPG.Managers
 
                 if (skill.Caster == GameManager.Instance.DataManager.Player)
                 {
+
                     GameManager.Instance.UIManager.AddLog($"[{skill.Name}]{skill.Target.Name}에게 {-damage} {(critical ? "치명타 " : "")}피해!");
                 }
                 else
