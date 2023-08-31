@@ -532,7 +532,7 @@ namespace TeamTextRPG.Managers
             Console.Write($"권  장  방어력 {dm.Dungeons[stage].Condition} 이상");
 
             Console.SetCursorPosition(left, 17);
-            Console.Write($"보  상  {dm.Dungeons[stage].Reward[0].ToString().PadLeft(4, ' ')} G");
+            Console.Write($"보  상  {dm.Dungeons[stage].Reward[0]} G");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
@@ -787,7 +787,7 @@ namespace TeamTextRPG.Managers
 
         }
 
-        public void MakeSkillBox()
+        public void MakeTab()
         {
             var currentCursor = Console.GetCursorPosition();
 
@@ -795,8 +795,6 @@ namespace TeamTextRPG.Managers
             MakeUIContainer(left, top, right, bottom);
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
-
-            Console.CursorSize = 2000;
         }
     }
 }
