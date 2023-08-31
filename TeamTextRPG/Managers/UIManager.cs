@@ -752,10 +752,7 @@ namespace TeamTextRPG.Managers
                 {
                     Console.SetCursorPosition(leftPosition[i] + 2, top + 7);
                     paddingSize = (17 - 4) / 2;
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     Console.Write("".PadLeft(paddingSize, ' ') + "사망");
-                    Console.ForegroundColor = ConsoleColor.White;
-                    Console.Write(" ");
                 }
 
 

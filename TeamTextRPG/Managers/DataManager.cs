@@ -150,7 +150,13 @@ namespace TeamTextRPG.Managers
                 return;
             _items.AddRange(LoadedItems);
         }
-
+        public void LoadDungeon()
+        {
+            List<Dungeon>? LoadedDungeons = JsonConvert.DeserializeObject<List<Dungeon>>(File.ReadAllText(_dataPath + @"/Dungeons.json"));
+            if (LoadedDungeons == null)
+                return;
+            Dungeons.AddRange(LoadedDungeons);
+        }
         public void BuyItem(Item item)
         {
             Player.Gold -= item.Price;
@@ -207,117 +213,7 @@ namespace TeamTextRPG.Managers
         {
             LoadItems();
             LoadMonsters();
-
-            #region 던전 세팅
-            Dungeons.Add(new Dungeon("마을 동굴", "왠지 꺼림칙한 작은 동굴입니다.", 3, 300));
-            Dungeons[0].AddMonster(0);
-            Dungeons[0].AddMonster(1);
-            Dungeons[0].AddMonster(2);
-            Dungeons[0].AddMonster(3);
-            Dungeons[0].AddMonster(4);
-            Dungeons[0].AddReward(0);
-            Dungeons[0].AddReward(10);
-            Dungeons[0].AddReward(20);
-            Dungeons[0].AddReward(30);
-            Dungeons[0].AddReward(40);
-
-            Dungeons.Add(new Dungeon("옆 마을", "몬스터들에게 침략당한 마을입니다.", 5, 600));
-            Dungeons[1].AddMonster(5);
-            Dungeons[1].AddMonster(6);
-            Dungeons[1].AddMonster(7);
-            Dungeons[1].AddMonster(8);
-            Dungeons[1].AddReward(1);
-            Dungeons[1].AddReward(11);
-            Dungeons[1].AddReward(21);
-            Dungeons[1].AddReward(31);
-            Dungeons[1].AddReward(41);
-
-            Dungeons.Add(new Dungeon("대륙 끝의 던전", "이곳의 몬스터들은 왜인지 사람을 닮았습니다.", 7, 1000));
-            Dungeons[2].AddMonster(9);
-            Dungeons[2].AddMonster(10);
-            Dungeons[2].AddMonster(11);
-            Dungeons[2].AddMonster(12);
-            Dungeons[2].AddReward(2);
-            Dungeons[2].AddReward(12);
-            Dungeons[2].AddReward(22);
-            Dungeons[2].AddReward(32);
-            Dungeons[2].AddReward(42);
-
-            Dungeons.Add(new Dungeon("대형 거미줄", "거대한 벌레들이 우글거리는 '아라크네'의 둥지입니다.", 10, 1500));
-            Dungeons[3].AddMonster(13);
-            Dungeons[3].AddMonster(14);
-            Dungeons[3].AddMonster(15);
-            Dungeons[3].AddMonster(16);
-            Dungeons[3].AddReward(3);
-            Dungeons[3].AddReward(13);
-            Dungeons[3].AddReward(23);
-            Dungeons[3].AddReward(33);
-            Dungeons[3].AddReward(43);
-
-            Dungeons.Add(new Dungeon("초원 지대", "각종 위협이 도사리는 넓은 평야입니다.", 14, 2500));
-            Dungeons[4].AddMonster(17);
-            Dungeons[4].AddMonster(18);
-            Dungeons[4].AddMonster(19);
-            Dungeons[4].AddMonster(20);
-            Dungeons[4].AddReward(4);
-            Dungeons[4].AddReward(14);
-            Dungeons[4].AddReward(24);
-            Dungeons[4].AddReward(34);
-            Dungeons[4].AddReward(44);
-
-            Dungeons.Add(new Dungeon("곰의 절벽", "마음이 웅장해지는 이 절벽은 '우르순'의 터입니다.", 20, 4000));
-            Dungeons[5].AddMonster(21);
-            Dungeons[5].AddMonster(22);
-            Dungeons[5].AddMonster(23);
-            Dungeons[5].AddMonster(24);
-            Dungeons[5].AddReward(5);
-            Dungeons[5].AddReward(15);
-            Dungeons[5].AddReward(25);
-            Dungeons[5].AddReward(35);
-            Dungeons[5].AddReward(45);
-
-            Dungeons.Add(new Dungeon("지룡의 둥지", "드래곤들이 모여사는 뜨거운 지하 세계입니다.", 26, 6000));
-            Dungeons[6].AddMonster(25);
-            Dungeons[6].AddMonster(26);
-            Dungeons[6].AddMonster(27);
-            Dungeons[6].AddMonster(28);
-            Dungeons[6].AddReward(6);
-            Dungeons[6].AddReward(16);
-            Dungeons[6].AddReward(26);
-            Dungeons[6].AddReward(36);
-            Dungeons[6].AddReward(46);
-            Dungeons.Add(new Dungeon("심연의 해구", "신기한 생물들이 많습니다. 위험해보이진 않습니다. 아마도..", 35, 9000));
-            Dungeons[7].AddMonster(29);
-            Dungeons[7].AddMonster(30);
-            Dungeons[7].AddMonster(31);
-            Dungeons[7].AddMonster(32);
-            Dungeons[7].AddReward(7);
-            Dungeons[7].AddReward(17);
-            Dungeons[7].AddReward(27);
-            Dungeons[7].AddReward(37);
-            Dungeons[7].AddReward(47);
-            Dungeons.Add(new Dungeon("달의 안개", "아무것도 보이지 않습니다. 눈을 닫고, 신경을 곤두세웁니다.", 45, 13000));
-            Dungeons[8].AddMonster(33);
-            Dungeons[8].AddMonster(34);
-            Dungeons[8].AddMonster(35);
-            Dungeons[8].AddMonster(36);
-            Dungeons[8].AddReward(8);
-            Dungeons[8].AddReward(18);
-            Dungeons[8].AddReward(28);
-            Dungeons[8].AddReward(38);
-            Dungeons[8].AddReward(48);
-
-            Dungeons.Add(new Dungeon("격전지", "몸속에서 스파르타의 피가 흐르는 것 같습니다.", 60, 25000));
-            Dungeons[9].AddMonster(37);
-            Dungeons[9].AddMonster(38);
-            Dungeons[9].AddMonster(39);
-            Dungeons[9].AddMonster(40);
-            Dungeons[9].AddReward(9);
-            Dungeons[9].AddReward(19);
-            Dungeons[9].AddReward(29);
-            Dungeons[9].AddReward(39);
-            Dungeons[9].AddReward(49);
-            #endregion
+            LoadDungeon();
 
             #region 상점 세팅
             // 70 번부터 상점 아이템입니다.
