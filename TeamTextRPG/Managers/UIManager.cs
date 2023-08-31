@@ -678,18 +678,18 @@ namespace TeamTextRPG.Managers
             var currentCursor = Console.GetCursorPosition();
             int size = monsters.Count;
             int top = 6, bottom = 19;
-            int width = 22;
+            int width = 21;
 
             List<int> leftPosition = new List<int>();
 
             switch (size)
             {
                 case 1:
-                    leftPosition.Add(35);
+                    leftPosition.Add(36);
                     break;
                 case 2:
-                    leftPosition.Add(12);
-                    leftPosition.Add(59);
+                    leftPosition.Add(15);
+                    leftPosition.Add(61);
                     break;
                 case 3:
                     leftPosition.Add(5);
@@ -697,17 +697,18 @@ namespace TeamTextRPG.Managers
                     leftPosition.Add(65);
                     break;
                 case 4:
-                    leftPosition.Add(1);
+                    leftPosition.Add(2);
                     leftPosition.Add(24);
-                    leftPosition.Add(47);
-                    leftPosition.Add(70);
+                    leftPosition.Add(46);
+                    leftPosition.Add(68);
                     break;
             }
 
-            foreach (int left in leftPosition)
+            for (int i = 0; i < leftPosition.Count; i++)
             {
                 // 몬스터 카드 틀 생성
-                MakeUIContainer(left, top, left + width - 1, bottom);
+                Console.ResetColor();
+                MakeUIContainer(leftPosition[i], top, leftPosition[i] + width, bottom);
             }
 
             for (int i = 0; i < size; i++)
@@ -717,14 +718,33 @@ namespace TeamTextRPG.Managers
 
                 Console.SetCursorPosition(leftPosition[i] + 9, top + 1);
                 Console.Write($"Lv{monster.Level}");
-                Console.SetCursorPosition(leftPosition[i] + 1, top + 2);
-                int paddingSize = (19 - monster.Name.Length * 2) / 2;
+                Console.SetCursorPosition(leftPosition[i] + 2, top + 2);
+                int paddingSize = (17 - monster.Name.Length * 2) / 2;
                 if (monster.Name.IndexOf(' ') > 0)
                     paddingSize++;
-                Console.Write("".PadLeft(paddingSize,' ') + monster.Name + "".PadRight(paddingSize - 1, ' '));
+                Console.Write("".PadLeft(paddingSize,' ') + monster.Name);
 
                 int fillHpBar = (int)(7 * (float)monster.CurrentHp / monster.MaxHp + 0.9f);
                 if (fillHpBar >= 7) fillHpBar = 7;
+
+                Console.SetCursorPosition(leftPosition[i] + 2, top + 4);
+                string atkString = $"공격력 : {monsters[i].Atk}";
+                paddingSize = (17 - (atkString.Length + 3)) / 2;
+                Console.Write("".PadLeft(paddingSize,' ') + atkString);
+                Console.SetCursorPosition(leftPosition[i] + 2, top + 5);
+                string defString = $"방어력 : {monsters[i].Def}";
+                paddingSize = (17 - (defString.Length + 3)) / 2;
+                Console.Write("".PadLeft(paddingSize, ' ') + defString);
+                if (monsters[i].IsDead())
+                {
+                    Console.SetCursorPosition(leftPosition[i] + 2, top + 7);
+                    paddingSize = (17 - 4) / 2;
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.Write("".PadLeft(paddingSize, ' ') + "사망");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(" ");
+                }
+
 
                 Console.SetCursorPosition(leftPosition[i] + 2, top + 11);
                 Console.Write("HP ");

@@ -73,7 +73,7 @@ namespace TeamTextRPG.Classes
             }
         }
 
-        public int GetEquipmentStatBonus(Stats stat)
+        public override int GetEquipmentStatBonus(Stats stat)
         {
             int bonus = 0;
             switch (stat)
