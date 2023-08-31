@@ -21,7 +21,7 @@ namespace TeamTextRPG.Classes
         {
             get
             {
-                return (int)(Stat * (1 +(Math.Pow(Level * 5, 1.5) / 100)));
+                return (int)(Stat * (Math.Pow(Level * 5, 1.5) / 100)));
             }
         }
 

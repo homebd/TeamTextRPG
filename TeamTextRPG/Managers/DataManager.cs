@@ -224,6 +224,7 @@ namespace TeamTextRPG.Managers
             Shop = Shop.OrderBy(item => item.Id).ToList();
            
             #endregion
+            
 
             #region 휴식 세팅
             Shelters.Add(new Shelter("약초 처방", 100, 40, 400));
@@ -581,9 +582,9 @@ namespace TeamTextRPG.Managers
         public void StrengthenItem(Item item)
         {
             var ui = GameManager.Instance.UIManager;
-            if (Player.Gold >= item.Price * (6 << item.Level) / 100)
+            if (Player.Gold >= (item.Price / 20) * Math.Pow(item.Level, 2))
             {
-                Player.Gold -= item.Price * (6 << item.Level) / 100;
+                Player.Gold -= (int)((item.Price / 20) * Math.Pow(item.Level, 2));
 
                 Random rnd = new Random();
                 if (rnd.Next(0, 100) < (100 >> item.Level) + (100 >> item.Level + 1))
