@@ -338,7 +338,7 @@ namespace TeamTextRPG.Managers
 
             #region 데미지 공식
             int temp = damage;
-            float control = 1f - MathF.Pow(((float)skill.Target.GetStatValue(Stats.DEF) / -damage), 2);
+            float control = MathF.Pow(1f - ((float)skill.Target.GetStatValue(Stats.DEF) / -damage), 1.4f);
             if (control < 0.2f) control = 0.2f;
 
             damage = (int)Math.Round(damage * control);
