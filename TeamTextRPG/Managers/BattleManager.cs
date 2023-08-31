@@ -207,7 +207,8 @@ namespace TeamTextRPG.Managers
             }
             
             SkillList.Push(skill.UseSkill(player, target));
-            if(skill.IsAoE)
+
+            if(skill.IsAoE && target != player)
             {
                 int index = Monsters.IndexOf((Monster)target);
 

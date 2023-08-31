@@ -163,15 +163,16 @@ namespace TeamTextRPG.Managers
             //구매한 아이템이 소모품인 경우
             if(item.Part == Parts.USEABlE)
             {
+                Item? playerItem = Player.Inventory.Find(x => x.Id == item.Id);
                 //플레이어에게 이미 동일한 아이템이 존재하는 경우
-                if (Player.Inventory.Exists(playeritem => playeritem == item))
+                if (playerItem != null)
                 {
-                    Player.ItemStackAdd(item);
+                    Player.ItemStackAdd(playerItem);
                 }
                 else
                 {
                     //플레이어에게 처음 아이템을 사는 경우
-                    Player.Inventory.Add(item);
+                    Player.Inventory.Add(MakeNewItem(item.Id));
                 }
             }
             else
@@ -201,8 +202,8 @@ namespace TeamTextRPG.Managers
             {
                 item.Level = 0;
                 Player.Inventory.Remove(item);
+                if (!Shop.Exists(x => x.Id == item.Id)) Shop.Add(item);
             }
-            if (!Shop.Exists(x => x.Name == item.Name)) Shop.Add(item);
             Shop = Shop.OrderBy(item => item.Id).ToList();
             GameManager.Instance.UIManager.PrintGold();
             GameManager.Instance.UIManager.PrintItems();
