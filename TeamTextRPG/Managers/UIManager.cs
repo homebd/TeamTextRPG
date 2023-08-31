@@ -6,6 +6,7 @@ using TeamTextRPG.Classes;
 using TeamTextRPG.Common;
 using System.Text;
 using static TeamTextRPG.Managers.SceneManager;
+using System.Drawing;
 
 namespace TeamTextRPG.Managers
 {
@@ -49,11 +50,16 @@ namespace TeamTextRPG.Managers
 
         public void PrintTitle(string title, ConsoleColor color = ConsoleColor.DarkRed)
         {
-            Console.Clear();
-
+            var currentCursor = Console.GetCursorPosition();
             var currentColor = Console.ForegroundColor;
+
+            Console.SetCursorPosition(0, 0);
+            Console.Write("                    ");
+            Console.SetCursorPosition(0, 0);
             Console.ForegroundColor = color;
             Console.WriteLine($"{title}");
+
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
             Console.ForegroundColor = currentColor;
         }
 
@@ -135,7 +141,14 @@ namespace TeamTextRPG.Managers
 
         public void PrintDescription(string description)
         {
-            Console.Write($"{description}\n\n");
+            var currentCursor = Console.GetCursorPosition();
+
+            Console.SetCursorPosition(0, 1);
+            Console.Write("".PadLeft(90, ' '));
+            Console.SetCursorPosition(0, 1);
+            Console.WriteLine($"{description}\n\n");
+
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }
 
         public void PrintItems()

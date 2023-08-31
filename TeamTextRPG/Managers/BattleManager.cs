@@ -26,6 +26,9 @@ namespace TeamTextRPG.Managers
 
             var ui = GameManager.Instance.UIManager;
             SkillList.Clear();
+            Monsters.Clear();
+            ui.PrintTitle($"[{dungeon.Name}]", ConsoleColor.Green);
+            ui.PrintDescription(dungeon.Description);
             Random rnd = new Random();
             _size = rnd.Next(1, 5);
 
@@ -42,7 +45,7 @@ namespace TeamTextRPG.Managers
 
         private void BattleInput()
         {
-            GameManager.Instance.DataManager.Player.Skills.Add(new Skill("맹독성 공격", "도트뎀", 3, SkillType.DAMAGE, Stats.ATK, -80, 10));
+            GameManager.Instance.DataManager.Player.Skills.Add(new Skill("맹독성 공격", "도트뎀", 3, SkillType.DAMAGE, Stats.ATK, -80, 10, true));
             var ui = GameManager.Instance.UIManager;
 
             List<string> option = new List<string>();
@@ -84,7 +87,7 @@ namespace TeamTextRPG.Managers
                                 if (targetNum == _size + 1)
                                 {
                                     Battle(GameManager.Instance.DataManager.Player, selectedSkill);
-                                } //버프 임시로
+                                }
                                 else {
                                     Battle(Monsters[targetNum - 1], selectedSkill);
                                 }
@@ -192,19 +195,39 @@ namespace TeamTextRPG.Managers
 
         }
 
-        public void Battle(Character monster, Skill? skill)
+        public void Battle(Character target, Skill? skill)
         {
-
             var ui = GameManager.Instance.UIManager;
             var player = GameManager.Instance.DataManager.Player;
 
             // 플레이어 턴
             if (skill == null)
             {
-                skill = new Skill("공격", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1);
+                skill = new Skill("공격", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1, false);
             }
             
-            SkillList.Push(skill.UseSkill(player, monster));
+            SkillList.Push(skill.UseSkill(player, target));
+            if(skill.IsAoE)
+            {
+                int index = Monsters.IndexOf((Monster)target);
+
+                if(Monsters.Count > 1)
+                {
+                    if (index == 0)
+                    {
+                        SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                    }
+                    else if (index == Monsters.Count - 1)
+                    {
+                        SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
+                    }
+                    else
+                    {
+                        SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
+                        SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                    }
+                }
+            }
 
             ManageSkillList();
             Console.CursorVisible = false;
@@ -214,7 +237,7 @@ namespace TeamTextRPG.Managers
             //몬스터 턴
             foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
             {
-                var monsterSkill = new Skill("공격", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1);
+                var monsterSkill = new Skill("공격", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1, false);
                 SkillList.Push(monsterSkill.UseSkill(livingMonster, player));
             }
 
@@ -247,7 +270,6 @@ namespace TeamTextRPG.Managers
 
         public void ManageSkillList()
         {
-
             Stack<Skill> newSkillList = new Stack<Skill>();
             var ui = GameManager.Instance.UIManager;
 
