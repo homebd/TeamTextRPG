@@ -67,10 +67,10 @@ namespace TeamTextRPG.Classes
                     switch (Id)
                     {
                         case 90:
-                            statByPart = "체력";
+                            statByPart = "HP회복";
                             break;
                         case 91:
-                            statByPart = "마력";
+                            statByPart = "MP회복";
                             break;
                         case 92:
                             statByPart = "공격력";
@@ -79,7 +79,6 @@ namespace TeamTextRPG.Classes
                             statByPart = "아이템";
                             break;
                     }
-                   
                     break;
             }
             if (Stack >= 2)

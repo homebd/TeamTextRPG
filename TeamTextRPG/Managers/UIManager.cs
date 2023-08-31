@@ -752,7 +752,13 @@ namespace TeamTextRPG.Managers
                 {
                     Console.SetCursorPosition(leftPosition[i] + 2, top + 7);
                     paddingSize = (17 - 4) / 2;
-                    Console.Write("".PadLeft(paddingSize, ' ') + "사망");
+                    Console.Write("".PadLeft(paddingSize, ' '));
+
+                    var color = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.Write("사망");
+                    Console.ForegroundColor = color;
+                    Console.Write(" ");
                 }
 
 
@@ -767,6 +773,18 @@ namespace TeamTextRPG.Managers
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
 
+        }
+
+        public void MakeSkillBox()
+        {
+            var currentCursor = Console.GetCursorPosition();
+
+            int left = 2, top = 1, right = 90, bottom = 28;
+            MakeUIContainer(left, top, right, bottom);
+
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+
+            Console.CursorSize = 2000;
         }
     }
 }

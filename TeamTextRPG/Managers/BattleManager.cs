@@ -48,12 +48,13 @@ namespace TeamTextRPG.Managers
             GameManager.Instance.DataManager.Player.Skills.Add(new Skill("맹독성 공격", "도트뎀", 3, SkillType.DAMAGE, Stats.ATK, -80, 10, true));
             var ui = GameManager.Instance.UIManager;
 
-            List<string> option = new List<string>();
-
-            option.Add("1. 일반 공격");
-            option.Add("2. 특수 공격");
-            option.Add("3. 인벤토리");
-            option.Add("0. 도망가기");
+            List<string> option = new List<string>
+            {
+                "1. 일반 공격",
+                "2. 특수 공격",
+                "3. 소모품",
+                "0. 도망가기"
+            };
 
             while (_left > 0)
             {
@@ -90,6 +91,8 @@ namespace TeamTextRPG.Managers
                             }
                             break;
                         case 2:
+                            ui.MakeSkillBox();
+                            Console.ReadKey();
                             Skill selectedSkill = PrintSkillOption();
                             if (selectedSkill == null) continue;
                             targetNum = PrintBattleOption(BattleType.SKILL);
@@ -105,7 +108,7 @@ namespace TeamTextRPG.Managers
                             }
                             break;
                         case 3:
-                            PrintInventoryOption();
+                            PrintUseableOption();
                             break;
                     }
                 }
@@ -201,7 +204,7 @@ namespace TeamTextRPG.Managers
             }
         }
 
-        private void PrintInventoryOption()
+        private void PrintUseableOption()
         {
 
         }
@@ -352,7 +355,7 @@ namespace TeamTextRPG.Managers
 
             #region 데미지 공식
             int temp = damage;
-            float control = 1f - MathF.Pow(((float)skill.Target.GetStatValue(Stats.DEF) / -damage), 2);
+            float control = MathF.Pow(1f - (float)skill.Target.GetStatValue(Stats.DEF) / -damage, 2);
             if (control < 0.2f) control = 0.2f;
 
             damage = (int)Math.Round(damage * control);
