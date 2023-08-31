@@ -383,6 +383,7 @@ namespace TeamTextRPG.Managers
                 Thread.Sleep(500);
 
                 var iHp = Player.CurrentHp;
+                var iMP = Player.CurrentMp;
                 var iGold = Player.Gold;
 
                 Player.Gold -= st.Cost;
@@ -391,6 +392,7 @@ namespace TeamTextRPG.Managers
 
                 ui.AddLog($"{st.Name}(을)를 완료했습니다.");
                 ui.AddLog($"체력 {iHp} -> {Player.CurrentHp}");
+                ui.AddLog($"마나 {iMP} -> {Player.CurrentMp}");
                 if (Player.Gold / 1000000 > 0)
                 {
                     ui.AddLog($"소지금 {iGold} ");
