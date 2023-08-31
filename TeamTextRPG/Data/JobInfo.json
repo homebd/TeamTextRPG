@@ -63,5 +63,167 @@
     0,
     0,
     2
-  ]
+  ],
+  "WarriorSkills": {
+    "Skill1": {
+      "Name": "파워 슬래쉬",
+      "Description": "광역기",
+      "ManaCost": 10,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": -60,
+      "Duration": 1,
+      "IsAoE": true,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill2": {
+      "Name": "대지의 방패",
+      "Description": "버프",
+      "ManaCost": 50,
+      "SkillType": 1,
+      "ValueType": 0,
+      "Stat": 3,
+      "Value": 10,
+      "Duration": 2,
+      "IsAoE": false,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill3": {
+      "Name": "출혈 공격",
+      "Description": "도트뎀",
+      "ManaCost": 10,
+      "SkillType": 0,
+      "ValueType": 1,
+      "Stat": 2,
+      "Value": -10,
+      "Duration": 3,
+      "IsAoE": false,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill4": {
+      "Name": "거인의 일격",
+      "Description": "필살기",
+      "ManaCost": 185,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": -600,
+      "Duration": 1,
+      "IsAoE": false,
+      "Caster": null,
+      "Target": null
+    }
+  },
+  "WizardSkills": {
+    "Skill1": {
+      "Name": "파이어 볼트",
+      "Description": "광역기",
+      "ManaCost": 20,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": -100,
+      "Duration": 1,
+      "IsAoE": true,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill2": {
+      "Name": "힐",
+      "Description": "버프",
+      "ManaCost": 80,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": 400,
+      "Duration": 1,
+      "IsAoE": false,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill3": {
+      "Name": "불 장판",
+      "Description": "도트뎀",
+      "ManaCost": 150,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": -10,
+      "Duration": 3,
+      "IsAoE": true,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill4": {
+      "Name": "메테오",
+      "Description": "필살기",
+      "ManaCost": 550,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": -600,
+      "Duration": 1,
+      "IsAoE": true,
+      "Caster": null,
+      "Target": null
+    }
+  },
+  "ArcherSkills": {
+    "Skill1": {
+      "Name": "다발 사격",
+      "Description": "광역기",
+      "ManaCost": 15,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": -80,
+      "Duration": 1,
+      "IsAoE": true,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill2": {
+      "Name": "바람의 축복",
+      "Description": "버프",
+      "ManaCost": 50,
+      "SkillType": 1,
+      "ValueType": 1,
+      "Stat": 6,
+      "Value": 2,
+      "Duration": 2,
+      "IsAoE": false,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill3": {
+      "Name": "맹독 화살",
+      "Description": "도트뎀",
+      "ManaCost": 100,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": -5,
+      "Duration": 4,
+      "IsAoE": false,
+      "Caster": null,
+      "Target": null
+    },
+    "Skill4": {
+      "Name": "스나이핑",
+      "Description": "필살기",
+      "ManaCost": 380,
+      "SkillType": 0,
+      "ValueType": 0,
+      "Stat": 2,
+      "Value": -600,
+      "Duration": 1,
+      "IsAoE": false,
+      "Caster": null,
+      "Target": null
+    }
+  }
 }

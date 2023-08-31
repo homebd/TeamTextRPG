@@ -482,7 +482,25 @@ namespace TeamTextRPG.Managers
                                     // 닷지 찬스 설정 (Player의 생성자 문제)
                                     Player.DodgeChance = (int)data["DodgeChance"][job];
                                     // 레벨 당 스탯 증가 수치 설정
+<<<<<<< Updated upstream
                                     Player.SetStatsPerLevel((int)data["AddAtk"][job], (int)data["AddDef"][job], (int)data["AddMaxHp"][job], (int)data["AddMaxMp"][job], (int)data["AddCriticalChance"][job], (int)data["AddDodgeChance"][job]);
+=======
+                                    Player.SetStatsPerLevel((int)data["AddAtk"][job], (int)data["AddDef"][job], (int)data["AddMaxHp"][job], (int)data["AddMaxMp"][job], (int)data["AddCriticalChance"][job], (int)data["AddCriticalDamage"][job],(int)data["AddDodgeChance"][job]);
+                                    string jobSkill = "";
+                                    switch(job)
+                                    {
+                                        case 0:
+                                            jobSkill = "WarriorSkills";
+                                            break;
+                                        case 1:
+                                            jobSkill = "WizardSkills";
+                                            break;
+                                        case 2:
+                                            jobSkill = "ArcherSkills";
+                                            break;
+                                    }
+                                    Player.SetSkillList(data[jobSkill]);
+>>>>>>> Stashed changes
                                     GetBasicItem();
                                     SaveData();
                                     GameManager.Instance.SceneManager.Scene = Scenes.TOWN;
