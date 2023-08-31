@@ -202,6 +202,8 @@ namespace TeamTextRPG.Classes
             CriticalChance += StatsPerLevel["CriticalChance"];
             CriticalDamage += StatsPerLevel["CriticalDamage"];
             DodgeChance += StatsPerLevel["DodgeChance"];
+            ChangeHP(GetStatValue(Stats.MAXHP));
+            ChangeMP(GetStatValue(Stats.MAXMP));
             Level++;
         }
         public void SetSkillList(dynamic data)
