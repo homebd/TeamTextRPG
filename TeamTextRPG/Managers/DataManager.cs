@@ -213,7 +213,6 @@ namespace TeamTextRPG.Managers
             Dungeons[2].AddReward(42);
 
             Dungeons.Add(new Dungeon("대형 거미줄", "거대한 벌레들이 우글거리는 '아라크네'의 둥지입니다.", 10, 1500));
-
             Dungeons[3].AddMonster(13);
             Dungeons[3].AddMonster(14);
             Dungeons[3].AddMonster(15);
