@@ -26,6 +26,8 @@ namespace TeamTextRPG.Managers
 
             var ui = GameManager.Instance.UIManager;
             SkillList.Clear();
+            ui.PrintTitle($"[{dungeon.Name}]", ConsoleColor.Green);
+            ui.PrintDescription(dungeon.Description);
             Random rnd = new Random();
             _size = rnd.Next(1, 5);
 
@@ -194,7 +196,6 @@ namespace TeamTextRPG.Managers
 
         public void Battle(Character monster, Skill? skill)
         {
-
             var ui = GameManager.Instance.UIManager;
             var player = GameManager.Instance.DataManager.Player;
 
