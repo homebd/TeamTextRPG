@@ -105,7 +105,10 @@ namespace TeamTextRPG.Classes
         public void Wear(Item item)
         {
             Equipments[(int)item.Part] = item;
-
+            if(item.Part == Parts.USEABlE)
+            {
+                ItemUse(item);
+            }
             if (item.Part == Parts.HELMET)
             {
                 ChangeHP(item.Stat + item.BonusStat);
@@ -113,7 +116,10 @@ namespace TeamTextRPG.Classes
 
             item.IsEquipped = true;
         }
-
+        public void ItemUse(Item item)
+        {
+            Inventory.Remove(item);
+        }
         public void Unwear(Parts part)
         {
             if (part == Parts.HELMET)
