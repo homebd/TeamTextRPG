@@ -2,8 +2,6 @@
 /// 캐릭터 클래스
 /// </summary>
 
-using Newtonsoft.Json.Linq;
-using System.Numerics;
 using TeamTextRPG.Common;
 
 namespace TeamTextRPG.Classes
@@ -27,7 +25,7 @@ namespace TeamTextRPG.Classes
 
         public int[] BuffStat = new int[Enum.GetValues(typeof(Stats)).Length];
 
-        public void ChangeHP(int hp)
+        public virtual void ChangeHP(int hp)
         {
             var totalHp = MaxHp;
 

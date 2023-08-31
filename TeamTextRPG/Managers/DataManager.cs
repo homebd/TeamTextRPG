@@ -154,18 +154,49 @@ namespace TeamTextRPG.Managers
         public void BuyItem(Item item)
         {
             Player.Gold -= item.Price;
-            Player.Inventory.Add(item);
-            Shop.Remove(item);
+            //구매한 아이템이 소모품인 경우
+            if(item.Part == Parts.USEABlE)
+            {
+                //플레이어에게 이미 동일한 아이템이 존재하는 경우
+                if (Player.Inventory.Exists(playeritem => playeritem == item))
+                {
+                    //스택을 증가시키고 상점에서는 삭제하지 않는다.
+                    Player.ItemStackAdd(item);
+                }
+                else
+                {
+                    //플레이어에게 처음 아이템을 사는 경우
+                    Player.Inventory.Add(item);
+                }
+            }
+            else
+            {
+                Player.Inventory.Add(item);
+                Shop.Remove(item);
+            }
+         
             GameManager.Instance.UIManager.PrintGold();
             GameManager.Instance.UIManager.PrintItems();
         }
 
         public void SellItem(Item item)
         {
+          
             Player.Gold += (int)(item.Price * 0.85f);
-
-            item.Level = 0;
-            Player.Inventory.Remove(item);
+            //판매한 아이템이 소모품인 경우.
+            if (item.Part == Parts.USEABlE)
+            {
+                Player.ItemStackRemove(item);
+                if (Player.CheckStack(item) == 0)
+                {
+                    Player.Inventory.Remove(item);
+                }
+            }
+            else
+            {
+                item.Level = 0;
+                Player.Inventory.Remove(item);
+            }
             if (!Shop.Exists(x => x.Name == item.Name)) Shop.Add(item);
             Shop = Shop.OrderBy(item => item.Id).ToList();
             GameManager.Instance.UIManager.PrintGold();
@@ -178,7 +209,7 @@ namespace TeamTextRPG.Managers
             LoadMonsters();
 
             #region 던전 세팅
-            Dungeons.Add(new Dungeon(Player, "마을 동굴", 3, 300));
+            Dungeons.Add(new Dungeon("마을 동굴", "왠지 꺼림칙한 작은 동굴입니다.", 3, 300));
             Dungeons[0].AddMonster(0);
             Dungeons[0].AddMonster(1);
             Dungeons[0].AddMonster(2);
@@ -190,7 +221,7 @@ namespace TeamTextRPG.Managers
             Dungeons[0].AddReward(30);
             Dungeons[0].AddReward(40);
 
-            Dungeons.Add(new Dungeon(Player, "옆 마을", 5, 600));
+            Dungeons.Add(new Dungeon("옆 마을", "몬스터들에게 침략당한 마을입니다.", 5, 600));
             Dungeons[1].AddMonster(5);
             Dungeons[1].AddMonster(6);
             Dungeons[1].AddMonster(7);
@@ -201,7 +232,7 @@ namespace TeamTextRPG.Managers
             Dungeons[1].AddReward(31);
             Dungeons[1].AddReward(41);
 
-            Dungeons.Add(new Dungeon(Player, "대륙끝의 던전", 7, 1000));
+            Dungeons.Add(new Dungeon("대륙 끝의 던전", "이곳의 몬스터들은 왜인지 사람을 닮았습니다.", 7, 1000));
             Dungeons[2].AddMonster(9);
             Dungeons[2].AddMonster(10);
             Dungeons[2].AddMonster(11);
@@ -212,8 +243,7 @@ namespace TeamTextRPG.Managers
             Dungeons[2].AddReward(32);
             Dungeons[2].AddReward(42);
 
-            Dungeons.Add(new Dungeon(Player, "대형 거미줄", 10, 1500));
-
+            Dungeons.Add(new Dungeon("대형 거미줄", "거대한 벌레들이 우글거리는 '아라크네'의 둥지입니다.", 10, 1500));
             Dungeons[3].AddMonster(13);
             Dungeons[3].AddMonster(14);
             Dungeons[3].AddMonster(15);
@@ -224,7 +254,7 @@ namespace TeamTextRPG.Managers
             Dungeons[3].AddReward(33);
             Dungeons[3].AddReward(43);
 
-            Dungeons.Add(new Dungeon(Player, "초원 지대", 14, 2500));
+            Dungeons.Add(new Dungeon("초원 지대", "각종 위협이 도사리는 넓은 평야입니다.", 14, 2500));
             Dungeons[4].AddMonster(17);
             Dungeons[4].AddMonster(18);
             Dungeons[4].AddMonster(19);
@@ -234,7 +264,8 @@ namespace TeamTextRPG.Managers
             Dungeons[4].AddReward(24);
             Dungeons[4].AddReward(34);
             Dungeons[4].AddReward(44);
-            Dungeons.Add(new Dungeon(Player, "곰의 절벽", 20, 4000));
+
+            Dungeons.Add(new Dungeon("곰의 절벽", "마음이 웅장해지는 이 절벽은 '우르순'의 터입니다.", 20, 4000));
             Dungeons[5].AddMonster(21);
             Dungeons[5].AddMonster(22);
             Dungeons[5].AddMonster(23);
@@ -244,7 +275,8 @@ namespace TeamTextRPG.Managers
             Dungeons[5].AddReward(25);
             Dungeons[5].AddReward(35);
             Dungeons[5].AddReward(45);
-            Dungeons.Add(new Dungeon(Player, "지룡의 둥지", 26, 6000));
+
+            Dungeons.Add(new Dungeon("지룡의 둥지", "드래곤들이 모여사는 뜨거운 지하 세계입니다.", 26, 6000));
             Dungeons[6].AddMonster(25);
             Dungeons[6].AddMonster(26);
             Dungeons[6].AddMonster(27);
@@ -254,7 +286,7 @@ namespace TeamTextRPG.Managers
             Dungeons[6].AddReward(26);
             Dungeons[6].AddReward(36);
             Dungeons[6].AddReward(46);
-            Dungeons.Add(new Dungeon(Player, "심연의 해구", 35, 9000));
+            Dungeons.Add(new Dungeon("심연의 해구", "신기한 생물들이 많습니다. 위험해보이진 않습니다. 아마도..", 35, 9000));
             Dungeons[7].AddMonster(29);
             Dungeons[7].AddMonster(30);
             Dungeons[7].AddMonster(31);
@@ -264,7 +296,7 @@ namespace TeamTextRPG.Managers
             Dungeons[7].AddReward(27);
             Dungeons[7].AddReward(37);
             Dungeons[7].AddReward(47);
-            Dungeons.Add(new Dungeon(Player, "달의 안개", 45, 13000));
+            Dungeons.Add(new Dungeon("달의 안개", "아무것도 보이지 않습니다. 눈을 닫고, 신경을 곤두세웁니다.", 45, 13000));
             Dungeons[8].AddMonster(33);
             Dungeons[8].AddMonster(34);
             Dungeons[8].AddMonster(35);
@@ -274,7 +306,8 @@ namespace TeamTextRPG.Managers
             Dungeons[8].AddReward(28);
             Dungeons[8].AddReward(38);
             Dungeons[8].AddReward(48);
-            Dungeons.Add(new Dungeon(Player, "격전지", 60, 25000));
+
+            Dungeons.Add(new Dungeon("격전지", "몸속에서 스파르타의 피가 흐르는 것 같습니다.", 60, 25000));
             Dungeons[9].AddMonster(37);
             Dungeons[9].AddMonster(38);
             Dungeons[9].AddMonster(39);

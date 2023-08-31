@@ -13,7 +13,7 @@ namespace TeamTextRPG.Classes
         public JOB Job { get; }
         public Item[]? Equipments { get; set; }
         public List<Skill> Skills { get; set; }
-        private Dictionary<string,int> StatsPerLevel;
+        public Dictionary<string,int> StatsPerLevel;
 
         public Player(string name, JOB job, int level, int atk, int def, int maxHp, int maxMp, int gold
             , int exp = 0, int cc = 10, int cd = 160, int dc = 5, int currentHp = -1, int currentMp = -1)
@@ -56,7 +56,7 @@ namespace TeamTextRPG.Classes
             StatsPerLevel.Add("DodgeChance", addDodgeChance);
         }
 
-        public void ChangeHP(int hp)
+        public override void ChangeHP(int hp)
         {
             var totalHp = MaxHp + GetEquipmentStatBonus(Stats.MAXHP);
 
@@ -73,6 +73,27 @@ namespace TeamTextRPG.Classes
             }
         }
 
+        public void ChangeMP(int mp)
+        {
+            var totalMp = MaxMp + GetEquipmentStatBonus(Stats.MAXMP);
+
+            CurrentMp += mp;
+
+            if (totalMp < CurrentMp)
+            {
+                CurrentMp = totalMp;
+            }
+
+            if (CurrentMp < 0)
+            {
+                CurrentMp = 0;
+            }
+        }
+
+        public void ChangeATk(int atk)
+        {
+            Atk += atk;
+        }
         public override int GetEquipmentStatBonus(Stats stat)
         {
             int bonus = 0;
@@ -101,19 +122,53 @@ namespace TeamTextRPG.Classes
 
             return bonus;
         }
-
         public void Wear(Item item)
         {
             Equipments[(int)item.Part] = item;
-
+            if(item.Part == Parts.USEABlE)
+            {
+                ItemUse(item);
+            }
             if (item.Part == Parts.HELMET)
             {
                 ChangeHP(item.Stat + item.BonusStat);
+                item.IsEquipped = true;
             }
-
-            item.IsEquipped = true;
+ 
         }
+        public void ItemUse(Item item)
+        {
 
+            //아이템 id 에 따라 다르게 작동하도록 한다. 
+            switch (item.Id)
+            {
+                case 90:
+                    //HP 회복
+                    ChangeHP(item.Stat);
+                    break; 
+                case 91:
+                    //MP 회복
+                    ChangeMP(item.Stat);
+                    break;
+                case 92:
+                    //공격력 증가
+                   ChangeATk(item.Stat);
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                default:
+                    break;
+
+            }
+            ItemStackRemove(item);
+            if(item.Stack==0)
+            {
+                Inventory.Remove(item);
+            }
+            
+        }
         public void Unwear(Parts part)
         {
             if (part == Parts.HELMET)
@@ -130,6 +185,19 @@ namespace TeamTextRPG.Classes
             Item item = Equipments[(int)part];
             Equipments[(int)part] = null;
             item.IsEquipped = false;
+        }
+        //소모성 아이템 스택 구현
+        public void ItemStackAdd(Item item)
+        {
+            item.Stack++;
+        }
+        public void ItemStackRemove(Item item)
+        {
+            item.Stack--;
+        }
+        public int CheckStack(Item item)
+        {
+            return item.Stack;
         }
 
         // 레벨업 함수입니다 StatsPerLevel에 따라 각각의 스탯과 레벨을 증가 시킵니다.

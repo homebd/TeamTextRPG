@@ -898,5 +898,35 @@
   "Price": 90000,
   "Level": 0,
   "BonusStat": 0
+ },
+ {
+  "Name": "체력 회복 물약",
+  "Id": 90,
+  "Part": 5,
+  "Stat": 30,
+  "Description": "체력을 30 회복시켜줍니다",
+  "Price": 10,
+  "Level": 0,
+  "BonusStat": 0
+ },
+ {
+  "Name": "마력 회복 물약",
+  "Id": 91,
+  "Part": 5,
+  "Stat": 50,
+  "Description": "마력을 50 회복시켜줍니다",
+  "Price": 30,
+  "Level": 0,
+  "BonusStat": 0
+ },
+ {
+  "Name": "스테로이드",
+  "Id": 92,
+  "Part": 5,
+  "Stat": 10,
+  "Description": "공격력을 10 추가합니다.",
+  "Price": 3,
+  "Level": 0,
+  "BonusStat": 0
  }
 ]

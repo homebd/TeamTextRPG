@@ -38,6 +38,8 @@ namespace TeamTextRPG.Managers
 
             UIManager ui = GameManager.Instance.UIManager;
 
+            Console.Clear();
+
             ui.PrintTitle(sceneData["Title"].ToString());
             ui.PrintDescription(sceneData["Description"].ToString());
 

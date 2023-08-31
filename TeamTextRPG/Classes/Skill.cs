@@ -14,10 +14,11 @@ namespace TeamTextRPG.Classes
         public Stats Stat { get; set; }
         public int Value { get; set; }
         public int Duration { get; set; }
+        public bool IsAoE { get; set; }
         public Character Caster { get; set; }
         public Character Target { get; set; }
 
-        public Skill(string name, string description, int manaCost, SkillType type, Stats stat, int value, int duration)
+        public Skill(string name, string description, int manaCost, SkillType type, Stats stat, int value, int duration, bool isAoE)
         {
             Name = name;
             Description = description;
@@ -27,9 +28,10 @@ namespace TeamTextRPG.Classes
             Value = value;
             Duration = duration;
             ValueType = ValueTypeEnum.PROPOTIONAL;
+            IsAoE = isAoE;
         }
 
-        public Skill(string name, string description, int manaCost, SkillType type, int value, int duration)
+        public Skill(string name, string description, int manaCost, SkillType type, int value, int duration, bool isAoE)
         {
             Name = name;
             Description = description;
@@ -38,6 +40,7 @@ namespace TeamTextRPG.Classes
             Value = value;
             Duration = duration;
             ValueType = ValueTypeEnum.FIXED;
+            IsAoE = isAoE;
         }
 
         public Skill UseSkill(Character caster, Character target)
@@ -47,10 +50,10 @@ namespace TeamTextRPG.Classes
             switch (ValueType)
             {
                 case ValueTypeEnum.PROPOTIONAL:
-                    skillToken = new Skill(Name, Description, ManaCost, SkillType, Stat, Value, Duration);
+                    skillToken = new Skill(Name, Description, ManaCost, SkillType, Stat, Value, Duration, IsAoE);
                     break;
                 case ValueTypeEnum.FIXED:
-                    skillToken = new Skill(Name, Description, ManaCost, SkillType, Value, Duration);
+                    skillToken = new Skill(Name, Description, ManaCost, SkillType, Value, Duration, IsAoE);
                     break;
             }
 
