@@ -15,7 +15,6 @@ namespace TeamTextRPG.Classes
         public string Description { get; }
         public int Price { get; }
         public int Level { get; set; }
-
         public int Stack { get; set; }
         public int BonusStat
         {
@@ -63,7 +62,7 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
-                case Parts.USEABlE:
+                case Parts.USEABLE:
                     switch (Id)
                     {
                         case 90:
@@ -120,7 +119,7 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
-                case Parts.USEABlE:
+                case Parts.USEABLE:
                     statByPart = "아이템";
                     break;
 
