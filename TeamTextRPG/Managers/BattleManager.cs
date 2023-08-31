@@ -228,9 +228,9 @@ namespace TeamTextRPG.Managers
                         {
                             //스테로이드
                             case 92:
-                                Skill strBuff = new Skill("공격력 상승", "", 0, SkillType.BUFF, Stats.ATK, 5, 1, false);
+                                Skill atkBuff = new Skill("공격력 상승", "", 0, SkillType.BUFF, Stats.ATK, 5, 1, false);
                                 ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                                Battle(player, strBuff);
+                                Battle(player, atkBuff);
                                 break;
                             //철분제
                             case 93:
@@ -263,7 +263,7 @@ namespace TeamTextRPG.Managers
                                 break;
                         }
 
-                        //dm.Player.Wear(dm.SortedItems[input - 1]);
+                        dm.Player.Wear(dm.SortedItems[input - 1]);
                        // ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
                         //ui.PrintUseables();
                     }
@@ -285,7 +285,6 @@ namespace TeamTextRPG.Managers
             // 도망 실패로 배틀에 끌려왔을 시 플레이어 턴 무시
             if(target != null)
             {
-                //배틀 아이템 구현, 수류탄 Skill("수류탄", "수류탄이 폭발합니다.",SkillType.Damage, 데미지 공식보고 Value 혹은 Stat 결정, 0, true);
                 //플레이어 턴
                 if (skill == null)
                 {
@@ -458,7 +457,7 @@ namespace TeamTextRPG.Managers
 
             #endregion
 
-            //크리티컬 아이템 추가할 수 도?
+          
             #region 치명타 공식
            
             if (rnd.Next(0, 100) <= skill.Caster.CriticalChance)

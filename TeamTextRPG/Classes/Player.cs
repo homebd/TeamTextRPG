@@ -135,7 +135,6 @@ namespace TeamTextRPG.Classes
                     break;
                 case 92:
                     //공격력 증가
-                   ChangeStat(Stats.ATK, item.Stat);
                     break;
                 case 93:
                     //철분제
