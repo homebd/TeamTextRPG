@@ -898,5 +898,35 @@
   "Price": 90000,
   "Level": 0,
   "BonusStat": 0
+ },
+ {
+  "Name": "회복 물약(소)",
+  "Id": 90,
+  "Part": 5,
+  "Stat": 10,
+  "Description": "체력을 10 회복시켜줍니다",
+  "Price": 10,
+  "Level": 0,
+  "BonusStat": 0
+ },
+ {
+  "Name": "회복 물약(중)",
+  "Id": 91,
+  "Part": 5,
+  "Stat": 30,
+  "Description": "체력을 30 회복시켜줍니다",
+  "Price": 30,
+  "Level": 0,
+  "BonusStat": 0
+ },
+ {
+  "Name": "용도모를 스크롤",
+  "Id": 92,
+  "Part": 5,
+  "Stat": 50,
+  "Description": "열어보기 전에는 아무것도 모릅니다.",
+  "Price": 3,
+  "Level": 0,
+  "BonusStat": 0
  }
 ]
