@@ -485,7 +485,7 @@ namespace TeamTextRPG.Managers
                                     // 닷지 찬스 설정 (Player의 생성자 문제)
                                     Player.DodgeChance = (int)data["DodgeChance"][job];
                                     // 레벨 당 스탯 증가 수치 설정
-                                    Player.SetStatsPerLevel((int)data["AddAtk"][job], (int)data["AddDef"][job], (int)data["AddMaxHp"][job], (int)data["AddMaxMp"][job], (int)data["AddCriticalChance"][job], (int)data["AddDodgeChance"][job]);
+                                    Player.SetStatsPerLevel((int)data["AddAtk"][job], (int)data["AddDef"][job], (int)data["AddMaxHp"][job], (int)data["AddMaxMp"][job], (int)data["AddCriticalChance"][job], (int)data["AddCriticalDamage"][job],(int)data["AddDodgeChance"][job]);
                                     GetBasicItem();
                                     SaveData();
                                     GameManager.Instance.SceneManager.Scene = Scenes.TOWN;

@@ -57,6 +57,11 @@
   "AddCriticalChance": [
     0,
     0,
+    2
+  ],
+  "AddCriticalDamage": [
+    0,
+    0,
     5
   ],
   "AddDodgeChance": [
