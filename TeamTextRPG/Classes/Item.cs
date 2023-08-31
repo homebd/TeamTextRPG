@@ -15,6 +15,8 @@ namespace TeamTextRPG.Classes
         public string Description { get; }
         public int Price { get; }
         public int Level { get; set; }
+
+        public int Stack { get; set; }
         public int BonusStat
         {
             get
@@ -35,6 +37,7 @@ namespace TeamTextRPG.Classes
             Price = price;
             Level = level;
             IsEquipped = isEquipped;
+            Stack = 1;
         }
 
         public void PrintInfo(bool showPrice, int num = 0, float sale = 1)
@@ -60,9 +63,33 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
+                case Parts.USEABlE:
+                    switch (Id)
+                    {
+                        case 90:
+                            statByPart = "체력";
+                            break;
+                        case 91:
+                            statByPart = "마력";
+                            break;
+                        case 92:
+                            statByPart = "공격력";
+                            break;
+                        default:
+                            statByPart = "아이템";
+                            break;
+                    }
+                   
+                    break;
             }
-
-            Console.Write($"- {printNum}{equip}{level}{Name}");
+            if (Stack >= 2)
+            {
+                Console.Write($"- {printNum}{equip}{level}{Name} X {Stack}");
+            }
+            else
+            {
+                Console.Write($"- {printNum}{equip}{level}{Name}");
+            }
             Console.SetCursorPosition(25, Console.GetCursorPosition().Top);
             Console.Write($"| {statByPart} + {Stat}{bonus}");
             Console.SetCursorPosition(45, Console.GetCursorPosition().Top);
@@ -94,10 +121,19 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
+                case Parts.USEABlE:
+                    statByPart = "아이템";
+                    break;
 
             }
-
-            Console.Write($"- {printNum}{equip}{level}{Name}");
+            if(Stack >= 2)
+            {
+                Console.Write($"- {printNum}{equip}{level}{Name} X {Stack}");
+            }
+            else
+            {
+                Console.Write($"- {printNum}{equip}{level}{Name}");
+            }
             Console.SetCursorPosition(25, Console.GetCursorPosition().Top);
             Console.Write($"| {statByPart} + {Stat}{bonus}");
             Console.SetCursorPosition(45, Console.GetCursorPosition().Top);

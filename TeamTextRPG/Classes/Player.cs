@@ -94,7 +94,7 @@ namespace TeamTextRPG.Classes
         {
             Atk += atk;
         }
-        public int GetEquipmentStatBonus(Stats stat)
+      
         public override int GetEquipmentStatBonus(Stats stat)
         {
             int bonus = 0;
@@ -134,14 +134,14 @@ namespace TeamTextRPG.Classes
             if (item.Part == Parts.HELMET)
             {
                 ChangeHP(item.Stat + item.BonusStat);
+                item.IsEquipped = true;
             }
-
-            item.IsEquipped = true;
+ 
         }
         public void ItemUse(Item item)
         {
+
             //아이템 id 에 따라 다르게 작동하도록 한다. 
-            // 
             switch (item.Id)
             {
                 case 90:
@@ -164,7 +164,12 @@ namespace TeamTextRPG.Classes
                     break;
 
             }
-            Inventory.Remove(item);
+            ItemStackRemove(item);
+            if(item.Stack==0)
+            {
+                Inventory.Remove(item);
+            }
+            
         }
         public void Unwear(Parts part)
         {
@@ -182,6 +187,19 @@ namespace TeamTextRPG.Classes
             Item item = Equipments[(int)part];
             Equipments[(int)part] = null;
             item.IsEquipped = false;
+        }
+        //소모성 아이템 스택 구현
+        public void ItemStackAdd(Item item)
+        {
+            item.Stack++;
+        }
+        public void ItemStackRemove(Item item)
+        {
+            item.Stack--;
+        }
+        public int CheckStack(Item item)
+        {
+            return item.Stack;
         }
 
         // 레벨업 함수입니다 StatsPerLevel에 따라 각각의 스탯과 레벨을 증가 시킵니다.
