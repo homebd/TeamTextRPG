@@ -153,18 +153,26 @@ namespace TeamTextRPG.Classes
                 case 90:
                     //HP 회복
                     ChangeHP(item.Stat);
-                    break; 
+                    break;
                 case 91:
                     //MP 회복
                     ChangeMP(item.Stat);
                     break;
                 case 92:
-                    //공격력 증가
-                   ChangeATk(item.Stat);
+                    //스테로이드
+                    ChangeATk(item.Stat);
                     break;
-                case 3:
+                case 93:
+                    //철분제
                     break;
-                case 4:
+                case 94:
+                    //수류탄
+                    break;
+                case 95:
+                    //연막탄
+                    break;
+                case 96:
+                    //독안개
                     break;
                 default:
                     break;
@@ -225,5 +233,7 @@ namespace TeamTextRPG.Classes
             DodgeChance += StatsPerLevel["DodgeChance"];
             Level++;
         }
+
+                    
     }
 }

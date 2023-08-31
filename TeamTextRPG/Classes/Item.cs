@@ -95,6 +95,7 @@ namespace TeamTextRPG.Classes
             if(showPrice) Console.WriteLine($"| {((int)(Price * sale)).ToString().PadLeft(8, ' ')} G");
             else Console.Write($"| {Description}\n");
         }
+       
 
         public void PrintInfoAtSmithy(int num)
         {
@@ -142,7 +143,8 @@ namespace TeamTextRPG.Classes
             int cost = Price * (6 << Level) / 100;
 
             Console.WriteLine($"| 성공 확률: {prb.ToString().PadLeft(3, ' ')} %| 비용: {cost.ToString().PadLeft(10, ' ')} G");
-             
+
+           
         }
     }
 }
