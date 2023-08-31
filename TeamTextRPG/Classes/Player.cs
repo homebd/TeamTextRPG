@@ -94,7 +94,6 @@ namespace TeamTextRPG.Classes
         {
             Atk += atk;
         }
-      
         public override int GetEquipmentStatBonus(Stats stat)
         {
             int bonus = 0;
@@ -123,7 +122,6 @@ namespace TeamTextRPG.Classes
 
             return bonus;
         }
-
         public void Wear(Item item)
         {
             Equipments[(int)item.Part] = item;
