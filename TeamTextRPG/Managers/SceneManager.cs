@@ -77,7 +77,7 @@ namespace TeamTextRPG.Managers
             {
                 ui.PrintGold();
                 ui.MakeShelterBox();
-                ui.PrintHp();
+                ui.PrintHpAndMp();
             }
             else if (Scene == Scenes.SMITHY)
             {
