@@ -441,8 +441,9 @@ namespace TeamTextRPG.Managers
 
                 if (targetDef > characterATK)
                 {
+                    // 해당 공식대로면 상대방의 방어력이 내 공격력보다 55% 가량 높으면 최소데미지인 40%에 가까운 데미지가 들어감.
                     input = ((float)-characterATK / targetDef) + 1f;
-                    formulaResult = (float)((Math.Exp(input * 2) / (Math.Exp(input * 2) + 1)) - 0.5) * 2;
+                    formulaResult = 1 - (float)((Math.Exp(input * 4) / (Math.Exp(input * 4) + 1)) - 0.5) * 2;
                     // 최소 데미지는 공격력의 40%
                     if (formulaResult < 0.4f)
                         formulaResult = 0.4f;
@@ -454,8 +455,9 @@ namespace TeamTextRPG.Managers
                 }
                 else
                 {
+                    // 해당 공식대로면 내 공격력이 상대 방어력보다 33% 가량 높으면 약 150%에 해당하는 데미지가 들어감. 65%높으면 175%가 들어감.
                     input = 1f - ((float)characterATK / targetDef);
-                    formulaResult = 1 + (-(float)((Math.Exp(input * 1.5) / (Math.Exp(input * 1.5) + 1)) - 0.5) * 2);
+                    formulaResult = 1 + (-(float)((Math.Exp(input * 3.3) / (Math.Exp(input * 3.3) + 1)) - 0.5) * 2);
                     float proportion = (characterATK * formulaResult * randomDamageRange) / characterATK;
                     damage = (int)(damage * proportion);
                     // 최소데미지 1 보장
