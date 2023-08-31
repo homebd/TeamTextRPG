@@ -377,6 +377,7 @@ namespace TeamTextRPG.Managers
             int def = skill.Target.GetStatValue(Stats.DEF);
             float input = 0f;
             float formulaResult = 0f;
+            float randomDamageRange = (float)(rnd.NextDouble() * 0.4f) + 0.8f;
 
             if (def > -damage)
             {
@@ -385,7 +386,7 @@ namespace TeamTextRPG.Managers
                 // 최소 데미지는 공격력의 40%
                 if (formulaResult < 0.4f)
                     formulaResult = 0.4f;
-                damage = (int)(damage * formulaResult);
+                damage = (int)(damage * formulaResult * randomDamageRange);
                 // 최소데미지 1 보장
                 if (damage == 0)
                     damage--;
@@ -394,15 +395,11 @@ namespace TeamTextRPG.Managers
             {
                 input = 1 - ((float)-damage / def);
                 formulaResult = (float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2;
-                damage = (int)(damage * (1 + formulaResult));
+                damage = (int)(damage * (1 + formulaResult * randomDamageRange));
                 // 최소데미지 1 보장
                 if (damage == 0)
                     damage--;
             }
-
-
-
-
             #endregion
 
             #region 치명타 공식

@@ -9,6 +9,18 @@
         BOOTS,
         USEABLE
     }
+    public enum UsableItemTypes
+    {
+        HEAL_HP,
+        HEAL_MP,
+        DAMAGE,
+        ATTACK_BUFF,
+        DEFENCE_BUFF,
+        CRITICAL_CHANCE_BUFF,
+        CRITICAL_DAMAGE_BUFF,
+        DODGE_BUFF,
+
+    }
     public enum JOB
     {
         WARRIOR,
