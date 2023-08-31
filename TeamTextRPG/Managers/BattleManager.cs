@@ -361,7 +361,8 @@ namespace TeamTextRPG.Managers
             Stack<Skill> newSkillStack = new Stack<Skill>();
             var ui = GameManager.Instance.UIManager;
 
-            GameManager.Instance.DataManager.Player.BuffStat = new int[] { 0, };
+            // 이거때문에 오류 났는데 어떤 용도로 있는것인지?
+            //GameManager.Instance.DataManager.Player.BuffStat = new int[] { 0, };
 
             // 일단 버프를 정렬
             SkillStack = new Stack<Skill>(SkillStack.OrderByDescending(x => x.SkillType).ToList());
@@ -432,28 +433,31 @@ namespace TeamTextRPG.Managers
                 #endregion
 
                 #region 데미지 공식
-                int def = skill.Target.GetStatValue(Stats.DEF);
+                int targetDef = skill.Target.GetStatValue(Stats.DEF);
+                int characterATK = skill.Caster.GetStatValue(Stats.ATK);
                 float input = 0f;
                 float formulaResult = 0f;
                 float randomDamageRange = (float)(rnd.NextDouble() * 0.4f) + 0.8f;
 
-                if (def > -damage)
+                if (targetDef > characterATK)
                 {
-                    input = ((float)damage / def) + 1f;
+                    input = ((float)-characterATK / targetDef) + 1f;
                     formulaResult = (float)((Math.Exp(input * 4) / (Math.Exp(input * 4) + 1)) - 0.5) * 2;
                     // 최소 데미지는 공격력의 40%
                     if (formulaResult < 0.4f)
                         formulaResult = 0.4f;
-                    damage = (int)(damage * formulaResult * randomDamageRange);
+                    float proportion = (characterATK * formulaResult * randomDamageRange) / characterATK;
+                    damage = (int)(damage * proportion);
                     // 최소데미지 1 보장
                     if (damage == 0)
                         damage--;
                 }
                 else
                 {
-                    input = 1 - ((float)-damage / def);
+                    input = ((float)characterATK / targetDef) - 1f;
                     formulaResult = (float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2;
-                    damage = (int)(damage * (1 + formulaResult * randomDamageRange));
+                    float proportion = (characterATK * formulaResult * randomDamageRange) / characterATK;
+                    damage = (int)(damage * proportion);
                     // 최소데미지 1 보장
                     if (damage == 0)
                         damage--;
