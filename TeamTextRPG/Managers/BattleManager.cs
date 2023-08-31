@@ -442,7 +442,7 @@ namespace TeamTextRPG.Managers
                 if (targetDef > characterATK)
                 {
                     input = ((float)-characterATK / targetDef) + 1f;
-                    formulaResult = (float)((Math.Exp(input * 4) / (Math.Exp(input * 4) + 1)) - 0.5) * 2;
+                    formulaResult = (float)((Math.Exp(input * 2) / (Math.Exp(input * 2) + 1)) - 0.5) * 2;
                     // 최소 데미지는 공격력의 40%
                     if (formulaResult < 0.4f)
                         formulaResult = 0.4f;
@@ -455,7 +455,7 @@ namespace TeamTextRPG.Managers
                 else
                 {
                     input = 1f - ((float)characterATK / targetDef);
-                    formulaResult = 1 + (-(float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2);
+                    formulaResult = 1 + (-(float)((Math.Exp(input * 1.5) / (Math.Exp(input * 1.5) + 1)) - 0.5) * 2);
                     float proportion = (characterATK * formulaResult * randomDamageRange) / characterATK;
                     damage = (int)(damage * proportion);
                     // 최소데미지 1 보장
