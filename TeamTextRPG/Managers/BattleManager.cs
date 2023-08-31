@@ -12,6 +12,7 @@ namespace TeamTextRPG.Managers
     {
         public List<Monster> Monsters = new List<Monster>();
         public Stack<Skill> SkillList = new Stack<Skill>();
+        private Dungeon currentDgn;
         int _size;
         int _left;
 
@@ -24,17 +25,18 @@ namespace TeamTextRPG.Managers
         public bool EntryBattle(Dungeon dungeon)
         {
             // 클리어 여부를 bool로 반환 false면 실패
+            currentDgn = dungeon;
 
             var ui = GameManager.Instance.UIManager;
             SkillList.Clear();
             Monsters.Clear();
-            ui.PrintTitle($"[{dungeon.Name}]", ConsoleColor.Green);
-            ui.PrintDescription(dungeon.Description);
+            ui.PrintTitle($"[{currentDgn.Name}]", ConsoleColor.Green);
+            ui.PrintDescription(currentDgn.Description);
             Random rnd = new Random();
             _size = rnd.Next(1, 5);
 
             // 던전의 몬스터 객체화: _size에 따라 수행
-            InstantiateMonster(dungeon);
+            InstantiateMonster(currentDgn);
             _left = Monsters.Count;
 
             ui.MakeBattleBox();
@@ -46,15 +48,15 @@ namespace TeamTextRPG.Managers
 
         private void BattleInput()
         {
-            GameManager.Instance.DataManager.Player.Skills.Add(new Skill("맹독성 공격", "도트뎀", 3, SkillType.DAMAGE, Stats.ATK, -80, 10, true));
             var ui = GameManager.Instance.UIManager;
 
-            List<string> option = new List<string>();
-
-            option.Add("1. 일반 공격");
-            option.Add("2. 특수 공격");
-            option.Add("3. 인벤토리");
-            option.Add("0. 도망가기");
+            List<string> option = new List<string>
+            {
+                "1. 일반 공격",
+                "2. 특수 공격",
+                "3. 소모품",
+                "0. 도망가기"
+            };
 
             while (_left > 0)
             {
@@ -91,7 +93,39 @@ namespace TeamTextRPG.Managers
                             }
                             break;
                         case 2:
-                            Skill selectedSkill = PrintSkillOption();
+                            #region 스킬창 열고 입력 받고 닫고 다 해무라
+                            ui.MakeTab();
+                            ui.PrintSkills();
+
+                            int skillNum;
+                            Skill? selectedSkill = null;
+                            Player player = GameManager.Instance.DataManager.Player;
+                            while(true)
+                            {
+                                ui.SetCursorPositionForOption();
+
+                                if (int.TryParse(Console.ReadLine(), out skillNum) && skillNum >= 0 && skillNum <= player.Skills.Count)
+                                {
+                                    if (skillNum == 0)
+                                    {
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        selectedSkill = player.Skills[skillNum - 1];
+                                        if (selectedSkill.ManaCost > player.CurrentMp) ui.AddLog("내공이 부족합니다.");
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                }
+                                else ui.AddLog("잘못된 입력입니다.");
+                            }
+
+                            LoadBattle();
+
+                            #endregion
                             if (selectedSkill == null) continue;
                             targetNum = PrintBattleOption(BattleType.SKILL);
                             if (targetNum != 0)
@@ -106,7 +140,7 @@ namespace TeamTextRPG.Managers
                             }
                             break;
                         case 3:
-                            PrintInventoryOption();
+                            PrintUseableOption();
                             break;
                     }
                 }
@@ -163,48 +197,36 @@ namespace TeamTextRPG.Managers
             }
         }
 
-        private Skill PrintSkillOption()
+        private void PrintUseableOption()
         {
             var ui = GameManager.Instance.UIManager;
             var dm = GameManager.Instance.DataManager;
-            List<string> option = new List<string>();
-            bool playerTurn = true;
 
-            for (int i = 0; i < dm.Player.Skills.Count ; i++)
-            {
-                option.Add($"{i + 1}. {dm.Player.Skills[i].Name}");
-            }
-            option.Add("0. 취소");
+            ui.MakeTab();
+            ui.PrintUseables();
+            int input;
+
 
             while (true)
             {
-                ui.MakeOptionBox(option);
                 ui.SetCursorPositionForOption();
 
-                string input = Console.ReadLine();
-                if (int.TryParse(input, out var ret) && ret >= 0 && ret <= dm.Player.Skills.Count)
+                if (int.TryParse(Console.ReadLine(), out input) && input >= 0 && input <= dm.SortedItems.Count)
                 {
-                    if (ret == 0)
+                    if (input == 0)
                     {
-                        return null;
+                        LoadBattle();
+                        break;
                     }
                     else
                     {
-                        Skill selectedSkill = dm.Player.Skills[ret - 1];
-                        if (selectedSkill.ManaCost > dm.Player.CurrentMp) ui.AddLog("내공이 부족합니다.");
-                        else
-                        {
-                            return selectedSkill;
-                        }
+                        dm.Player.Wear(dm.SortedItems[input - 1]);
+                        ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                        ui.PrintUseables();
                     }
                 }
                 else ui.AddLog("잘못된 입력입니다.");
             }
-        }
-
-        private void PrintInventoryOption()
-        {
-
         }
 
         public void Battle(Character? target, Skill? skill)
@@ -399,6 +421,19 @@ namespace TeamTextRPG.Managers
             {
                 GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 {skill.Name}! {-damage} {(critical ? "치명타 " : "")}피해!");
             }
+        }
+
+        public void LoadBattle()
+        {
+            var ui = GameManager.Instance.UIManager;
+
+            Console.Clear();
+            ui.PrintTitle($"[{currentDgn.Name}]", ConsoleColor.Green);
+            ui.PrintDescription(currentDgn.Description);
+            ui.MakeBattleBox();
+            ui.MakeLogBox();
+            PrintPlayerUI();
+            ui.ShowMonsterCard(Monsters);
         }
     }
 }

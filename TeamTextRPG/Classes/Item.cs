@@ -15,7 +15,6 @@ namespace TeamTextRPG.Classes
         public string Description { get; }
         public int Price { get; }
         public int Level { get; set; }
-
         public int Stack { get; set; }
         public int BonusStat
         {
@@ -63,14 +62,14 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
-                case Parts.USEABlE:
+                case Parts.USEABLE:
                     switch (Id)
                     {
                         case 90:
-                            statByPart = "체력";
+                            statByPart = "HP회복";
                             break;
                         case 91:
-                            statByPart = "마력";
+                            statByPart = "MP회복";
                             break;
                         case 92:
                             statByPart = "공격력";
@@ -79,7 +78,6 @@ namespace TeamTextRPG.Classes
                             statByPart = "아이템";
                             break;
                     }
-                   
                     break;
             }
             if (Stack >= 2)
@@ -121,7 +119,7 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
-                case Parts.USEABlE:
+                case Parts.USEABLE:
                     statByPart = "아이템";
                     break;
 
