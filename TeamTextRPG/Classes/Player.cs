@@ -134,7 +134,9 @@ namespace TeamTextRPG.Classes
                 ChangeHP(item.Stat + item.BonusStat);
                 item.IsEquipped = true;
             }
- 
+            else
+                item.IsEquipped = true;
+        
         }
         public void ItemUse(Item item)
         {
