@@ -70,12 +70,14 @@ namespace TeamTextRPG.Managers
                 if (int.TryParse(input, out var ret) && ret >= 0 && ret < option.Count)
                 {
                     int targetNum;
+                    Player player = GameManager.Instance.DataManager.Player;
                     switch (ret)
                     {
                         case 0:
                             Random rnd = new Random();
-                            //배틀 아이템 '연막탄' 
-                            if(rnd.Next(0, 100) < 50)
+                            
+                            // 100% HP -> 40% RUN / 20% HP -> 80% RUN
+                            if(rnd.Next(0, 100) < (90 - 100f * player.CurrentHp / player.GetStatValue(Stats.MAXHP) / 2))
                             {
                                 ui.AddLog("성공적으로 도망쳤습니다!");
                                 return;
@@ -100,8 +102,7 @@ namespace TeamTextRPG.Managers
 
                             int skillNum;
                             Skill? selectedSkill = null;
-                            Player player = GameManager.Instance.DataManager.Player;
-                            while(true)
+                            while (true)
                             {
                                 ui.SetCursorPositionForOption();
 
@@ -321,6 +322,10 @@ namespace TeamTextRPG.Managers
                 Console.CursorVisible = true;
             }
             
+            if(_left == 0)
+            {
+                return;
+            }
 
             //몬스터 턴
             foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
@@ -423,27 +428,29 @@ namespace TeamTextRPG.Managers
         
             #region 데미지 공식
             int def = skill.Target.GetStatValue(Stats.DEF);
+            float input = 0f;
+            float formulaResult = 0f;
+
             if (def > -damage)
             {
-                int minDamage = (int)(damage * 0.2f);
-                if (minDamage == 0)
-                    minDamage--;
-                damage = minDamage;
+                input = ((float)damage / def) + 1f;
+                formulaResult = (float)((Math.Exp(input * 4) / (Math.Exp(input * 4) + 1)) - 0.5) * 2;
+                // 최소 데미지는 공격력의 40%
+                if (formulaResult < 0.4f)
+                    formulaResult = 0.4f;
+                damage = (int)(damage * formulaResult);
+                // 최소데미지 1 보장
+                if (damage == 0)
+                    damage--;
             }
             else
             {
-                int temp = damage;
-                float control = MathF.Pow(1f - ((float)def / -damage), 1.4f);
-
-                // 최소데미지는 공격력의 20%
-                if (control < 0.2f) 
-                    control = 0.2f;
-                damage = (int)Math.Round(damage * control);
-                // 20%가 1 미만이라면 1로 고정
-                if (-temp >= 0 && damage == 0)
-                {
-                    damage = -1;
-                }
+                input = 1 - ((float)-damage / def);
+                formulaResult = (float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2;
+                damage = (int)(damage * (1 + formulaResult));
+                // 최소데미지 1 보장
+                if (damage == 0)
+                    damage--;
             }
 
 

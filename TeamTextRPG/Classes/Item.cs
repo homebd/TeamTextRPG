@@ -120,19 +120,9 @@ namespace TeamTextRPG.Classes
                 case Parts.BOOTS:
                     statByPart = "회피율";
                     break;
-                case Parts.USEABLE:
-                    statByPart = "아이템";
-                    break;
 
             }
-            if(Stack >= 2)
-            {
-                Console.Write($"- {printNum}{equip}{level}{Name} X {Stack}");
-            }
-            else
-            {
-                Console.Write($"- {printNum}{equip}{level}{Name}");
-            }
+            Console.Write($"- {printNum}{equip}{level}{Name}");
             Console.SetCursorPosition(25, Console.GetCursorPosition().Top);
             Console.Write($"| {statByPart} + {Stat}{bonus}");
             Console.SetCursorPosition(45, Console.GetCursorPosition().Top);
