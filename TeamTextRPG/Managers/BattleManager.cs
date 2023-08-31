@@ -417,66 +417,71 @@ namespace TeamTextRPG.Managers
     
         public void Damage(int damage, Skill skill)
         {
-            Random rnd = new Random();
-            bool critical = false;
-
-            #region 회피 공식
-            if (rnd.Next(0, 100) <= skill.Target.GetStatValue(Stats.DODGECHANCE))
+            if (damage < 0)
             {
-                GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 공격은 빗나갔다!");
-                return;
-            }
-            #endregion
-        
-            #region 데미지 공식
-            int def = skill.Target.GetStatValue(Stats.DEF);
-            float input = 0f;
-            float formulaResult = 0f;
-            float randomDamageRange = (float)(rnd.NextDouble() * 0.4f) + 0.8f;
 
-            if (def > -damage)
-            {
-                input = ((float)damage / def) + 1f;
-                formulaResult = (float)((Math.Exp(input * 4) / (Math.Exp(input * 4) + 1)) - 0.5) * 2;
-                // 최소 데미지는 공격력의 40%
-                if (formulaResult < 0.4f)
-                    formulaResult = 0.4f;
-                damage = (int)(damage * formulaResult * randomDamageRange);
-                // 최소데미지 1 보장
-                if (damage == 0)
-                    damage--;
+                Random rnd = new Random();
+                bool critical = false;
+
+                #region 회피 공식
+                if (rnd.Next(0, 100) <= skill.Target.GetStatValue(Stats.DODGECHANCE))
+                {
+                    GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 공격은 빗나갔다!");
+                    return;
+                }
+                #endregion
+
+                #region 데미지 공식
+                int def = skill.Target.GetStatValue(Stats.DEF);
+                float input = 0f;
+                float formulaResult = 0f;
+                float randomDamageRange = (float)(rnd.NextDouble() * 0.4f) + 0.8f;
+
+                if (def > -damage)
+                {
+                    input = ((float)damage / def) + 1f;
+                    formulaResult = (float)((Math.Exp(input * 4) / (Math.Exp(input * 4) + 1)) - 0.5) * 2;
+                    // 최소 데미지는 공격력의 40%
+                    if (formulaResult < 0.4f)
+                        formulaResult = 0.4f;
+                    damage = (int)(damage * formulaResult * randomDamageRange);
+                    // 최소데미지 1 보장
+                    if (damage == 0)
+                        damage--;
+                }
+                else
+                {
+                    input = 1 - ((float)-damage / def);
+                    formulaResult = (float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2;
+                    damage = (int)(damage * (1 + formulaResult * randomDamageRange));
+                    // 최소데미지 1 보장
+                    if (damage == 0)
+                        damage--;
+                }
+                #endregion
+
+
+                #region 치명타 공식
+
+                if (rnd.Next(0, 100) <= skill.Caster.CriticalChance)
+                {
+                    damage = (int)(damage * skill.Caster.CriticalDamage / 100f);
+                    critical = true;
+                }
+                #endregion
+
+                if (skill.Caster == GameManager.Instance.DataManager.Player)
+                {
+                    GameManager.Instance.UIManager.AddLog($"[{skill.Name}]{skill.Target.Name}에게 {-damage} {(critical ? "치명타 " : "")}피해!");
+                }
+                else
+                {
+                    GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 {skill.Name}! {-damage} {(critical ? "치명타 " : "")}피해!");
+                }
             }
             else
-            {
-                input = 1 - ((float)-damage / def);
-                formulaResult = (float)((Math.Exp(input * 2.5) / (Math.Exp(input * 2.5) + 1)) - 0.5) * 2;
-                damage = (int)(damage * (1 + formulaResult * randomDamageRange));
-                // 최소데미지 1 보장
-                if (damage == 0)
-                    damage--;
-            }
-            #endregion
-
-          
-            #region 치명타 공식
-           
-            if (rnd.Next(0, 100) <= skill.Caster.CriticalChance)
-            {
-                damage = (int)(damage * skill.Caster.CriticalDamage / 100f);
-                critical = true;
-            }
-            #endregion
-
+                GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 {skill.Name}! {damage} 회복!");
             skill.Target.ChangeHP(damage);
-
-            if(skill.Caster == GameManager.Instance.DataManager.Player)
-            {
-                GameManager.Instance.UIManager.AddLog($"[{skill.Name}]{skill.Target.Name}에게 {-damage} {(critical ? "치명타 " : "")}피해!");
-            }
-            else
-            {
-                GameManager.Instance.UIManager.AddLog($"{skill.Caster.Name}의 {skill.Name}! {-damage} {(critical ? "치명타 " : "")}피해!");
-            }
         }
 
         public void LoadBattle()
