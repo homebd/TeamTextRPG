@@ -11,7 +11,7 @@ namespace TeamTextRPG.Managers
     internal class BattleManager
     {
         public List<Monster> Monsters = new List<Monster>();
-        public Stack<Skill> SkillList = new Stack<Skill>();
+        public Stack<Skill> SkillStack = new Stack<Skill>();
         private Dungeon currentDgn;
         int _size;
         int _left;
@@ -28,7 +28,7 @@ namespace TeamTextRPG.Managers
             currentDgn = dungeon;
 
             var ui = GameManager.Instance.UIManager;
-            SkillList.Clear();
+            SkillStack.Clear();
             Monsters.Clear();
             ui.PrintTitle($"[{currentDgn.Name}]", ConsoleColor.Green);
             ui.PrintDescription(currentDgn.Description);
@@ -275,8 +275,6 @@ namespace TeamTextRPG.Managers
             }
         }
 
-    
-
         public void Battle(Character? target, Skill? skill)
         {
             var ui = GameManager.Instance.UIManager;
@@ -292,7 +290,7 @@ namespace TeamTextRPG.Managers
                     skill = new Skill("공격", "", 0, SkillType.DAMAGE, -player.GetStatValue(Stats.ATK), 1, false);
                 }
 
-                SkillList.Push(skill.UseSkill(player, target));
+                SkillStack.Push(skill.UseSkill(player, target));
 
                 if (skill.IsAoE && target != player)
                 {
@@ -302,16 +300,16 @@ namespace TeamTextRPG.Managers
                     {
                         if (index == 0)
                         {
-                            SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                            SkillStack.Push(skill.UseSkill(player, Monsters[index + 1]));
                         }
                         else if (index == Monsters.Count - 1)
                         {
-                            SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
+                            SkillStack.Push(skill.UseSkill(player, Monsters[index - 1]));
                         }
                         else
                         {
-                            SkillList.Push(skill.UseSkill(player, Monsters[index - 1]));
-                            SkillList.Push(skill.UseSkill(player, Monsters[index + 1]));
+                            SkillStack.Push(skill.UseSkill(player, Monsters[index - 1]));
+                            SkillStack.Push(skill.UseSkill(player, Monsters[index + 1]));
                         }
                     }
                 }
@@ -331,7 +329,7 @@ namespace TeamTextRPG.Managers
             foreach (var livingMonster in Monsters.Where(x => !x.IsDead()))
             {
                 var monsterSkill = new Skill("공격", "", 0, SkillType.DAMAGE, -livingMonster.GetStatValue(Stats.ATK), 1, false);
-                SkillList.Push(monsterSkill.UseSkill(livingMonster, player));
+                SkillStack.Push(monsterSkill.UseSkill(livingMonster, player));
             }
 
             ManageSkillList();
@@ -361,12 +359,17 @@ namespace TeamTextRPG.Managers
 
         public void ManageSkillList()
         {
-            Stack<Skill> newSkillList = new Stack<Skill>();
+            Stack<Skill> newSkillStack = new Stack<Skill>();
             var ui = GameManager.Instance.UIManager;
 
-            while(SkillList.Count > 0)
+            GameManager.Instance.DataManager.Player.BuffStat = new int[] { 0, };
+
+            // 일단 버프를 정렬
+            SkillStack = new Stack<Skill>(SkillStack.OrderByDescending(x => x.SkillType).ToList());
+
+            while(SkillStack.Count > 0)
             {
-                Skill token = SkillList.Pop();
+                Skill token = SkillStack.Pop();
                 if (token.Target.IsDead()) continue;
 
                 int value = token.DoSkill();
@@ -393,15 +396,15 @@ namespace TeamTextRPG.Managers
                         token.Target.ChangeStat(token.Stat, value);
                         break;
                 }
-                newSkillList.Push(token);
+                newSkillStack.Push(token);
             }
 
-            while(newSkillList.Count > 0)
+            while(newSkillStack.Count > 0)
             {
-                Skill token = newSkillList.Pop();
+                Skill token = newSkillStack.Pop();
                 if (token.Duration > 0)
                 {
-                    SkillList.Push(token);
+                    SkillStack.Push(token);
                 }
             }
 
