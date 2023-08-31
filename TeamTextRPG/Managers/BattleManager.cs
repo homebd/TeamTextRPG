@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.ComponentModel.Design;
 using System.Numerics;
 using System.Threading;
 using TeamTextRPG.Classes;
@@ -337,16 +338,27 @@ namespace TeamTextRPG.Managers
             #endregion
 
             #region 데미지 공식
-            int temp = damage;
-            float control = MathF.Pow(1f - ((float)skill.Target.GetStatValue(Stats.DEF) / -damage), 1.4f);
-            if (control < 0.2f) control = 0.2f;
-
-            damage = (int)Math.Round(damage * control);
-            // 최소데미지 1로 고정
-            if (-temp >= 0 && damage == 0)
+            int def = skill.Target.GetStatValue(Stats.DEF);
+            if (def > -damage)
             {
                 damage = -1;
             }
+            else
+            {
+                int temp = damage;
+                float control = MathF.Pow(1f - ((float)def / -damage), 1.4f);
+                if (control < 0.2f) control = 0.2f;
+                damage = (int)Math.Round(damage * control);
+                // 최소데미지 1로 고정
+                if (-temp >= 0 && damage == 0)
+                {
+                    damage = -1;
+                }
+            }
+
+
+
+
             #endregion
 
             #region 치명타 공식

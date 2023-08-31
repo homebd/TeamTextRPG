@@ -323,7 +323,6 @@ namespace TeamTextRPG.Managers
                 if (rnd.NextDouble() < 0.1f)
                 {
                     Item rewardItem = MakeNewItem(dungeon.Reward[i]);
-                    Player.Inventory.Add(rewardItem);
                     rewardItems.Add(rewardItem);
                     if (!DiscoveredItem.Exists(x => x == rewardItem.Id))
                         DiscoveredItem.Add(rewardItem.Id);
@@ -332,7 +331,7 @@ namespace TeamTextRPG.Managers
 
             Player.Gold += rewardGold;
             Player.Exp += rewardExp;
-
+            Player.Inventory.AddRange(rewardItems);
             // UI 로그에 출력합니다.
             PrintDungeonExploreResult(dungeon, clear, rewardGold, rewardExp, rewardItems);
         }
