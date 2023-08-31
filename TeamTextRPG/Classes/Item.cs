@@ -75,6 +75,12 @@ namespace TeamTextRPG.Classes
                         case 92:
                             statByPart = "공격력";
                             break;
+                        case 93:
+                            statByPart = "???";
+                            break;
+                        case 94:
+                            statByPart = "레벨";
+                            break;
                         default:
                             statByPart = "아이템";
                             break;

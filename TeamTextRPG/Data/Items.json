@@ -928,5 +928,25 @@
   "Price": 3,
   "Level": 0,
   "BonusStat": 0
+ },
+ {
+  "Name": "돈 주머니",
+  "Id": 93,
+  "Part": 5,
+  "Stat": 10,
+  "Description": "열어보기 전까지는 아무것도 모릅니다...",
+  "Price": 100,
+  "Level": 0,
+  "BonusStat": 0
+ },
+ {
+  "Name": "수상한 스크롤",
+  "Id": 94,
+  "Part": 5,
+  "Stat": 10,
+  "Description": "레벨이 1 증가합니다.",
+  "Price": 100,
+  "Level": 0,
+  "BonusStat": 0
  }
 ]

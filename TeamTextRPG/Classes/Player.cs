@@ -95,6 +95,11 @@ namespace TeamTextRPG.Classes
         {
             Atk += atk;
         }
+        public void ChangeGold(int stat)
+        {
+            Random random = new Random();
+            Gold += 50*random.Next(1,stat);
+        }
         public override int GetEquipmentStatBonus(Stats stat)
         {
             int bonus = 0;
@@ -159,9 +164,13 @@ namespace TeamTextRPG.Classes
                     //공격력 증가
                    ChangeATk(item.Stat);
                     break;
-                case 3:
+                case 93:
+                    //열면 랜덤으로 돈 증가 
+                    ChangeGold(item.Stat);
                     break;
-                case 4:
+                case 94:
+                    //레벨 업 스크롤
+                    LevelUp();
                     break;
                 default:
                     break;
