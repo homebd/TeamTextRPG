@@ -58,8 +58,10 @@ namespace TeamTextRPG.Classes
                     statByPart = "체  력";
                     break;
                 case Parts.CHESTPLATE:
-                case Parts.LEGGINGS:
                     statByPart = "방어력";
+                    break;
+                case Parts.LEGGINGS:
+                    statByPart = "치명타";
                     break;
                 case Parts.BOOTS:
                     statByPart = "회피율";
