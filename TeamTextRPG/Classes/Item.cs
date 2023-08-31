@@ -1,7 +1,7 @@
 ﻿/// <summary
 /// 아이템이 가져야 할 속성들을 정의하는 클래스
 /// </summary>
-/// 
+
 using TeamTextRPG.Common;
 
 namespace TeamTextRPG.Classes
