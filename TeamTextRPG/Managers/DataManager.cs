@@ -161,7 +161,7 @@ namespace TeamTextRPG.Managers
         {
             Player.Gold -= item.Price;
             //구매한 아이템이 소모품인 경우
-            if(item.Part == Parts.USEABlE)
+            if(item.Part == Parts.USEABLE)
             {
                 Item? playerItem = Player.Inventory.Find(x => x.Id == item.Id);
                 //플레이어에게 이미 동일한 아이템이 존재하는 경우
@@ -190,7 +190,7 @@ namespace TeamTextRPG.Managers
           
             Player.Gold += (int)(item.Price * 0.85f);
             //판매한 아이템이 소모품인 경우.
-            if (item.Part == Parts.USEABlE)
+            if (item.Part == Parts.USEABLE)
             {
                 Player.ItemStackRemove(item);
                 if (Player.CheckStack(item) == 0)

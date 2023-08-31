@@ -126,12 +126,14 @@ namespace TeamTextRPG.Classes
         }
         public void Wear(Item item)
         {
-            Equipments[(int)item.Part] = item;
-            if(item.Part == Parts.USEABlE)
+            if(item.Part == Parts.USEABLE)
             {
                 ItemUse(item);
+                return;
             }
-            else if (item.Part == Parts.HELMET)
+
+            Equipments[(int)item.Part] = item;
+            if (item.Part == Parts.HELMET)
             {
                 ChangeHP(item.Stat + item.BonusStat);
                 item.IsEquipped = true;

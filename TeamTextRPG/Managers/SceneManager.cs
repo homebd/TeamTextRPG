@@ -3,6 +3,7 @@
 /// </summary>
 
 using Newtonsoft.Json;
+using TeamTextRPG.Classes;
 using TeamTextRPG.Common;
 
 namespace TeamTextRPG.Managers
@@ -229,6 +230,44 @@ namespace TeamTextRPG.Managers
                                         return;
                                     case 1:
                                         dm.ChangeNick();
+                                        return;
+                                    case 2:
+                                        ui.MakeTab();
+                                        ui.PrintSkills();
+                                        Skill? firstSkill = null;
+                                        while (true)
+                                        {
+                                            ui.SetCursorPositionForOption();
+
+                                            int skillInput;
+                                            if (int.TryParse(Console.ReadLine(), out skillInput) && skillInput >= 0 && skillInput <= dm.Player.Skills.Count)
+                                            {
+                                                if (skillInput == 0)
+                                                {
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    var selectedSkill = dm.Player.Skills[skillInput - 1];
+                                                    if (firstSkill == null)
+                                                    {
+                                                        firstSkill = selectedSkill;
+                                                        ui.MarkSkill(dm.Player.Skills.IndexOf(selectedSkill));
+                                                    }
+                                                    else
+                                                    {
+                                                        int temp = dm.Player.Skills.IndexOf(firstSkill);
+                                                        dm.Player.Skills[dm.Player.Skills.IndexOf(selectedSkill)] = firstSkill;
+                                                        dm.Player.Skills[temp] = selectedSkill;
+
+                                                        ui.MakeTab();
+                                                        ui.PrintSkills();
+                                                        firstSkill = null;
+                                                    }
+                                                }
+                                            }
+                                            else ui.AddLog("잘못된 입력입니다.");
+                                        }
                                         return;
                                 }
                                 break;

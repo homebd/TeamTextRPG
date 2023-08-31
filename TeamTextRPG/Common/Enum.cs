@@ -7,7 +7,7 @@
         CHESTPLATE,
         LEGGINGS,
         BOOTS,
-        USEABlE
+        USEABLE
     }
     public enum JOB
     {
