@@ -13,7 +13,7 @@ namespace TeamTextRPG.Classes
         public JOB Job { get; }
         public Item[]? Equipments { get; set; }
         public List<Skill> Skills { get; set; }
-        private Dictionary<string,int> StatsPerLevel;
+        public Dictionary<string,int> StatsPerLevel;
 
         public Player(string name, JOB job, int level, int atk, int def, int maxHp, int maxMp, int gold
             , int exp = 0, int cc = 10, int cd = 160, int dc = 5, int currentHp = -1, int currentMp = -1)
@@ -56,7 +56,7 @@ namespace TeamTextRPG.Classes
             StatsPerLevel.Add("DodgeChance", addDodgeChance);
         }
 
-        public void ChangeHP(int hp)
+        public override void ChangeHP(int hp)
         {
             var totalHp = MaxHp + GetEquipmentStatBonus(Stats.MAXHP);
 
@@ -73,7 +73,7 @@ namespace TeamTextRPG.Classes
             }
         }
 
-        public int GetEquipmentStatBonus(Stats stat)
+        public override int GetEquipmentStatBonus(Stats stat)
         {
             int bonus = 0;
             switch (stat)
