@@ -674,7 +674,7 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(50, _goldTopPostion);
             Console.Write("┬──────┬────────────────────────────────┐");
             Console.SetCursorPosition(50, _goldTopPostion + 1);
-            Console.Write($"│ 내 공│  ");
+            Console.Write($"│ 마 나│  ");
             Console.BackgroundColor = ConsoleColor.Blue;
             Console.Write("".PadRight(fillExpBar, '　'));
             Console.BackgroundColor = ConsoleColor.DarkBlue;
@@ -683,6 +683,49 @@ namespace TeamTextRPG.Managers
             Console.Write("│");
             Console.SetCursorPosition(50, _goldTopPostion + 2);
             Console.Write("┴──────┴────────────────────────────────┤");
+
+            Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
+        }
+        public void PrintHpAndMp()
+        {
+            var currentCursor = Console.GetCursorPosition();
+            var player = GameManager.Instance.DataManager.Player;
+
+            int rate = 14;
+            int fillExpBar = (int)(rate * (float)player.CurrentHp / (player.MaxHp + player.GetEquipmentStatBonus(Stats.MAXHP)) + 0.5f);
+            if (fillExpBar >= rate) fillExpBar = rate;
+
+            Console.SetCursorPosition(0, _goldTopPostion);
+            Console.Write("┌──────┬──────────────────────────────┐");
+            Console.SetCursorPosition(0, _goldTopPostion + 1);
+            Console.Write($"│ 체 력│  ");
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.Write("".PadRight(fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.Write("".PadRight(rate - fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("│");
+            Console.SetCursorPosition(0, _goldTopPostion + 2);
+            Console.Write("├──────┴──────────────────────────────┴");
+
+
+            rate = 12;
+            fillExpBar = (int)(rate * (float)player.CurrentMp / player.MaxMp + player.GetEquipmentStatBonus(Stats.MAXMP) + 0.5f);
+            if (fillExpBar >= rate) fillExpBar = rate;
+            int hpBarWidth = "┌──────┬──────────────────────────────┐".Length;
+
+            Console.SetCursorPosition(hpBarWidth - 1, _goldTopPostion);
+            Console.Write("┬──────┬──────────────────────────┐");
+            Console.SetCursorPosition(hpBarWidth - 1, _goldTopPostion + 1);
+            Console.Write($"│ 마 나│  ");
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Write("".PadRight(fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.Write("".PadRight(rate - fillExpBar, '　'));
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.Write("│");
+            Console.SetCursorPosition(hpBarWidth - 1, _goldTopPostion + 2);
+            Console.Write("┴──────┴──────────────────────────┘");
 
             Console.SetCursorPosition(currentCursor.Left, currentCursor.Top);
         }

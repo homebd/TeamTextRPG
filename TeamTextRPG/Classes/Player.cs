@@ -46,13 +46,14 @@ namespace TeamTextRPG.Classes
         }
 
         // StatsPerLevel -> 초기설정 함수(reference 참고)
-        public void SetStatsPerLevel(int addAtk, int addDef, int addMaxHp, int addMaxMp, int addCriticalChance, int addDodgeChance)
+        public void SetStatsPerLevel(int addAtk, int addDef, int addMaxHp, int addMaxMp, int addCriticalChance,int addCriticalDamage, int addDodgeChance)
         {
             StatsPerLevel.Add("Atk", addAtk);
             StatsPerLevel.Add("Def", addDef);
             StatsPerLevel.Add("MaxHp", addMaxHp);
             StatsPerLevel.Add("MaxMp", addMaxMp);
-            StatsPerLevel.Add("CriticalChance", addCriticalChance);
+            StatsPerLevel.Add("CriticalChance", addCriticalChance); 
+            StatsPerLevel.Add("CriticalDamage", addCriticalDamage);
             StatsPerLevel.Add("DodgeChance", addDodgeChance);
         }
 
@@ -220,6 +221,7 @@ namespace TeamTextRPG.Classes
             MaxHp += StatsPerLevel["MaxHp"];
             MaxMp += StatsPerLevel["MaxMp"];
             CriticalChance += StatsPerLevel["CriticalChance"];
+            CriticalDamage += StatsPerLevel["CriticalDamage"];
             DodgeChance += StatsPerLevel["DodgeChance"];
             Level++;
         }
