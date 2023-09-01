@@ -472,13 +472,17 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(31, 11);
             Console.Write($"직  업  {jop}");
 
-            Console.SetCursorPosition(31, 15);
+            Console.SetCursorPosition(31, 13);
             bonus = (player.GetEquipmentStatBonus(Stats.MAXHP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXHP)})";
             Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp}{bonus}");
 
-            Console.SetCursorPosition(31, 17);
+            Console.SetCursorPosition(31, 15);
             bonus = (player.GetEquipmentStatBonus(Stats.MAXMP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXMP)})";
             Console.Write($"마  나  {player.CurrentMp} / {player.MaxMp}{bonus}");
+
+            Console.SetCursorPosition(31, 17);
+            bonus = (player.GetEquipmentStatBonus(Stats.MAXMP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXMP)})";
+            Console.Write($"경험치  {player.Exp} / {100 * player.Level * player.Level}");
 
             Console.SetCursorPosition(69, 6);
             Console.Write("< 세부 능력치 >");

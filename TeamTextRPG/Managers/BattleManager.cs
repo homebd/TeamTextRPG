@@ -332,9 +332,6 @@ namespace TeamTextRPG.Managers
             Stack<Skill> newSkillStack = new Stack<Skill>();
             var ui = GameManager.Instance.UIManager;
 
-            // 이거때문에 오류 났는데 어떤 용도로 있는것인지?
-            //GameManager.Instance.DataManager.Player.BuffStat = new int[] { 0, };
-
             // 일단 버프를 정렬
             SkillStack = new Stack<Skill>(SkillStack.OrderByDescending(x => x.SkillType).ToList());
 
@@ -379,6 +376,12 @@ namespace TeamTextRPG.Managers
                 }
             }
 
+            GameManager.Instance.DataManager.Player.BuffStat = new int[Enum.GetValues(typeof(Stats)).Length];
+            foreach (var monster in Monsters)
+            {
+                monster.BuffStat = new int[Enum.GetValues(typeof(Stats)).Length];
+            }
+
             GameManager.Instance.UIManager.ShowMonsterCard(Monsters);
         }
 
@@ -402,6 +405,7 @@ namespace TeamTextRPG.Managers
                     return;
                 }
                 #endregion
+
 
                 #region 데미지 공식
                 int targetDef = skill.Target.GetStatValue(Stats.DEF);

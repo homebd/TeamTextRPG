@@ -151,7 +151,7 @@ namespace TeamTextRPG.Classes
             int prb = (100 >> Level) + (100 >> (Level + 1));
             if (prb > 100) prb = 100;
 
-            int cost = Price * (6 << Level) / 100;
+            int cost = (int)((Price / 20) * Math.Pow(Level, 2));
 
             Console.WriteLine($"| 성공 확률: {prb.ToString().PadLeft(3, ' ')} %| 비용: {cost.ToString().PadLeft(10, ' ')} G");
 
