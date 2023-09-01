@@ -127,7 +127,7 @@
     "Skill1": {
       "Name": "파이어 볼트",
       "Description": "광역기",
-      "ManaCost": 15,
+      "ManaCost": 40,
       "SkillType": 0,
       "ValueType": 0,
       "Stat": 2,
@@ -153,7 +153,7 @@
     "Skill3": {
       "Name": "불 장판",
       "Description": "도트뎀",
-      "ManaCost": 70,
+      "ManaCost": 80,
       "SkillType": 0,
       "ValueType": 0,
       "Stat": 2,
