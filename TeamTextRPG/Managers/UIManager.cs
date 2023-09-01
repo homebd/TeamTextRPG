@@ -818,6 +818,11 @@ namespace TeamTextRPG.Managers
                 string defString = $"방어력 : {monsters[i].Def}";
                 paddingSize = (17 - (defString.Length + 3)) / 2;
                 Console.Write("".PadLeft(paddingSize, ' ') + defString);
+                Console.SetCursorPosition(leftPosition[i] + 2, top + 10);
+                string hpString = $"체력 : {monsters[i].CurrentHp}/{monsters[i].MaxHp}";
+                paddingSize = (17 - (hpString.Length + 2)) / 2;
+                Console.Write("".PadLeft(paddingSize, ' ') + hpString);
+
                 if (monsters[i].IsDead())
                 {
                     Console.SetCursorPosition(leftPosition[i] + 2, top + 7);
