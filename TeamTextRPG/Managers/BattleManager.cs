@@ -226,50 +226,17 @@ namespace TeamTextRPG.Managers
                     }
                     else
                     {
-                        int ItemId = dm.SortedItems[input - 1].Id;
-
-                        switch (ItemId)
+                          ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                        //id ==100, 수류탄 일 때만 따로 작동.
+                        if (dm.SortedItems[input - 1].Id == 100)
                         {
-                            //스테로이드
-                            case 92:
-                                Skill atkBuff = new Skill("공격력 상승", "", 0, SkillType.BUFF, Stats.ATK, 5, 1, false);
-                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                                Battle(player, atkBuff);
-                                break;
-                            //철분제
-                            case 93:
-                                Skill defBuff = new Skill("방어력 상승", "", 0, SkillType.BUFF, Stats.DEF, 5, 1, false);
-                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                                Battle(player, defBuff);
-                                break;
-                            // 수류탄
-                            case 94:
-                                int targetNum = PrintBattleOption(BattleType.SKILL);
-                                Skill grade = new Skill("수류탄", "", 0, SkillType.DAMAGE, -100, 1, true);
-                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                                Battle(Monsters[targetNum - 1], grade);
-                                break;
-                            //연막탄, 회피율 증가
-                            case 95:
-                                Skill SmokeShell = new Skill("연막탄", "", 0, SkillType.BUFF, Stats.DODGECHANCE, 10, 1, true);
-                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                                Battle(player, SmokeShell);
-                                break;
-                            //독안개
-                            case 96:
-                                targetNum = PrintBattleOption(BattleType.SKILL);
-                                Skill poisonMist = new Skill("독안개", "", 0, SkillType.BUFF, Stats.ATK, -5, 1, true);
-                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                                Battle(Monsters[targetNum - 1], poisonMist);
-                                break;
-                            default:
-                                ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                                break;
+                            int targetNum = PrintBattleOption(BattleType.SKILL);
+                            Skill poisonMist = new Skill("수류탄", "", 0, SkillType.DAMAGE, -1000, 1, true);
+                            ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                            Battle(Monsters[targetNum - 1], poisonMist);
                         }
 
                         dm.Player.Wear(dm.SortedItems[input - 1]);
-                       // ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                        //ui.PrintUseables();
                     }
                 }
                 else { ui.AddLog("잘못된 입력입니다."); }
