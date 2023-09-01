@@ -1093,11 +1093,11 @@
   "UsableItemType": 0
  },
  {
-  "Name": "마력 물약(소)",
+  "Name": "마나 물약(소)",
   "Id": 91,
   "Part": 5,
   "Stat": 40,
-  "Description": "마력을 40 회복시켜줍니다",
+  "Description": "마나을 40 회복시켜줍니다",
   "Price": 600,
   "Level": 0,
   "Stack": 1,
@@ -1119,11 +1119,11 @@
   "UsableItemType": 0
  },
  {
-  "Name": "마력 물약(중)",
+  "Name": "마나 물약(중)",
   "Id": 93,
   "Part": 5,
   "Stat": 80,
-  "Description": "마력을 80 회복시켜줍니다",
+  "Description": "마나를 80 회복시켜줍니다",
   "Price": 2400,
   "Level": 0,
   "Stack": 1,
@@ -1145,11 +1145,11 @@
   "UsableItemType": 0
  },
  {
-  "Name": "마력 물약(대)",
+  "Name": "마나 물약(대)",
   "Id": 95,
   "Part": 5,
   "Stat": 160,
-  "Description": "마력을 160 회복시켜줍니다",
+  "Description": "마나를 160 회복시켜줍니다",
   "Price": 4800,
   "Level": 0,
   "Stack": 1,
