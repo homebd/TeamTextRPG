@@ -270,15 +270,19 @@ namespace TeamTextRPG.Managers
                     {
                         if (index == 0)
                         {
+                            player.ChangeMP(skill.ManaCost);
                             SkillStack.Push(skill.UseSkill(player, Monsters[index + 1]));
                         }
                         else if (index == Monsters.Count - 1)
                         {
+                            player.ChangeMP(skill.ManaCost);
                             SkillStack.Push(skill.UseSkill(player, Monsters[index - 1]));
                         }
                         else
                         {
+                            player.ChangeMP(skill.ManaCost);
                             SkillStack.Push(skill.UseSkill(player, Monsters[index - 1]));
+                            player.ChangeMP(skill.ManaCost);
                             SkillStack.Push(skill.UseSkill(player, Monsters[index + 1]));
                         }
                     }

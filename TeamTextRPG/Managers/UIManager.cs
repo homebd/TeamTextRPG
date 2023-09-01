@@ -904,7 +904,7 @@ namespace TeamTextRPG.Managers
                         break;
                 }
 
-                string aoe = skill.IsAoE ? "(광역기) " : "";
+                string aoe = skill.IsAoE ? "(광역기)" : "";
                 switch (skill.SkillType)
                 {
                     case SkillType.DAMAGE:
@@ -915,7 +915,7 @@ namespace TeamTextRPG.Managers
                             {
                                 Console.Write($"대상의 체력을 {value}씩 회복합니다.");
                             }
-                            else if (value < 0)
+                            else if (value <= 0)
                             {
                                 Console.Write($"대상에게 {-value}의 지속 피해를 입힙니다.");
                             }
@@ -926,20 +926,46 @@ namespace TeamTextRPG.Managers
                             {
                                 Console.Write($"{aoe}대상의 체력을 {value}만큼 회복합니다.");
                             }
-                            else if (value < 0)
+                            else if (value <= 0)
                             {
                                 Console.Write($"{aoe}대상에게 {-value}의 피해를 입힙니다.");
                             }
                         }                        
                         break;
                     case SkillType.BUFF:
+                        string str = "";
+                        switch (skill.Stat)
+                        {
+                            case Stats.MAXHP:
+                                str = "체력";
+                                break;
+                            case Stats.MAXMP:
+                                str = "마나";
+                                break;
+                            case Stats.ATK:
+                                str = "공격력";
+                                break;
+                            case Stats.DEF:
+                                str = "방어력";
+                                break;
+                            case Stats.CRITICALCHANCE:
+                                str = "치명률";
+                                break;
+                            case Stats.CRITICALDAMAGE:
+                                str = "치명타";
+                                break;
+                            case Stats.DODGECHANCE:
+                                str = "회피율";
+                                break;
+
+                        }
                         if (value > 0)
                         {
-                            Console.Write($"{aoe}대상의 {skill.Stat}을(를) {skill.Duration}턴 동안 {value}만큼 증가시킵니다.");
+                            Console.Write($"{aoe}대상의 {str}을(를) {skill.Duration}턴 동안 {value}만큼 증가시킵니다.");
                         }
-                        else if (value < 0)
+                        else if (value <= 0)
                         {
-                            Console.Write($"{aoe}대상의 {skill.Stat}을(를) {skill.Duration}턴 동안 {value}만큼 감소시킵니다.");
+                            Console.Write($"{aoe}대상의 {str}을(를) {skill.Duration}턴 동안 {value}만큼 감소시킵니다.");
                         }
                         break;
                 }
@@ -971,7 +997,7 @@ namespace TeamTextRPG.Managers
                     break;
             }
 
-            string aoe = skill.IsAoE ? "(광역기) " : "";
+            string aoe = skill.IsAoE ? "(광역기)" : "";
             switch (skill.SkillType)
             {
                 case SkillType.DAMAGE:
@@ -982,7 +1008,7 @@ namespace TeamTextRPG.Managers
                         {
                             Console.Write($"대상의 체력을 {value}씩 회복합니다.");
                         }
-                        else if (value < 0)
+                        else if (value <= 0)
                         {
                             Console.Write($"대상에게 {-value}의 지속 피해를 입힙니다.");
                         }
@@ -993,20 +1019,46 @@ namespace TeamTextRPG.Managers
                         {
                             Console.Write($"{aoe}대상의 체력을 {value}만큼 회복합니다.");
                         }
-                        else if (value < 0)
+                        else if (value <= 0)
                         {
                             Console.Write($"{aoe}대상에게 {-value}의 피해를 입힙니다.");
                         }
                     }
                     break;
                 case SkillType.BUFF:
+                    string str = "";
+                    switch (skill.Stat)
+                    {
+                        case Stats.MAXHP:
+                            str = "체력";
+                            break;
+                        case Stats.MAXMP:
+                            str = "마나";
+                            break;
+                        case Stats.ATK:
+                            str = "공격력";
+                            break;
+                        case Stats.DEF:
+                            str = "방어력";
+                            break;
+                        case Stats.CRITICALCHANCE:
+                            str = "치명률";
+                            break;
+                        case Stats.CRITICALDAMAGE:
+                            str = "치명타";
+                            break;
+                        case Stats.DODGECHANCE:
+                            str = "회피율";
+                            break;
+
+                    }
                     if (value > 0)
                     {
-                        Console.Write($"{aoe}대상의 {skill.Stat}을(를) {skill.Duration}턴 동안 {value}만큼 증가시킵니다.");
+                        Console.Write($"{aoe}대상의 {str}을(를) {skill.Duration}턴 동안 {value}만큼 증가시킵니다.");
                     }
-                    else if (value < 0)
+                    else if (value <= 0)
                     {
-                        Console.Write($"{aoe}대상의 {skill.Stat}을(를) {skill.Duration}턴 동안 {value}만큼 감소시킵니다.");
+                        Console.Write($"{aoe}대상의 {str}을(를) {skill.Duration}턴 동안 {value}만큼 감소시킵니다.");
                     }
                     break;
             }
