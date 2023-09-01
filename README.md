@@ -1,5 +1,8 @@
 # TeamTextRPG
 
+# 팀 노션 페이지
+https://www.notion.so/09-c1b84370f617461d968c9c84ace565d7
+
 ### UI 설명
 
 1. 왼쪽 위 여백: 씬을 시각적으로 표현하는 영역
