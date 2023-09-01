@@ -472,13 +472,17 @@ namespace TeamTextRPG.Managers
             Console.SetCursorPosition(31, 11);
             Console.Write($"직  업  {jop}");
 
-            Console.SetCursorPosition(31, 15);
+            Console.SetCursorPosition(31, 13);
             bonus = (player.GetEquipmentStatBonus(Stats.MAXHP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXHP)})";
             Console.Write($"체  력  {player.CurrentHp} / {player.MaxHp}{bonus}");
 
-            Console.SetCursorPosition(31, 17);
+            Console.SetCursorPosition(31, 15);
             bonus = (player.GetEquipmentStatBonus(Stats.MAXMP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXMP)})";
             Console.Write($"마  나  {player.CurrentMp} / {player.MaxMp}{bonus}");
+
+            Console.SetCursorPosition(31, 17);
+            bonus = (player.GetEquipmentStatBonus(Stats.MAXMP) == 0) ? "" : $"(+{player.GetEquipmentStatBonus(Stats.MAXMP)})";
+            Console.Write($"경험치  {player.Exp} / {100 * player.Level * player.Level}");
 
             Console.SetCursorPosition(69, 6);
             Console.Write("< 세부 능력치 >");
@@ -818,6 +822,11 @@ namespace TeamTextRPG.Managers
                 string defString = $"방어력 : {monsters[i].Def}";
                 paddingSize = (17 - (defString.Length + 3)) / 2;
                 Console.Write("".PadLeft(paddingSize, ' ') + defString);
+                Console.SetCursorPosition(leftPosition[i] + 2, top + 10);
+                string hpString = $"체력 : {monsters[i].CurrentHp}/{monsters[i].MaxHp}";
+                paddingSize = (17 - (hpString.Length + 2)) / 2;
+                Console.Write("".PadLeft(paddingSize, ' ') + hpString);
+
                 if (monsters[i].IsDead())
                 {
                     Console.SetCursorPosition(leftPosition[i] + 2, top + 7);
