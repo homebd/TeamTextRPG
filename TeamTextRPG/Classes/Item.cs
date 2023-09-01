@@ -73,7 +73,7 @@ namespace TeamTextRPG.Classes
                             statByPart = "공격력";
                             break;
                         case UsableItemTypes.CRITICAL_CHANCE_BUFF:
-                            statByPart = "치명율";
+                            statByPart = "치명률";
                             break;
                         case UsableItemTypes.CRITICAL_DAMAGE_BUFF:
                             statByPart = "치명타";

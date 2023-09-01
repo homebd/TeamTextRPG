@@ -226,24 +226,40 @@ namespace TeamTextRPG.Managers
                     }
                     else
                     {
-                          ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
+                        Item item = dm.SortedItems[input - 1];
                         //id ==100, 수류탄 일 때만 따로 작동.
-                        if (dm.SortedItems[input - 1].Id == 100)
+                        if (item.Id == 100)
                         {
+                            LoadBattle();
                             int targetNum = PrintBattleOption(BattleType.SKILL);
-                            Skill poisonMist = new Skill("수류탄", "", 0, SkillType.DAMAGE, -1000, 1, true);
-                            ui.AddLog($"{dm.SortedItems[input - 1].Name}을 사용했습니다.");
-                            Battle(Monsters[targetNum - 1], poisonMist);
+                            if(targetNum != 0)
+                            {
+                                dm.Player.Wear(item);
+                                ui.AddLog($"{item.Name}을 사용했습니다.");
+                                Skill poisonMist = new Skill("수류탄", "", 0, SkillType.DAMAGE, -1000, 1, true);
+                                if (targetNum == Monsters.Count + 1) Battle(dm.Player, poisonMist);
+                                else Battle(Monsters[targetNum - 1], poisonMist);
+                                break;
+                            }
+                            else
+                            {
+                                //창 다시 열리게 하는 쉬운 방법이지만 해제를 못해줌
+                                //PrintUseableOption();
+                                break;
+                            }
                         }
-
-                        dm.Player.Wear(dm.SortedItems[input - 1]);
+                        else
+                        {
+                            dm.Player.Wear(item);
+                            ui.AddLog($"{item.Name}을 사용했습니다.");
+                            ui.MakeTab();
+                            ui.PrintUseables();
+                        }
                     }
                 }
                 else { ui.AddLog("잘못된 입력입니다."); }
-                LoadBattle();
-                break;
-             
             }
+            LoadBattle();
         }
 
         public void Battle(Character? target, Skill? skill)
