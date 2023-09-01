@@ -121,12 +121,9 @@ namespace TeamTextRPG.Classes
         }
         public void ItemUse(Item item)
         {
-
-            //아이템 id 에 따라 다르게 작동하도록 한다. 
             switch (item.UsableItemType)
             {
                 case UsableItemTypes.ATTACK_BUFF:
-                    //공격력 증가
                     ChangeStat(Stats.ATK, item.Stat);
                     break; 
                 case UsableItemTypes.CRITICAL_CHANCE_BUFF:
@@ -141,7 +138,7 @@ namespace TeamTextRPG.Classes
                 case UsableItemTypes.DEFENCE_BUFF:
                     ChangeStat(Stats.DEF, item.Stat);
                     break;
-                case UsableItemTypes.DODGE_BUFF:
+                case UsableItemTypes.DODGE_CHANCE_BUFF:
                     ChangeStat(Stats.DODGECHANCE, item.Stat);
                     break;
                 case UsableItemTypes.HEAL_HP:

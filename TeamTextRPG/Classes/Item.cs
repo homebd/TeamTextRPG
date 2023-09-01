@@ -84,7 +84,7 @@ namespace TeamTextRPG.Classes
                         case UsableItemTypes.DEFENCE_BUFF:
                             statByPart = "방어력";
                             break;
-                        case UsableItemTypes.DODGE_BUFF:
+                        case UsableItemTypes.DODGE_CHANCE_BUFF:
                             statByPart = "회피율";
                             break;
                         case UsableItemTypes.HEAL_HP:

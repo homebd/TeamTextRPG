@@ -234,11 +234,9 @@ namespace TeamTextRPG.Managers
                             int targetNum = PrintBattleOption(BattleType.SKILL);
                             if(targetNum != 0)
                             {
-                                dm.Player.Wear(item);
                                 ui.AddLog($"{item.Name}을 사용했습니다.");
-                                Skill poisonMist = new Skill("수류탄", "", 0, SkillType.DAMAGE, -1000, 1, true);
-                                if (targetNum == Monsters.Count + 1) Battle(dm.Player, poisonMist);
-                                else Battle(Monsters[targetNum - 1], poisonMist);
+                                if (targetNum == Monsters.Count + 1) Battle(dm.Player, ItemToSkill(item));
+                                else Battle(Monsters[targetNum - 1], ItemToSkill(item));
                                 break;
                             }
                             else
@@ -250,7 +248,8 @@ namespace TeamTextRPG.Managers
                         }
                         else
                         {
-                            dm.Player.Wear(item);
+                            Skill? itemSkill = ItemToSkill(item);
+                            if(itemSkill != null) SkillStack.Push(itemSkill.UseSkill(player, player));
                             ui.AddLog($"{item.Name}을 사용했습니다.");
                             ui.MakeTab();
                             ui.PrintUseables();
@@ -353,7 +352,7 @@ namespace TeamTextRPG.Managers
             var ui = GameManager.Instance.UIManager;
 
             // 일단 버프를 정렬
-            SkillStack = new Stack<Skill>(SkillStack.OrderByDescending(x => x.SkillType).ToList());
+            SkillStack = new Stack<Skill>(SkillStack.OrderBy(x => x.SkillType).ToList());
 
             while(SkillStack.Count > 0)
             {
@@ -497,6 +496,50 @@ namespace TeamTextRPG.Managers
             ui.MakeLogBox();
             PrintPlayerUI();
             ui.ShowMonsterCard(Monsters);
+        }
+
+        public Skill ItemToSkill(Item item)
+        {
+            var player = GameManager.Instance.DataManager.Player;
+            Skill? skill = null;
+
+            switch (item.UsableItemType)
+            {
+                case UsableItemTypes.ATTACK_BUFF:
+                    skill = new Skill(item.Name, "", 0, SkillType.BUFF, Stats.ATK, item.Stat, 4, false);
+                    break;
+                case UsableItemTypes.CRITICAL_CHANCE_BUFF:
+                    skill = new Skill(item.Name, "", 0, SkillType.BUFF, Stats.CRITICALCHANCE, item.Stat, 4, false);
+                    break;
+                case UsableItemTypes.CRITICAL_DAMAGE_BUFF:
+                    skill = new Skill(item.Name, "", 0, SkillType.BUFF, Stats.CRITICALDAMAGE, item.Stat, 4, false);
+                    break;
+                case UsableItemTypes.DAMAGE:
+                    skill = new Skill(item.Name, "", 0, SkillType.DAMAGE, -item.Stat, 1, true);
+                    break;
+                case UsableItemTypes.DEFENCE_BUFF:
+                    skill = new Skill(item.Name, "", 0, SkillType.BUFF, Stats.DEF, item.Stat, 4, false);
+                    break;
+                case UsableItemTypes.DODGE_CHANCE_BUFF:
+                    skill = new Skill(item.Name, "", 0, SkillType.BUFF, Stats.DODGECHANCE, item.Stat, 4, false);
+                    break;
+                case UsableItemTypes.HEAL_HP:
+                    player.ChangeHP(item.Stat);
+                    break;
+                case UsableItemTypes.HEAL_MP:
+                    player.ChangeMP(item.Stat);
+                    break;
+
+            }
+
+            player.ItemStackRemove(item);
+            if (item.Stack == 0)
+            {
+                player.Inventory.Remove(item);
+            }
+
+            return skill;
+
         }
     }
 }

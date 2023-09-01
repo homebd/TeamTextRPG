@@ -18,7 +18,7 @@
         DEFENCE_BUFF,
         CRITICAL_CHANCE_BUFF,
         CRITICAL_DAMAGE_BUFF,
-        DODGE_BUFF,
+        DODGE_CHANCE_BUFF,
 
     }
     public enum JOB
