@@ -374,7 +374,7 @@ namespace TeamTextRPG.Managers
                             token.Target.ChangeHP(value);
                         }
                         
-                        if (token.Target.IsDead())
+                        if (token.Target.IsDead() && !token.Target.Equals(GameManager.Instance.DataManager.Player))
                         {
                             KillMonster();
                         }
@@ -413,7 +413,6 @@ namespace TeamTextRPG.Managers
         {
             if (damage < 0)
             {
-
                 Random rnd = new Random();
                 bool critical = false;
 
@@ -463,9 +462,9 @@ namespace TeamTextRPG.Managers
 
                 #region 치명타 공식
 
-                if (rnd.Next(0, 100) <= skill.Caster.CriticalChance)
+                if (rnd.Next(0, 100) <= skill.Caster.GetStatValue(Stats.CRITICALCHANCE))
                 {
-                    damage = (int)(damage * skill.Caster.CriticalDamage / 100f);
+                    damage = (int)(damage * skill.Caster.GetStatValue(Stats.CRITICALDAMAGE) / 100f);
                     critical = true;
                 }
                 #endregion
