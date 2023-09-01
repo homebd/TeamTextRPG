@@ -308,7 +308,10 @@ namespace TeamTextRPG.Managers
             {
                 Player.Gold += rewardGold;
                 Player.Exp += rewardExp;
-                Player.Inventory.AddRange(rewardItems);
+                foreach (Item item in rewardItems)
+                {
+                    Player.Inventory.Add(MakeNewItem(item.Id));
+                }
                 // UI 로그에 출력합니다.
                 PrintDungeonExploreResult(dungeon, clear, rewardGold, rewardExp, rewardItems);
                 return;
@@ -332,7 +335,10 @@ namespace TeamTextRPG.Managers
 
             Player.Gold += rewardGold;
             Player.Exp += rewardExp;
-            Player.Inventory.AddRange(rewardItems);
+            foreach (Item item in rewardItems)
+            {
+                Player.Inventory.Add(MakeNewItem(item.Id));
+            }
             // UI 로그에 출력합니다.
             PrintDungeonExploreResult(dungeon, clear, rewardGold, rewardExp, rewardItems);
         }
