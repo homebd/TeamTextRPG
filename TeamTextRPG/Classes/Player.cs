@@ -123,24 +123,6 @@ namespace TeamTextRPG.Classes
         {
             switch (item.UsableItemType)
             {
-                case UsableItemTypes.ATTACK_BUFF:
-                    ChangeStat(Stats.ATK, item.Stat);
-                    break; 
-                case UsableItemTypes.CRITICAL_CHANCE_BUFF:
-                    ChangeStat(Stats.CRITICALCHANCE, item.Stat);
-                    break;
-                case UsableItemTypes.CRITICAL_DAMAGE_BUFF:
-                    ChangeStat(Stats.CRITICALDAMAGE, item.Stat);
-                    break;
-                case UsableItemTypes.DAMAGE:
-                    // 타겟 설정하고 배틀 매니저에서 진행할 수 있도록 해야 함.
-                    break;
-                case UsableItemTypes.DEFENCE_BUFF:
-                    ChangeStat(Stats.DEF, item.Stat);
-                    break;
-                case UsableItemTypes.DODGE_CHANCE_BUFF:
-                    ChangeStat(Stats.DODGECHANCE, item.Stat);
-                    break;
                 case UsableItemTypes.HEAL_HP:
                     ChangeHP(item.Stat);
                     break;
@@ -148,8 +130,7 @@ namespace TeamTextRPG.Classes
                     ChangeMP(item.Stat);
                     break;
                 default:
-                    break;
-
+                    return;
             }
             ItemStackRemove(item);
             if(item.Stack==0)

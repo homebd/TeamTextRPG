@@ -191,7 +191,7 @@ namespace TeamTextRPG.Managers
                     dm.SortItems(dm.Player.Inventory);
                     showPrice = true;
                     printNum = true;
-                    sale = 0.85f;
+                    sale = 0.3f;
                     break;
             }
 
