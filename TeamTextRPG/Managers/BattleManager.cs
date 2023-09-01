@@ -118,7 +118,7 @@ namespace TeamTextRPG.Managers
                                         if (selectedSkill.ManaCost > player.CurrentMp)
                                         {
                                             selectedSkill = null;
-                                            ui.AddLog("내공이 부족합니다.");
+                                            ui.AddLog("마나가 부족합니다.");
                                         }
                                         else
                                         {
