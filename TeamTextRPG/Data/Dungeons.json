@@ -2,7 +2,7 @@
   {
     "Name": "마을 동굴",
     "Description": "왠지 꺼림칙한 작은 동굴입니다.",
-    "Condition": 3,
+    "Condition": 9,
     "Reward": [
       600,
       0,
@@ -22,7 +22,7 @@
   {
     "Name": "옆 마을",
     "Description": "몬스터들에게 침략당한 마을입니다.",
-    "Condition": 5,
+    "Condition": 16,
     "Reward": [
       1200,
       1,
@@ -41,7 +41,7 @@
   {
     "Name": "대륙 끝의 던전",
     "Description": "이곳의 몬스터들은 왜인지 사람을 닮았습니다.",
-    "Condition": 7,
+    "Condition": 25,
     "Reward": [
       2000,
       2,
@@ -60,7 +60,7 @@
   {
     "Name": "대형 거미줄",
     "Description": "거대한 벌레들이 우글거리는 '아라크네'의 둥지입니다.",
-    "Condition": 10,
+    "Condition": 38,
     "Reward": [
       3000,
       3,
@@ -79,7 +79,7 @@
   {
     "Name": "초원 지대",
     "Description": "각종 위협이 도사리는 넓은 평야입니다.",
-    "Condition": 14,
+    "Condition": 54,
     "Reward": [
       5000,
       4,
@@ -98,7 +98,7 @@
   {
     "Name": "곰의 절벽",
     "Description": "마음이 웅장해지는 이 절벽은 '우르순'의 터입니다.",
-    "Condition": 20,
+    "Condition": 74,
     "Reward": [
       8000,
       5,
@@ -117,7 +117,7 @@
   {
     "Name": "지룡의 둥지",
     "Description": "드래곤들이 모여사는 뜨거운 지하 세계입니다.",
-    "Condition": 26,
+    "Condition": 95,
     "Reward": [
       12000,
       6,
@@ -136,7 +136,7 @@
   {
     "Name": "심연의 해구",
     "Description": "신기한 생물들이 많습니다. 위험해보이진 않습니다. 아마도..",
-    "Condition": 35,
+    "Condition": 120,
     "Reward": [
       18000,
       7,
@@ -155,7 +155,7 @@
   {
     "Name": "달의 안개",
     "Description": "아무것도 보이지 않습니다. 눈을 닫고, 신경을 곤두세웁니다.",
-    "Condition": 45,
+    "Condition": 150,
     "Reward": [
       26000,
       8,
@@ -174,7 +174,7 @@
   {
     "Name": "격전지",
     "Description": "몸속에서 스파르타의 피가 흐르는 것 같습니다.",
-    "Condition": 60,
+    "Condition": 180,
     "Reward": [
       50000,
       9,
