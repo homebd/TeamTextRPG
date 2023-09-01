@@ -91,7 +91,7 @@
       "ValueType": 0,
       "Stat": 3,
       "Value": 50,
-      "Duration": 2,
+      "Duration": 4,
       "IsAoE": false,
       "Caster": null,
       "Target": null
