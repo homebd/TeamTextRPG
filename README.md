@@ -1,6 +1,6 @@
 # TeamTextRPG
 
-# 팀 노션 페이지
+## 팀 노션 페이지
 https://www.notion.so/09-c1b84370f617461d968c9c84ace565d7
 
 ### UI 설명
